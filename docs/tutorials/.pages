@@ -1,0 +1,6 @@
+nav:
+    - index.md
+    - 1-simpleCollection.md
+    - 2-filterCollection.md
+    - 1-simpleMap.md
+    - 2-filterMap.md

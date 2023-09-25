@@ -1,0 +1,6 @@
+nav:
+    - index.md
+    - why.md
+    - Sorting and Comparators: sorting.md
+    - size_and_performance.md
+    - pair.md

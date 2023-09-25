@@ -1,0 +1,950 @@
+%REM
+    Copyright 2022-23 HCL America, Inc.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+%END REM
+Option Declare
+Use "../src/VoltScriptCollections"
+Use "../libs/VoltScriptTesting"
+
+Class CaseInsensitiveStringComparator as Comparator
+
+    Sub New(isDescending as Boolean)
+
+    End Sub
+    
+    Function compare(source as Variant, target as Variant) as Integer
+        compare = StrCompare(source, target, 5)
+    End Function
+
+    Function equals(source as Variant, target as Variant) as Boolean
+        Return StrCompare(source, target, 5) = 0
+    End Function
+
+End Class
+
+Class EvenFilterer as CollectionFilter
+    Function filter(source as Variant) as Boolean
+        If (IsNumeric(source)) Then
+            If (source Mod 2 = 0) Then
+                filter = true
+            End If
+        End If
+    End Function
+
+End Class
+
+Class Person
+    Public firstName as String
+    Public lastName as String
+    Public age as Integer
+    Public value1 as Integer
+    Public value2 as Integer
+
+    Sub New(firstName as String, lastName as String, age as Integer)
+        Me.firstName = firstName
+        Me.lastName = lastName
+        Me.age = age
+    End Sub
+
+    Function toJson() as JsonObject
+        Dim jsonObj as New JsonObject()
+        Call jsonObj.insertValue("firstName", Me.firstName)
+        Call jsonObj.insertValue("lastName", Me.lastName)
+        Call jsonObj.insertValue("age", Me.age)
+        Set toJson = jsonObj
+    End Function
+
+    Function toString() as String
+        Return Me.firstName & " " & Me.lastName & "," & Me.age & "-" & Me.value1 & "," & Me.value2
+    End Function
+End Class
+
+Class PersonSorter as Comparator
+
+    Sub New(isDescending as Boolean)
+
+    End Sub
+    
+    Function compare(source as Variant, target as Variant) as Integer
+        compare = Me.compareMatchingDataType(CStr(source.FirstName) & "~" & CStr(source.LastName), CStr(target.firstName) & "~" & CStr(target.LastName))
+        If (compare <> 0) Then return compare
+
+        compare = Me.compareMatchingDataType(source.Age, target.Age) * -1
+    End Function
+
+    Function equals(source as Variant, target as Variant) as Boolean
+        Return CStr(source.firstName) = CStr(target.firstName) &&_
+            CStr(source.lastName) = CStr(target.lastName) &&_
+            CStr(source.age) = CStr(target.age) &&_
+            CStr(source.value1) = CStr(target.value1) &&_
+            CStr(source.value2) = CStr(target.value2)
+    End Function
+
+End Class
+
+Class PersonTransformer as CollectionTransformer
+    Function transform(source as Variant) as Variant
+        If (CInt(source.age) < 55) Then
+            transform = CStr(source.FirstName) & " " & CStr(source.lastName) & ", " & CStr(source.age)
+        End If
+    End Function
+
+End Class
+
+Public Function runCollectionTests as Boolean
+    Dim testRunner as New TestRunner("Test Collections")
+    Call testRunner.setOutputFormat("BOTH")
+    Dim retVal as Boolean
+
+    Try
+        Call testBasicCollection(testRunner)
+
+        Call testComparator(testRunner)
+
+        Call testAddingCollection(testRunner)
+
+        Call testStringCollection(testRunner)
+
+        Call testInsertion(testRunner)
+
+        Call testTransformSilent(testRunner)
+
+        Call testBig(testRunner)
+
+        Call testSortedNumerics(testRunner)
+
+        Call testSortedStrings(testRunner)
+
+        Call testMixedSorted(testRunner)
+
+        Call testFilter(testRunner)
+
+        Call testPeople(testRunner)
+
+        Call testFromJson(testRunner)
+    Catch
+        Print "Error " & Error() & " on line " & Erl()
+    End Try
+
+    retVal = True
+    ForAll suite in testRunner.testSuites
+        retVal = retVal And suite.ranSuccessfully()
+    End ForAll
+    Return retVal
+
+End Function
+
+Sub testBasicCollection(testRunner as TestRunner)
+
+    Dim coll as Collection
+    
+    Dim testSuite as New TestSuite("Test Basic Collection")
+    Dim idex as Long
+    Dim arr(2) as Variant
+    Dim emptyVar as Variant
+    Call testRunner.addTestSuite(testSuite)
+
+    Call tryFailingCollection("", testSuite, "contentType should be a comma-delimited string of one or more explicit datatypes, or SCALAR or OBJECT")
+    Call tryFailingCollection(" ", testSuite, "contentType should be a comma-delimited string of one or more explicit datatypes, or SCALAR or OBJECT")
+    Call tryFailingCollection("NULL", testSuite, "Invalid data type for Collection: NULL")
+    Call tryFailingCollection("EMPTY", testSuite, "Invalid data type for Collection: EMPTY")
+    Call tryFailingCollection("VARIANT", testSuite, "Invalid data type for Collection: VARIANT")
+    Call tryFailingCollection("NOTHING", testSuite, "Invalid data type for Collection: NOTHING")
+    Call tryFailingCollection("ARRAY", testSuite, "Invalid data type for Collection: ARRAY")
+    Call tryFailingCollection("LIST", testSuite, "Invalid data type for Collection: LIST")
+    Call tryFailingCollection("SCALAR,STRING", testSuite, "SCALAR cannot be mixed with other datatypes")
+    Call tryFailingCollection("OBJECT,STRING", testSuite, "OBJECT cannot be mixed with other datatypes")
+    Call tryFailingCollection("PERSON,STRING", testSuite, "Invalid mixture of scalar and object datatypes")
+
+    Set coll = new Collection("SCALAR", Nothing, False, False)
+    Call testSuite.describe("Test has no content").assertFalse(coll.hasContent)
+    arr(0) = "Two"
+    arr(1) = "one"
+    arr(2) = 3
+
+    Call testSuite.describe("Adding to collection")
+    Try
+        coll.add("One")
+        Call coll.addAll(arr)
+        coll.add("3")
+        Call testSuite.addResult(True, "")
+    Catch
+        Call testSuite.addError("Error " & Error() & " on line " & Erl(), "")
+        Exit Sub
+    End Try
+
+    Call testSuite.describe("Test collection has content").assertTrue(coll.HasContent)
+    Call testSuite.describe("Check collection has 5 elements").assertEqualsInteger(5, coll.ElementCount)
+    Call testSuite.describe("Check removing first element").assertEqualsString("One", CStr(coll.getAndRemoveFirstRaw()), False)
+    Call testSuite.describe("Check removing last element").assertEqualsString("3", CStr(coll.getAndRemoveLastRaw()), False)
+    Call testSuite.describe("Check collection now has 3 elements").assertEqualsInteger(3, coll.ElementCount)
+    Call testSuite.describe("Try adding EMPTY")
+    Try
+        Call coll.add(emptyVar)
+        Call testSuite.addResult(False, "Successfully added EMPTY")
+    Catch
+        Call testSuite.assertEqualsString(|This collection can only accept SCALARS, passed value is EMPTY|, Error(), False)
+    End Try
+    Call testSuite.describe("Check collection still has 3 elements after adding EMPTY").assertEqualsInteger(3, coll.ElementCount)
+    Call coll.add("")
+    Call testSuite.describe("Check collection 4 elements after adding blank string").assertEqualsInteger(4, coll.ElementCount)
+
+    For idex = 0 to 2
+        Call testSuite.describe("Test element " & idex & " is " & arr(idex)).assertEqualsPrimitive(arr(idex), coll.getNthElementRaw(idex))
+    Next
+
+    Call testSuite.describe("Test get invalid index is EMPTY").assertIs("EMPTY", coll.getNthElementRaw(10))
+End Sub
+
+Sub tryFailingCollection(contentType as String, testSuite as TestSuite, expectedError as String)
+
+    Call testSuite.describe("Test " & contentType & " contentType")
+    Try
+        Dim coll as new Collection(contentType, Nothing, False, False)
+        Call testSuite.addResult(False, "Created when should have failed")
+    Catch
+        Call testSuite.assertEqualsString(expectedError, Error(), False)
+    End Try
+
+End Sub
+
+Sub testComparator(testRunner as TestRunner)
+    Dim testSuite as New TestSuite("Test string insensitive comparator collection")
+    Call testRunner.addTestSuite(testSuite)
+    Dim coll as New Collection("STRING", Nothing, False, False)
+    
+    Call coll.add("Two")
+    Call coll.add("one")
+    Call coll.add("One")
+    Call coll.add("three")
+
+    Dim passCompar as New CaseInsensitiveStringComparator(false)
+    Dim newColl as New Collection("STRING", passCompar, True, False)
+    Call testSuite.describe("Test adding a collection")
+    Try
+        Call newColl.addAll(coll)
+        Call testSuite.addResult(True, "")
+    Catch
+        Call testSuite.addError("Error " & Error() & " on line " & Erl(), "")
+        Exit Sub
+    End Try
+
+    Call testSuite.describe("Check case insensitive unique coll has three elements").assertEqualsInteger(3, newColl.ElementCount)
+        
+End Sub
+
+Sub testAddingCollection(testRunner as TestRunner)
+    Dim testSuite as New TestSuite("Test adding collections")
+    Call testRunner.addTestSuite(testSuite)
+    
+    Dim newColl as New Collection("STRING,INTEGER", Nothing, True, False)
+    Dim coll as New Collection("SCALAR", Nothing, False, False)
+    
+    Call coll.add("Two")
+    Call coll.add("one")
+    Call coll.add("One")
+    
+    newColl.add("Four")
+    newColl.add(5)
+    coll.add(5)
+
+    Call testSuite.describe("Test adding a collection")
+    Try
+        Call newColl.addAll(coll)
+        Call testSuite.addResult(True, "")
+    Catch
+        Call testSuite.addError("Error " & Error() & " on line " & Erl(), "")
+        Exit Sub
+    End Try
+
+    Call testSuite.describe("Check unique newColl only has five elements").assertEqualsInteger(5, newColl.ElementCount)
+    
+    Call testSuite.describe("Test adding non-Collection object")
+    Try
+        Call coll.addAll(testRunner)
+        Call testSuite.addResult(False, "")
+    Catch
+        Call testSuite.addResult(True, "")
+    End Try
+    
+End Sub
+
+Sub testStringCollection(testRunner as TestRunner)
+
+    Dim testSuite as New TestSuite("Test String collection")
+    Call testRunner.addTestSuite(testSuite)
+    Dim StringColl as New Collection("STRING", Nothing, True, False)
+    Dim mixedColl as New Collection("SCALAR", Nothing, False, False)
+
+    mixedColl.add("One")
+    mixedColl.add(2)
+    mixedColl.add("Two")
+    
+    Call testSuite.describe("Test string collection accepts strings")
+    Try
+        Call stringColl.add("Hello")
+        Call stringColl.add("World")
+        Call testSuite.addResult(True, "")
+    Catch
+        Call testSuite.addError("Error " & Error() & " on line " & Erl(), "")
+    End Try
+    Call testSuite.describe("Test collection at start has 2 elements").assertEqualsInteger(2, stringColl.ElementCount)
+
+    Call testSuite.describe("Test string collection won't accept number")
+    Try
+        Call stringColl.add(1)
+        Call testSuite.addResult(False, "")
+    Catch
+        Call testSuite.addResult(True, "")
+    End Try
+    Call testSuite.describe("Test collection after number has 2 elements").assertEqualsInteger(2, stringColl.ElementCount)
+
+    Call testSuite.describe("Test string collection will not accept variant collection")
+    Try
+        Call stringColl.addAll(mixedColl)
+        Call testSuite.addResult(False, "Did not throw error")
+    Catch
+        Call testSuite.addResult(True, "")
+    End Try
+    Call testSuite.describe("Test collection after variant coll elements has 2 elements").assertEqualsInteger(2, stringColl.ElementCount)
+
+    Call testSuite.describe("Test string collection will only accept strings from variant collection")
+    Try
+        stringColl.suppressErrors = True
+        Call stringColl.addAll(mixedColl)
+        Call testSuite.addResult(True, "")
+    Catch
+        Call testSuite.addResult(False, "")
+    End Try
+    Call testSuite.describe("Test collection after variant coll elements has 4 elements").assertEqualsInteger(4, stringColl.ElementCount)
+
+    Dim arr(1) as Variant
+    arr(0) = "Another Hello"
+    arr(1) = 1
+    
+    Call testSuite.describe("Test string collection won't accept variant array")
+    Try
+        stringColl.suppressErrors = False
+        Call stringColl.addAll(arr)
+        Call testSuite.addResult(False, "")
+    Catch
+        Call testSuite.addResult(True, "")
+    End Try
+    Call testSuite.describe("Test collection after variant array has 4 elements").assertEqualsInteger(4, stringColl.ElementCount)
+    
+    Call testSuite.describe("Test string collection will accept variant array with suppressErrors")
+    Try
+        stringColl.suppressErrors = True
+        Call stringColl.addAll(arr)
+        Call testSuite.addResult(True, "")
+    Catch
+        Call testSuite.addError("", Error())
+    End Try
+    Call testSuite.describe("Test collection after variant array has 5 elements").assertEqualsInteger(5, stringColl.ElementCount)
+        
+End Sub
+
+Sub testInsertion(testRunner as TestRunner)
+
+    Dim i as Integer
+    Dim testSuite as New TestSuite("Test Insertion")
+    Dim replaceCount as Long
+    Call testRunner.addTestSuite(testSuite)
+
+    Dim coll as New Collection("SCALAR", Nothing, False, False)
+    Dim newColl as New Collection("STRING", Nothing, false, false)
+
+    Call coll.add("One")
+    Call coll.add("Two")
+    Call coll.add("Three")
+
+    Call testSuite.describe("Test third element is Three").assertEqualsString("Three", Cstr(coll.getNthElementRaw(2)), false)
+
+    Call coll.insertAt("Four", 2)
+    Call testSuite.describe("Test third element is now Four").assertEqualsString("Four", Cstr(coll.getNthElementRaw(2)), false)
+
+    Call coll.add("Two")
+    Call coll.add("Three")
+    Call coll.add("Two")
+    Call coll.remove("Two", false)
+    Call testSuite.describe("Test remove first match").assertEqualsInteger(6, coll.ElementCount)
+
+    Call coll.remove("Three", true)
+    Call testSuite.describe("Test remove all matches").assertEqualsInteger(4, coll.ElementCount)
+
+    replaceCount = coll.replace("Four", 4, false)
+    Call testSuite.describe("Test Four has been changed to 4").assertEqualsInteger(4, coll.getNthElementRaw(1))
+    Call testSuite.describe("Check one replacement made").assertEqualsLong(1, replaceCount)
+
+    replaceCount = coll.replace("Two", 2, true)
+    Call testSuite.describe("Test two has been changed to 2").assertEqualsInteger(2, coll.getNthElementRaw(coll.elementCount - 1))
+    Call testSuite.describe("Check two replacements made").assertEqualsLong(2, replaceCount)
+
+    Call coll.lock()
+    Call testSuite.describe("Test collection is locked").assertTrue(coll.isLocked)
+
+    Call testSuite.describe("Test collection does not allow adding when locked")
+    Try
+        Call coll.add(5)
+        Call testSuite.addResult(false, "")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+
+    Call testSuite.describe("Test collection does not allow adding all when locked")
+    Try
+        Call coll.addAll(newColl)
+        Call testSuite.addResult(false, "")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+
+    Call testSuite.describe("Test collection does not allow removing first when locked")
+    Try
+        Call coll.getAndRemoveFirstRaw()
+        Call testSuite.addResult(false, "")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+
+    Call testSuite.describe("Test collection does not allow removing last when locked")
+    Try
+        Call coll.getAndRemoveLastRaw()
+        Call testSuite.addResult(false, "")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+
+    Call testSuite.describe("Test collection does not allow insertAt when locked")
+    Try
+        Call coll.insertAt("foo", 3)
+        Call testSuite.addResult(false, "")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+
+    Call testSuite.describe("Test collection does not allow clear when locked")
+    Try
+        Call coll.clear()
+        Call testSuite.addResult(false, "")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+
+    Call testSuite.describe("Test collection does not allow remove element when locked")
+    Try
+        Call coll.remove(2, true)
+        Call testSuite.addResult(false, "")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+
+    Call testSuite.describe("Test collection does not allow replace element when locked")
+    Try
+        Call coll.replace(3, "Three", true)
+        Call testSuite.addResult(false, "")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+
+    Call testSuite.describe("Test collection does not allow reverse when locked")
+    Try
+        Call coll.reverse()
+        Call testSuite.addResult(false, "")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+
+    Call coll.unlock
+    Call testSuite.describe("Test adding again")
+    Try
+        Call coll.add("4")
+        Call testSuite.addResult(true, "")
+    Catch
+        Call testSuite.addResult(false, "")
+    End Try
+
+    Call coll.clear()
+    Call testSuite.describe("Test collection cleared").assertFalse(coll.hasContent)
+    Call testSuite.describe("Test collection has 0 elements").assertFalse(coll.elementCount)
+
+    Set coll = New Collection("INTEGER", Nothing, False, True)
+    Call coll.add(1)
+    Call coll.add(2)
+    Call coll.add(6)
+    Call coll.add(1)
+    Call coll.replace(1, 4, True)
+    Call testSuite.describe("Test collection still has four elements").assertEqualsLong(4, coll.elementCount)
+    Call testSuite.describe("Test collection is ordered correctly").assertEqualsString("2,4,4,6", coll.join(","), True)
+        
+End Sub
+
+Sub testBig(testRunner as TestRunner)
+
+    Dim x as Long
+    Dim temp as Long
+    Dim testSuite as New TestSuite("Test big collection")
+    Dim coll as New Collection("LONG", Nothing, False, False)
+
+    Call testRunner.addTestSuite(testSuite)
+    Call testSuite.describe("Test adding 671 elements")
+    Try
+        For x = 0 to 670
+            coll.add(temp)
+            temp += 3
+        Next
+        Call testSuite.addResult(True, "")
+    Catch
+        Call testSuite.addError("Error " & Error() & " on line " & Erl(), "")
+    End Try
+    Call testSuite.describe("Verify collection contains 671 elements").assertEqualsInteger(671, coll.ElementCount)
+
+    Set coll = New Collection("LONG", Nothing, False, False)
+    Call testSuite.describe("Test adding 6701 elements")
+    Try
+        For x = 0 to 6700
+            coll.add(temp)
+            temp += 3
+        Next
+        Call testSuite.addResult(True, "")
+    Catch
+        Call testSuite.addError("Error " & Error() & " on line " & Erl(), "")
+    End Try
+    Call testSuite.describe("Verify collection contains 6701 elements").assertEqualsInteger(6701, coll.ElementCount)
+
+    Set coll = New Collection("LONG", Nothing, False, False)
+    Call testSuite.describe("Test adding 3550 elements")
+    Try
+        For x = 0 to 3549
+            coll.add(temp)
+            temp += 3
+        Next
+        Call testSuite.addResult(True, "")
+    Catch
+        Call testSuite.addError("Error " & Error() & " on line " & Erl(), "")
+    End Try
+    Call testSuite.describe("Verify collection contains 3550 elements").assertEqualsInteger(3550, coll.ElementCount)
+
+    Dim startTm as Variant, endTm as Variant
+    startTm = Now
+    Print "Starting adding 20000 at " & startTm
+    Set coll = New Collection("LONG", Nothing, False, False)
+    Call testSuite.describe("Test adding 20001 elements")
+    temp = 0
+    Try
+        For x = 0 to 20000
+            coll.add(temp)
+            temp++
+        Next
+        Call testSuite.addResult(True, "")
+    Catch
+        Call testSuite.addError("Error " & Error() & " on line " & Erl(), "")
+    End Try
+    Call testSuite.describe("Verify collection contains 20001 elements").assertEqualsLong(20001, coll.ElementCount)
+    endTm = Now
+    Print "Finished adding 20000 at " & endTm 
+    Print (endTm - startTm) / 20000
+
+    Call coll.reverse()
+    startTm = Now
+    Print "Coll reversed at " & Now()
+    Call testSuite.describe("Verify first element is 20000").assertEqualsLong(20000, coll.getNthElementRaw(0))
+    Call testSuite.describe("Verify last element is 0").assertEqualsLong(0, coll.getNthElementRaw(20001))
+    Print "Got first and last at " & Now()
+End Sub
+
+Sub testSortedNumerics(testRunner as TestRunner)
+
+    Dim x as Integer
+    Dim temp as Integer
+    Dim testSuite as New TestSuite("Test Sorted numerics")
+    Call testRunner.addTestSuite(testSuite)
+    
+    Dim coll as New Collection("INTEGER", Nothing, False, True)
+    Dim reverseComparator as New Comparator(true)
+    Dim reverseColl as New Collection("INTEGER", reverseComparator, False, True)
+    For x = 0 to 10
+        coll.add(temp)
+        temp += 3
+    Next
+    coll.add(90)
+    Call testSuite.describe("Test 90 inserted at end").assertEqualsInteger(90, coll.getNthElementRaw(11))
+
+    coll.add(-1)
+    Call testSuite.describe("Test -1 inserted at start").assertEqualsInteger(-1, coll.getNthElementRaw(0))
+
+    coll.add(13)
+    Call testSuite.describe("Test 13 inserted as 7th element").assertEqualsInteger(13, coll.getNthElementRaw(6))
+    Call testSuite.describe("Check comparator is ascending").assertFalse(coll.Comparator.isDescending)
+    
+    Call coll.reverse()
+    Call testSuite.describe("Check reverse of collection").assertEqualsString("90,30,27,24,21,18,15,13,12,9,6,3,0,-1", coll.join(","), false)
+    
+    Call coll.add(26)
+    Call testSuite.describe("Check 26 inserted at position 4").assertEqualsInteger(26, coll.getNthElementRaw(3))
+    
+    temp = 0
+    For x = 0 to 10
+        reverseColl.add(temp)
+        temp += 3
+    Next
+    Call testSuite.describe("Test 30 inserted at start").assertEqualsInteger(30, reverseColl.getNthElementRaw(0))
+    Call testSuite.describe("Test 0 inserted at end").assertEqualsInteger(0, reverseColl.getNthElementRaw(10))
+    
+    reverseColl.add(90)
+    Call testSuite.describe("Test 90 inserted at start").assertEqualsInteger(90, reverseColl.getNthElementRaw(0))
+
+    reverseColl.add(-1)
+    Call testSuite.describe("Test -1 inserted at end").assertEqualsInteger(-1, reverseColl.getNthElementRaw(12))
+
+    reverseColl.add(13)
+    Call testSuite.describe("Test 8th element is 13").assertEqualsInteger(13, reverseColl.getNthElementRaw(7))
+
+    Call reverseColl.reverse()
+    Call testSuite.describe("Check reverse of collection").assertEqualsString("-1,0,3,6,9,12,13,15,18,21,24,27,30,90", reverseColl.join(","), false)
+    Call reverseColl.add(26)
+    Call testSuite.describe("Check 12th element is 26").assertEqualsInteger(26, reverseColl.getNthElementRaw(11))
+
+End Sub
+
+Sub testSortedStrings(testRunner as TestRunner)
+    Dim coll as New Collection("STRING", Nothing, False, True)
+    Dim reverseComparator as New CaseInsensitiveStringComparator(true)
+    Dim reverseColl as New Collection("STRING", reverseComparator, True, True)
+
+    Dim testSuite as New TestSuite("Test Sorted strings")
+    Call testRunner.addTestSuite(testSuite)
+    Dim sentence as String
+    Dim arr as Variant
+
+    sentence = "The quick brown fox jumped over the lazy dog"
+    arr = Split(sentence, " ")
+    ForAll strings in arr
+        coll.add(strings)
+        reverseColl.add(strings)
+    End ForAll
+
+    Call testSuite.describe("Check coll has 9 elements").assertEqualsInteger(9, coll.ElementCount)
+    Call testSuite.describe("Check reverseColl has 8 elements").assertEqualsInteger(8, reverseColl.ElementCount)
+
+    Call testSuite.describe("Test brown is first word in coll").assertEqualsString("brown", coll.getNthElementRaw(0), true)
+    Call testSuite.describe("Test 7th word is quick").assertEqualsString("quick", coll.getNthElementRaw(6), true)
+
+    Call testSuite.describe("Test the is first word of reverseColl").assertEqualsString("the", reverseColl.getNthElementRaw(0), true)
+    Call testSuite.describe("Test fox is the 6th word of reverseColl").assertEqualsString("fox", reverseColl.getNthElementRaw(5), true)
+    Call testSuite.describe("Test brown is the 8th word of reverseColl").assertEqualsString("brown", reverseColl.getNthElementRaw(7), true)
+
+    Call testSuite.describe("Test contains invalid value").assertFalse(reverseColl.contains("aaaaa"))
+    Call testSuite.describe("Test contains brown").assertTrue(reverseColl.contains("brown"))
+End Sub
+
+Sub testMixedSorted(testRunner as TestRunner)
+    Dim coll as New Collection("SCALAR", Nothing, True, True)
+
+    Dim testSuite as New TestSuite("Test Mixed Sorted")
+    Call testRunner.addTestSuite(testSuite)
+
+    Call coll.add("Hello")
+    Call coll.add("World")
+    Call coll.add("2")
+    Call coll.add(2)
+    Call coll.add("One")
+    Call coll.add(True)
+    Call coll.add(False)
+    Call coll.add(10)
+    Call coll.add(12.25)
+    Call coll.add(12.57)
+    Call coll.add(13.12)
+    Call coll.add(11.12)
+    Call coll.add("10")
+    Call coll.add("2")
+
+    Call testSuite.describe("Test collection contains 13 elements").assertEqualsInteger(13, coll.ElementCount)
+    Call testSuite.describe("Test sorted correctly").assertEqualsString("2,10,11.12,12.25,12.57,13.12,10,2,Hello,One,World,False,True", coll.join(","), false)
+End Sub
+
+Sub testFilter(testRunner as TestRunner)
+    Dim coll as New Collection("INTEGER", Nothing, True, True)
+    Dim filtered as Collection
+    Dim evenFilter as new EvenFilterer()
+    Dim i as Integer
+    Dim temp as Integer
+
+    Dim testSuite as New TestSuite("Test Filters")
+    Call testRunner.addTestSuite(testSuite)
+
+    For i = 0 to 10
+        coll.add(temp++)
+    Next
+
+    Call testSuite.describe("Test coll has 11 elements").assertEqualsLong(11, coll.ElementCount)
+    Set filtered = coll.filter(evenFilter)
+    Call testSuite.describe("Test filter returns 6 elements").assertEqualsLong(6, filtered.ElementCount)
+    Call testSuite.describe("Test filter contents").assertEqualsString("0,2,4,6,8,10", filtered.join(","), false)
+
+End Sub
+
+Sub testPeople(testRunner as TestRunner)
+    Dim personSorter as New PersonSorter(False)
+    Dim sortedColl as New Collection("PERSON", personSorter, True, True)
+    Dim person as Person
+    Dim coll as New Collection("PERSON", personSorter, False, False)
+    Dim personTransformer as New PersonTransformer()
+    Dim transformedColl as New Collection("STRING", Nothing, True, False)
+
+    Dim testSuite as New TestSuite("Test People Sorted")
+    Call testRunner.addTestSuite(testSuite)
+
+    Set person = New Person("John", "Doe", 42)
+    Call coll.add(person)
+    Call sortedColl.add(person)
+
+    Set person = New Person("Jane", "Doe", 30)
+    Call coll.add(person)
+    Call sortedColl.add(person)
+
+    Set person = New Person("Steve", "Smith", 60)
+    Call coll.add(person)
+    Call sortedColl.add(person)
+
+    Set person = coll.getNthElementRaw(1)
+    Call testSuite.describe("Test unsorted second person is Jane Doe").assertEqualsString("Jane Doe", person.firstName & " " & person.lastName, false)
+    
+    Set person = sortedColl.getNthElementRaw(1)
+    Call testSuite.describe("Test sorted second person is John Doe").assertEqualsString("John Doe", person.firstName & " " & person.lastName, false)
+
+    Set person = New Person("Jane", "Doe", 32)
+    Call sortedColl.add(person)
+    Set person = sortedColl.getNthElementRaw(0)
+    Call testSuite.describe("Test sorted first person is Jane Doe 32").assertEqualsString("Jane Doe - 32", person.firstName & " " & person.lastName & " - " & person.age, false)
+
+    transformedColl.suppressErrors = True
+    Call sortedColl.transform(personTransformer, transformedColl)
+    Call testSuite.describe("Test second person is Jane Doe, 30").assertEqualsString("Jane Doe, 30", transformedColl.getNthElementRaw(1), false)
+    Call testSuite.describe("Test transformed has only 3 elements").assertEqualsLong(3, transformedColl.ElementCount)
+
+    Set person = New Person("Steve", "Smith", 60)
+    Call testSuite.describe("Test coll contains Steve Smith").assertTrue(coll.contains(person))
+    Call testSuite.describe("Test sortedColl contains Steve Smith").assertTrue(sortedColl.contains(person))
+
+    Set person = coll.getNthElementRaw(12)
+    Call testSuite.describe("Test get invalid index is NOTHING").assertTrue(person is Nothing)
+    Set person = New Person("John", "Doe", 42)
+
+    Set person = New Person("John", "Doe", 42)
+    person.value1 = 1
+    person.value2 = 1
+    Call sortedColl.add(person)
+    Call testSuite.describe("Test sortedColl has 5 entries").assertEqualsInteger(5, sortedColl.elementCount)
+    Call testSuite.describe("Check insertion is as at pos 3").assertEqualsInteger(1, sortedColl.getNthElementRaw(3).value1)
+    Set person = New Person("John", "Doe", 42)
+    Set person = New Person("John", "Doe", 42)
+    person.value1 = 2
+    person.value2 = 2
+    Call sortedColl.add(person)
+    Call testSuite.describe("Test sortedColl has 6 entries").assertEqualsInteger(6, sortedColl.elementCount)
+    Call testSuite.describe("Check insertion is as at pos 4").assertEqualsInteger(2, sortedColl.getNthElementRaw(4).value1)
+    Set person = New Person("John", "Doe", 42)
+    person.value1 = 3
+    person.value2 = 3
+    Call testSuite.describe("Check John Doe 42, 3, 3 is null index in sortedColl").assertTrue(IsNull(sortedColl.getIndex(person)))
+    Call testSuite.describe("Check John Doe 42, 3, 3 is not in sortedColl").assertFalse(sortedColl.contains(person))
+    Set person = New Person("John", "Doe", 42)
+    person.value1 = 0
+    person.value2 = 0
+    Call testSuite.describe("Check John Doe 42, 0, 0 is at index 2").assertEqualsLong(2, sortedColl.getIndex(person))
+    Call sortedColl.add(person)
+    Set person = New Person("John", "Doe", 42)
+    person.value1 = 1
+    person.value2 = 1
+    Call sortedColl.add(person)
+    Set person = New Person("John", "Doe", 42)
+    person.value1 = 2
+    person.value2 = 2
+    Call sortedColl.add(person)
+    Call testSuite.describe("Test sortedColl still has 6 entries").assertEqualsInteger(6, sortedColl.elementCount)
+
+    Call sortedColl.remove(person, False)
+    Call testSuite.describe("Test sortedColl now has 5 entries").assertEqualsInteger(5, sortedColl.elementCount)
+    Call testSuite.describe("Test person removed")
+    Dim found as Boolean
+    Dim i as Long
+    Do
+        Set person = sortedColl.getNthElementRaw(i)
+        If (person.value1 = 2) then found = True
+    Loop Until ++i = sortedColl.elementCount
+    Call testSuite.assertFalse(found)
+
+    Set person = New Person("John", "Doe", 42)
+    person.value1 = 1
+    person.value2 = 1
+    Dim newPerson as New Person("John", "Smith", 42)
+    person.value1 = 1
+    person.value2 = 1
+    Call sortedColl.replace(person, newPerson, False)
+    Call testSuite.describe("Test sortedColl still has 5 entries").assertEqualsInteger(5, sortedColl.elementCount)
+    Call testSuite.describe("Check collection no longer contains person").assertFalse(sortedColl.contains(person))
+    Call testSuite.describe("Check collection now contains newPerson").assertTrue(sortedColl.contains(newPerson))
+
+End Sub
+
+Function testFromJson(testRunner as TestRunner)
+
+    Dim testSuite as New TestSuite("Test JSON loading")
+    Call testRunner.addTestSuite(testSuite)
+
+    Dim coll as New Collection("STRING", Nothing, false, false)
+    Dim jsonObj as New JsonObject()
+    Call jsonObj.appendToJsonArray("Hello")
+    Call jsonObj.appendToJsonArray("Brave")
+    Call jsonObj.appendToJsonArray("New")
+    Call jsonObj.appendToJsonArray("World")
+
+    Call testSuite.describe("Loading from JsonObject array")
+    Try
+        Call coll.fromJson(jsonObj)
+        Call testSuite.addResult(true, "")
+    Catch
+        Call testSuite.addError("Error " & Error() & " on line " & Erl(), "")
+    End Try
+
+    Call testSuite.describe("Test collection has four elements").assertEqualsLong(4, coll.elementCount)
+
+%REM
+Currently causes crash
+    Dim badJson as New JsonObject()
+    Call badJson.insertValue("Hello", "World")
+    Call testSuite.describe("Try loading from JsonObject")
+    Try
+        Call coll.fromJson(badJson)
+        Call testSuite.addResult(false, "")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+
+    Set badJson = New JsonObject()
+    Call badJson.appendToJsonArray(jsonObj)
+    Call badJson.appendToJsonArray(jsonObj)
+    Call testSuite.describe("Try loading from JsonObject array of objects")
+    Try
+        Call coll.fromJson(badJson)
+        Call testSuite.addResult(false, "")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+%END REM
+
+    Set coll = new Collection("INTEGER", Nothing, False, False)
+    coll.add(1)
+    coll.add(2)
+    coll.add(3)
+
+    Call testSuite.describe("Test converting basic collection to JSON")
+    Try
+        Set jsonObj = coll.toJson()
+        Call testSuite.addResult(True, "")
+    Catch
+        Call testSuite.addError("Error " & Error() & " on line " & Erl(), "")
+    End Try
+    Call testSuite.describe("Test JSON output").assertEqualsString(|[1,2,3]|, jsonObj.toString(false), false)
+
+    Call coll.clear()
+    Set coll = new Collection("PERSON", Nothing, False, False)
+    Dim Person as Person
+    Set person = new Person("Jane", "Doe", 42)
+    Call coll.add(person)
+    Set person = new Person("John", "Doe", 43)
+    Call coll.add(person)
+
+    Call testSuite.describe("Try serializing array of persons")
+    Try
+        Set jsonObj = coll.toJson()
+        Call testSuite.addResult(True, "")
+    Catch
+        Call testSuite.addError("Error " & Error() & " on line " & Erl(), "")
+    End Try
+    Dim jsonStr as String
+    jsonStr = |[{"age":42,"firstName":"Jane","lastName":"Doe"},{"age":43,"firstName":"John","lastName":"Doe"}]|
+    Call testSuite.describe("Test JSON persons output").assertEqualsString(jsonStr, jsonObj.toString(false), false)
+
+End Function
+
+Function testTransformSilent(testRunner as TestRunner)
+
+    Dim testSuite as New TestSuite("Test transformation silently")
+    Call testRunner.addTestSuite(testSuite)
+
+    Dim coll1 as New Collection("SCALAR", Nothing, false, false)
+    Call coll1.add(1)
+    Call coll1.add("2")
+    call testSuite.describe("Test coll1 has two elements").assertEqualsLong(2, coll1.elementCount)
+
+    Dim coll2 as New Collection("string", Nothing, false, False)
+    Call testSuite.describe("Test transforming throws error")
+    Try
+        Call coll1.transform(Nothing, coll2)
+        Call testSuite.addResult(false, "")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+
+    coll1.suppressErrors = True
+    Call testSuite.describe("Test transforming with suppressErrors doesn't error")
+    Try
+        Call coll1.transform(Nothing, coll2)
+        Call testSuite.addResult(True, "")
+    Catch
+        Call testSuite.addResult(False, "Error " & Error & " on line " & Erl)
+    End Try
+    Call testSuite.describe("Test second collection has only one element").assertEqualsLong(1, coll2.elementCount)
+
+    Dim coll3 as New StringCollection(Nothing, false, false)
+    Call testSuite.describe("Test adding number to StringCollection doesn't error")
+    Try
+        Call coll3.add(1)
+        Call testSuite.addResult(true, "")
+    Catch
+        Call testSuite.addResult(false, "Error " & Error & " on line " & Erl)
+    End Try
+    Call testSuite.describe("Test only one element in StringCollection").assertEqualsLong(1, coll3.elementCount)
+    
+    Call testSuite.describe("Test adding boolean to StringCollection doesn't error")
+    Try
+        Call coll3.add(True)
+        Call testSuite.addResult(true, "")
+    Catch
+        Call testSuite.addResult(false, "Error " & Error & " on line " & Erl)
+    End Try
+    Call testSuite.describe("Test element is 'True' in StringCollection").assertEqualsString("True", coll3.getNthElement(1), True)
+    
+    Call testSuite.describe("Test adding object to string throws error")
+    Try
+        Call coll3.add(coll1)
+        Call testSuite.addResult(false, "")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+
+    coll3.suppressErrors = True
+    Call testSuite.describe("Test adding object with suppressErrors doesn't error")
+    Try
+        Call coll3.add(coll1)
+        Call testSuite.addResult(true, "")
+    Catch
+        Call testSuite.addResult(false, "Error " & Error & " on line " & Erl)
+    End Try
+
+    Call testSuite.describe("Test two elements in StringCollection").assertEqualsLong(2, coll3.elementCount)
+
+End Function

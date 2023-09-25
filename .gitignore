@@ -1,0 +1,13 @@
+# Compiled VoltScript files
+*.bso
+
+# .devcontainer
+.devcontainer/*
+
+# Bali unit tests
+test/unit-test-reports/
+bin/
+
+site/*
+
+effective-atlas.json
