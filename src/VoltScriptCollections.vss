@@ -1703,7 +1703,7 @@ Public Class Map
         @param key              Scalar value to use as the key
         @param value            Value to be put into the Map
         @throws                 1403, Map is locked
-        @return Boolean         If successful
+        @return Long            Index the element was inserted at, if successful, or -1 if not added
     %END REM
     Public Function put(key as Variant, value as Variant) as Long
         '{{SETI_AUTHOR_CODE_Sub_putElement
@@ -1734,9 +1734,9 @@ Public Class Map
         Puts a Pair into the Map, using key as Key and value as Value
         @param content          Pair to insert
         @throws                 1403, Map is locked
-        @return boolean         If addition was successful
+        @return Long            Index the element was inserted at, if successful, or -1 if not added
     %END REM
-    Function putPair(content as Pair) as Boolean
+    Function putPair(content as Pair) as Long
         '{{SETI_AUTHOR_CODE_Function_putPair
         Call checkLocked()
 
