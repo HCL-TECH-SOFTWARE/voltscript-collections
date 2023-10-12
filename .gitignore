@@ -4,8 +4,9 @@
 # .devcontainer
 .devcontainer/*
 
-# Bali unit tests
-test/unit-test-reports/
+# Unit tests
+test/unit-test-reports
+unit-test-reports/
 bin/
 
 site/*
