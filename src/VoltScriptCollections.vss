@@ -24,13 +24,14 @@
 
 Option Declare
 Option Public
+UseVSE "*JsonVSE"
+
 
 
 '{{SETI_AUTHOR_CODE_Collections_Private_Constants
 '}}
 
 '{{SETI_AUTHOR_CODE_Collections_Private_Variables
-UseVSE "*JsonVSE"
 '}}
 
 '{{SETI_AUTHOR_CODE_Collections_Private_Types
@@ -46,7 +47,7 @@ UseVSE "*JsonVSE"
 	Base class for Collections
  
 %END REM
-Class Collection 
+Public Class Collection 
 
 	'{{SETI_AUTHOR_CODE_Collection_Private_Variables
     Private m_comparator as Comparator
@@ -70,7 +71,7 @@ Class Collection
 	
 		@return	Comparator
 	%END REM
-	Property Get comparator As Comparator 
+	Public Property Get comparator As Comparator 
 		'{{SETI_AUTHOR_CODE_Get.comparator_implementation
         Set Comparator = Me.m_comparator
 		'}}
@@ -84,7 +85,7 @@ Class Collection
 	
 		@return	Long
 	%END REM
-	Property Get elementCount As Long 
+	Public Property Get elementCount As Long 
 		'{{SETI_AUTHOR_CODE_Get.elementCount_implementation
         Return Me.m_elementCount
 		'}}
@@ -98,7 +99,7 @@ Class Collection
 	
 		@return	Boolean
 	%END REM
-	Property Get isUnique As Boolean 
+	Public Property Get isUnique As Boolean 
 		'{{SETI_AUTHOR_CODE_Get.isUnique_implementation
         Return Me.m_isUnique
 		'}}
@@ -112,7 +113,7 @@ Class Collection
 	
 		@return	String
 	%END REM
-	Property Get contentType As String 
+	Public Property Get contentType As String 
 		'{{SETI_AUTHOR_CODE_Get.contentType_implementation
         Return Me.m_contentType
 		'}}
@@ -126,7 +127,7 @@ Class Collection
 	
 		@return	Boolean
 	%END REM
-	Property Get isSorted As Boolean 
+	Public Property Get isSorted As Boolean 
 		'{{SETI_AUTHOR_CODE_Get.isSorted_implementation
         Return Me.m_isSorted
 		'}}
@@ -140,7 +141,7 @@ Class Collection
 	
 		@return	Boolean
 	%END REM
-	Property Get isLocked As Boolean 
+	Public Property Get isLocked As Boolean 
 		'{{SETI_AUTHOR_CODE_Get.isLocked_implementation
         Return Me.m_isLocked
 		'}}
@@ -154,7 +155,7 @@ Class Collection
 	
 		@return	Boolean
 	%END REM
-	Property Get hasContent As Boolean 
+	Public Property Get hasContent As Boolean 
 		'{{SETI_AUTHOR_CODE_Get.hasContent_implementation
         Me.m_hasContent = Me.ElementCount > 0
 
@@ -170,7 +171,7 @@ Class Collection
 	
 		@return	Boolean
 	%END REM
-	Property Get isReversed As Boolean 
+	Public Property Get isReversed As Boolean 
 		'{{SETI_AUTHOR_CODE_Get.isReversed_implementation
         Return Me.p_isCollReversed
 		'}}
@@ -186,7 +187,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 	
 		@return	Boolean
 	%END REM
-	Property Get suppressErrors As Boolean 
+	Public Property Get suppressErrors As Boolean 
 		'{{SETI_AUTHOR_CODE_Get.suppressErrors_implementation
         Return Me.m_suppressErrors
 		'}}
@@ -201,7 +202,7 @@ or attempting to insert an entry into a sorted Collection.
 Instead of throwing an error, e.g. for wrong content type, the method will just return false
 	
 	%END REM
-	Property Set suppressErrors As Boolean 
+	Public Property Set suppressErrors As Boolean 
 		'{{SETI_AUTHOR_CODE_Set.suppressErrors_implementation
         Me.m_suppressErrors = suppressErrors
 		'}}
@@ -225,7 +226,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 		@param	isSorted 	Flag indicating if the content within the Collection shall be sorted
 
 	%END REM
-	Sub New(contentType As String, comparator As Comparator, mustBeUnique As Boolean, isSorted As Boolean) 
+	Public Sub New(contentType As String, comparator As Comparator, mustBeUnique As Boolean, isSorted As Boolean) 
 		'{{SETI_AUTHOR_CODE_New_implementation
         Me.m_contentType = FullTrim(UCase(contentType))
         Call validateContentType()
@@ -248,7 +249,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 	
 		@throws	Collection is locked 	
 	%END REM
-	Sub clear() 
+	Public Sub clear() 
 		'{{SETI_AUTHOR_CODE_clear_implementation
         Call checkLocked()
 
@@ -265,7 +266,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 		Unlocks the Collection, so add, remove, replace or reverse functions can be used again
 	
 	%END REM
-	Sub unlock() 
+	Public Sub unlock() 
 		'{{SETI_AUTHOR_CODE_unlock_implementation
         Me.m_isLocked = False
 		'}}
@@ -279,7 +280,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 		Useful when passing a collection to other functions.
 	
 	%END REM
-	Sub lock() 
+	Public Sub lock() 
 		'{{SETI_AUTHOR_CODE_lock_implementation
         Me.m_isLocked = True
 		'}}
@@ -292,7 +293,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 		Reverses a collection
 	
 	%END REM
-	Sub reverse() 
+	Public Sub reverse() 
 		'{{SETI_AUTHOR_CODE_reverse_implementation
         Dim newList List as Variant
         Dim execString as String
@@ -334,7 +335,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 
 		@throws	A collection can only accept an array 	
 	%END REM
-	Sub fromJson(jsonObj As JsonObject) 
+	Public Sub fromJson(jsonObj As JsonObject) 
 		'{{SETI_AUTHOR_CODE_fromJson_implementation
         Call checkLocked()
 
@@ -360,7 +361,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 		@param	newColl 	Collection to load transformed members into
 
 	%END REM
-	Sub transform(transformer As CollectionTransformer, newColl As Collection) 
+	Public Sub transform(transformer As CollectionTransformer, newColl As Collection) 
 		'{{SETI_AUTHOR_CODE_transform_implementation
         Dim i as Long
         Dim innerTransformer as CollectionTransformer
@@ -392,7 +393,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 	
 		@return	Collection
 	%END REM
-	Function clone() As Collection 
+	Public Function clone() As Collection 
 		'{{SETI_AUTHOR_CODE_clone_implementation
         Dim newColl as New Collection(Me.ContentType, Me.Comparator, Me.isUnique, Me.isSorted)
         Dim i as Long
@@ -420,7 +421,7 @@ If the array values are objects, the code will try to call a toJson method on th
 	
 		@return	JsonObject
 	%END REM
-	Function toJson() As JsonObject 
+	Public Function toJson() As JsonObject 
 		'{{SETI_AUTHOR_CODE_toJson_implementation
         Dim i as Long
         Dim result as New JsonObject()
@@ -452,7 +453,7 @@ If the array values are objects, the code will try to call a toJson method on th
 
 		@return	Variant
 	%END REM
-	Function getIndex(checkValue As Variant) As Variant 
+	Public Function getIndex(checkValue As Variant) As Variant 
 		'{{SETI_AUTHOR_CODE_getIndex_implementation
         If (Not continueAdd(checkValue)) Then Return NULL  'Not a valid insertion value, cannot be in Collection
 
@@ -482,7 +483,7 @@ If the array values are objects, the code will try to call a toJson method on th
 
 		@return	Variant
 	%END REM
-	Function getNthElementRaw(index As Long) As Variant 
+	Public Function getNthElementRaw(index As Long) As Variant 
 		'{{SETI_AUTHOR_CODE_getNthElementRaw_implementation
         'If you pass a non-existent indexed element of a List to a function it does not throw an error.
         If (index >= Me.elementCount) Then
@@ -503,7 +504,7 @@ If the collection is empty it just exits the function
 		@return	Variant
 		@throws	Collection is locked 	
 	%END REM
-	Function getAndRemoveLastRaw() As Variant 
+	Public Function getAndRemoveLastRaw() As Variant 
 		'{{SETI_AUTHOR_CODE_getAndRemoveLastRaw_implementation
         Dim tempVal as Variant
         Call checkLocked()
@@ -534,7 +535,7 @@ If the collection is empty it just exits the function
 		@return	Variant
 		@throws	Collection is locked 	
 	%END REM
-	Function getAndRemoveFirstRaw() As Variant 
+	Public Function getAndRemoveFirstRaw() As Variant 
 		'{{SETI_AUTHOR_CODE_getAndRemoveFirstRaw_implementation
         Dim tempVal as Variant
         Call checkLocked()
@@ -574,7 +575,7 @@ If the collection is empty it just exits the function
 
 		@return	String
 	%END REM
-	Function join(delim As String) As String 
+	Public Function join(delim As String) As String 
 		'{{SETI_AUTHOR_CODE_join_implementation
         Dim content as String
         Dim i as Integer
@@ -603,7 +604,7 @@ If the collection is empty it just exits the function
 
 		@return	Boolean
 	%END REM
-	Function contains(checkValue As Variant) As Boolean 
+	Public Function contains(checkValue As Variant) As Boolean 
 		'{{SETI_AUTHOR_CODE_contains_implementation
         If (Not continueAdd(checkValue)) Then Return False  'Not a valid insertion value, cannot be in Collection
 
@@ -626,7 +627,7 @@ If the collection is empty it just exits the function
 		@return	Long
 		@throws	Collection is locked 	
 	%END REM
-	Function remove(source As Variant, allMatches As Boolean) As Long 
+	Public Function remove(source As Variant, allMatches As Boolean) As Long 
 		'{{SETI_AUTHOR_CODE_remove_implementation
         Dim i as Long
         Dim tempSize as Long
@@ -672,7 +673,7 @@ If the collection is empty it just exits the function
 
 		@return	Collection
 	%END REM
-	Function filter(filterObj As CollectionFilter) As Collection 
+	Public Function filter(filterObj As CollectionFilter) As Collection 
 		'{{SETI_AUTHOR_CODE_filter_implementation
         Dim newColl as New Collection(Me.ContentType, Me.Comparator, Me.isUnique, Me.isSorted)
         Dim innerFilter as CollectionFilter
@@ -714,7 +715,7 @@ If the collection is empty it just exits the function
 
 		@throws	Collection is locked 	
 	%END REM
-	Function add(source As Variant) As Long 
+	Public Function add(source As Variant) As Long 
 		'{{SETI_AUTHOR_CODE_add_implementation
         Call checkLocked()
         Dim checkIndex as Variant
@@ -751,7 +752,7 @@ If the collection is empty it just exits the function
 
 		@throws	Collection is locked 	
 	%END REM
-	Function addAll(source As Variant) As Collection 
+	Public Function addAll(source As Variant) As Collection 
 		'{{SETI_AUTHOR_CODE_addAll_implementation
         Dim origList as Variant
         Dim origElemCount as Long
@@ -801,7 +802,7 @@ If the Collection is sorted, the old elements are removed and new ones inserted 
 		@return	Long
 		@throws	Collection is locked 	
 	%END REM
-	Function replace(oldValue As Variant, newValue As Variant, allMatches As Boolean) As Long 
+	Public Function replace(oldValue As Variant, newValue As Variant, allMatches As Boolean) As Long 
 		'{{SETI_AUTHOR_CODE_replace_implementation
         Dim i as Long
         Dim j as Long
@@ -849,7 +850,7 @@ If the Collection is sorted, the old elements are removed and new ones inserted 
 		@throws	Collection is locked 	
 		@throws	Collection is smaller than required position to insert at 	
 	%END REM
-	Function insertAt(source As Variant, index As Long) As Boolean 
+	Public Function insertAt(source As Variant, index As Long) As Boolean 
 		'{{SETI_AUTHOR_CODE_insertAt_implementation
         Call checkLocked()
 
@@ -1143,75 +1144,169 @@ End Class
 
 
 %REM
-	Class Pair 
-	Base class for ky/value pair
+	Class StringCollection 
+	Collection that can only contain strings or scalars, which will be converted to strings
  
 %END REM
-Class Pair 
+Public Class StringCollection As Collection 
 
-	'{{SETI_AUTHOR_CODE_Pair_Private_Variables
-    Private m_key as Variant
-    Private m_value as Variant
+	'{{SETI_AUTHOR_CODE_StringCollection_Private_Variables
 	'}}
 
-
-	%REM
-		Property value 
-
-		@return	Variant
-	%END REM
-	Property Get value As Variant 
-		'{{SETI_AUTHOR_CODE_Get.value_implementation
-        Return m_value
-		'}}
-
-	End Property
-
-
-	%REM
-		Property key 
-		Key for the pair
-	
-		@return	Variant
-	%END REM
-	Property Get key As Variant 
-		'{{SETI_AUTHOR_CODE_Get.key_implementation
-        key = m_key
-		'}}
-
-	End Property
-
-	'{{SETI_AUTHOR_CODE_Pair_Private_Properties
+	'{{SETI_AUTHOR_CODE_StringCollection_Private_Properties
 	'}}
 
 
 	%REM
 		Sub New 
 
-		@param	key 	Key for the pair. Required at initialization, cannot be changed afterwards.
+		@param	comparator 	Comparator, defaulting (if Nothing) to MatchingDataTypeComparator
 
-		@param	value 	Value for the pair. Required at initialization, cannot be changed afterwards.
+		@param	mustBeUnique 	Flag indicating if the elements within the Collection must be unique
+
+		@param	isSorted 	Flag indicating if the content within the Collection should be sorted
 
 	%END REM
-	Sub New(key As Variant, value As Variant) 
+	Public Sub New(comparator As Comparator, mustBeUnique As Boolean, isSorted As Boolean), Collection("STRING", comparator, mustBeUnique, isSorted) 
 		'{{SETI_AUTHOR_CODE_New_implementation
-        If (isObject(key)) Then
-            If (CStr(key) = "") Then Error 1400, "Key must be a scalar value"
-        Else
-            If (CStr(key) = "") Then Error 1400, "Key must not be empty"
-            Me.m_key = key
-        End If
-        
-        If (isObject(value)) Then
-            Set Me.m_value = value
-        Else
-            Me.m_value = value
+        If (comparator is Nothing) Then
+            Set Me.m_comparator = New MatchingDataTypeComparator(false)
         End If
 		'}}
 
 	End Sub
 
-	'{{SETI_AUTHOR_CODE_Pair_Private_Methods
+
+	%REM
+		Function getNthElement 
+		Wrapper for CStr(Collection.getNthElementRaw(index)).
+	
+		@param	index 	Index of the element to return
+
+		@return	String
+	%END REM
+	Public Function getNthElement(index As Long) As String 
+		'{{SETI_AUTHOR_CODE_getNthElement_implementation
+        Return Cstr(getNthElementRaw(index))
+		'}}
+
+	End Function
+
+
+	%REM
+		Function add 
+		Overrides parent method, forcing to string if possible
+	
+		@param	source 	A stringable scalar value
+
+		@return	Long
+		@throws	Cannot convert passed value to a String 	
+	%END REM
+	Public Function add(source As Variant) As Long 
+		'{{SETI_AUTHOR_CODE_add_implementation
+        If (Not IsScalar(source)) Then
+            If me.suppressErrors Then Return -1
+            Error 1400, "Cannot convert passed value to a String"
+        Else
+            Return Collection..add(CStr(source))
+        End If
+		'}}
+
+	End Function
+
+	'{{SETI_AUTHOR_CODE_StringCollection_Private_Methods
+	'}} 
+
+End Class 
+
+
+%REM
+	Class CollectionFilter 
+	Class for filtering elements when filtering a Collection
+ 
+%END REM
+Public Class CollectionFilter 
+
+	'{{SETI_AUTHOR_CODE_CollectionFilter_Private_Variables
+	'}}
+
+	'{{SETI_AUTHOR_CODE_CollectionFilter_Private_Properties
+	'}}
+
+
+	%REM
+		Sub New 
+
+	%END REM
+	Public Sub New() 
+		'{{SETI_AUTHOR_CODE_New_implementation
+		'}}
+
+	End Sub
+
+
+	%REM
+		Function filter 
+		Function to filter an element "in" or "out" of the resulting collection
+	
+		@param	source 	True to filter the value *in*, False to filter *out*
+
+		@return	Boolean
+	%END REM
+	Public Function filter(source As Variant) As Boolean 
+		'{{SETI_AUTHOR_CODE_filter_implementation
+        filter = true
+		'}}
+
+	End Function
+
+	'{{SETI_AUTHOR_CODE_CollectionFilter_Private_Methods
+	'}} 
+
+End Class 
+
+
+%REM
+	Class CollectionTransformer 
+	Class to transform elements in a Collection to something else
+ 
+%END REM
+Public Class CollectionTransformer 
+
+	'{{SETI_AUTHOR_CODE_CollectionTransformer_Private_Variables
+	'}}
+
+	'{{SETI_AUTHOR_CODE_CollectionTransformer_Private_Properties
+	'}}
+
+
+	%REM
+		Sub New 
+
+	%END REM
+	Public Sub New() 
+		'{{SETI_AUTHOR_CODE_New_implementation
+		'}}
+
+	End Sub
+
+
+	%REM
+		Function transform 
+		Function to transform a member of a Collection. If there is no return value, the element is skipped and nothing gets added to the new Collection for this element. Thus the function can perform a filter and a transform simultaneously.
+	
+		@param	source 	Value to transform
+
+		@return	Variant
+	%END REM
+	Public Function transform(source As Variant) As Variant 
+		'{{SETI_AUTHOR_CODE_transform_implementation
+        Return source
+		'}}
+
+	End Function
+
+	'{{SETI_AUTHOR_CODE_CollectionTransformer_Private_Methods
 	'}} 
 
 End Class 
@@ -1222,7 +1317,7 @@ End Class
 	Class used to handle comparison logic (used primarily for sorting Collection objects)
  
 %END REM
-Class Comparator 
+Public Class Comparator 
 
 	'{{SETI_AUTHOR_CODE_Comparator_Private_Variables
     Private m_isDescending as Boolean
@@ -1234,7 +1329,7 @@ Class Comparator
 
 		@return	Boolean
 	%END REM
-	Property Get isDescending As Boolean 
+	Public Property Get isDescending As Boolean 
 		'{{SETI_AUTHOR_CODE_Get.isDescending_implementation
         isDescending = m_isDescending
 		'}}
@@ -1251,7 +1346,7 @@ Class Comparator
 		@param	isDescending 	Whether sorting should be in descending order
 
 	%END REM
-	Sub New(isDescending As Boolean) 
+	Public Sub New(isDescending As Boolean) 
 		'{{SETI_AUTHOR_CODE_New_implementation
         m_isDescending = isDescending
 		'}}
@@ -1269,7 +1364,7 @@ Class Comparator
 
 		@return	Integer
 	%END REM
-	Function compare(source As Variant, target As Variant) As Integer 
+	Public Function compare(source As Variant, target As Variant) As Integer 
 		'{{SETI_AUTHOR_CODE_compare_implementation
         Dim dataTypeComparison as Integer
         dataTypeComparison = Me.compareDataType(source, target)
@@ -1299,7 +1394,7 @@ The value is reversed (so -1 changed to 1, 1 changed to -1) if:
 
 		@return	Integer
 	%END REM
-	Function compareAscDesc(source As Variant, target As Variant, collReversed As Boolean) As Integer 
+	Public Function compareAscDesc(source As Variant, target As Variant, collReversed As Boolean) As Integer 
 		'{{SETI_AUTHOR_CODE_compareAscDesc_implementation
         compareAscDesc = compare(source, target)
 
@@ -1320,7 +1415,7 @@ Used by remove, replace, and contains functions
 
 		@return	Boolean
 	%END REM
-	Function equals(source As Variant, target As Variant) As Boolean 
+	Public Function equals(source As Variant, target As Variant) As Boolean 
 		'{{SETI_AUTHOR_CODE_equals_implementation
         Dim dataTypeComparison as Integer
         dataTypeComparison = Me.compareDataType(source, target)
@@ -1365,7 +1460,7 @@ Used by remove, replace, and contains functions
         If (CStr(source) = CStr(target)) Then
             Return 0
         End If
-    
+
         If (IsNumeric(source) And (DataType(source) < 7)) Then
             ' Just doing CStr will mean 12.05 is before 9.05, which is wrong
             ' So compare integer portion first, then get fraction
@@ -1402,7 +1497,7 @@ End Class
 	Class for comparing, ignoring data type check
  
 %END REM
-Class MatchingDataTypeComparator as Comparator
+Public Class MatchingDataTypeComparator As Comparator 
 
 	'{{SETI_AUTHOR_CODE_MatchingDataTypeComparator_Private_Variables
 	'}}
@@ -1417,7 +1512,7 @@ Class MatchingDataTypeComparator as Comparator
 		@param	isDescending 	Whether sorting should be in descending order
 
 	%END REM
-	Sub New(isDescending As Boolean) 
+	Public Sub New(isDescending As Boolean) 
 		'{{SETI_AUTHOR_CODE_New_implementation
 		'}}
 
@@ -1434,7 +1529,7 @@ Class MatchingDataTypeComparator as Comparator
 
 		@return	Integer
 	%END REM
-	Function compare(source As Variant, target As Variant) As Integer 
+	Public Function compare(source As Variant, target As Variant) As Integer 
 		'{{SETI_AUTHOR_CODE_compare_implementation
         Return compareMatchingDataType(source, target)
 		'}}
@@ -1453,7 +1548,7 @@ Used by remove, replace, and contains functions
 
 		@return	Boolean
 	%END REM
-	Function equals(source As Variant, target As Variant) As Boolean 
+	Public Function equals(source As Variant, target As Variant) As Boolean 
 		'{{SETI_AUTHOR_CODE_equals_implementation
         Return CStr(source) = CStr(target)
 		'}}
@@ -1467,87 +1562,10 @@ End Class
 
 
 %REM
-	Class StringCollection 
-	Collection that can only contain strings or scalars, which will be converted to strings
- 
-%END REM
-Class StringCollection as Collection
-
-	'{{SETI_AUTHOR_CODE_StringCollection_Private_Variables
-	'}}
-
-	'{{SETI_AUTHOR_CODE_StringCollection_Private_Properties
-	'}}
-
-
-	%REM
-		Sub New 
-
-		@param	comparator 	Comparator, defaulting (if Nothing) to MatchingDataTypeComparator
-
-		@param	mustBeUnique 	Flag indicating if the elements within the Collection must be unique
-
-		@param	isSorted 	Flag indicating if the content within the Collection should be sorted
-
-	%END REM
-	Sub New(comparator As Comparator, mustBeUnique As Boolean, isSorted As Boolean), Collection("STRING", comparator, mustBeUnique, isSorted)
-		'{{SETI_AUTHOR_CODE_New_implementation
-        If (comparator is Nothing) Then
-            Set Me.m_comparator = New MatchingDataTypeComparator(false)
-        End If
-		'}}
-
-	End Sub
-
-
-	%REM
-		Function getNthElement 
-		Wrapper for CStr(Collection.getNthElementRaw(index)).
-	
-		@param	index 	Index of the element to return
-
-		@return	String
-	%END REM
-	Function getNthElement(index As Long) As String 
-		'{{SETI_AUTHOR_CODE_getNthElement_implementation
-        Return Cstr(getNthElementRaw(index))
-		'}}
-
-	End Function
-
-
-	%REM
-		Function add 
-		Overrides parent method, forcing to string if possible
-	
-		@param	source 	A stringable scalar value
-
-		@return	Long
-		@throws	Cannot convert passed value to a String 	
-	%END REM
-	Function add(source As Variant) As Long 
-		'{{SETI_AUTHOR_CODE_add_implementation
-        If (Not IsScalar(source)) Then
-            If me.suppressErrors Then Return -1
-            Error 1400, "Cannot convert passed value to a String"
-        Else
-            Return Collection..add(CStr(source))
-        End If
-		'}}
-
-	End Function
-
-	'{{SETI_AUTHOR_CODE_StringCollection_Private_Methods
-	'}} 
-
-End Class 
-
-
-%REM
 	Class Map 
 
 %END REM
-Class Map 
+Public Class Map 
 
 	'{{SETI_AUTHOR_CODE_Map_Private_Variables
     Private m_keySet as Collection
@@ -1565,7 +1583,7 @@ Class Map
 	
 		@return	Long
 	%END REM
-	Property Get elementCount As Long 
+	Public Property Get elementCount As Long 
 		'{{SETI_AUTHOR_CODE_Get.elementCount_implementation
         Return Me.m_KeySet.ElementCount
 		'}}
@@ -1579,7 +1597,7 @@ Class Map
 	
 		@return	Boolean
 	%END REM
-	Property Get isLocked As Boolean 
+	Public Property Get isLocked As Boolean 
 		'{{SETI_AUTHOR_CODE_Get.isLocked_implementation
         Return Me.m_keySet.isLocked
 		'}}
@@ -1593,7 +1611,7 @@ Class Map
 	
 		@return	String
 	%END REM
-	Property Get contentType As String 
+	Public Property Get contentType As String 
 		'{{SETI_AUTHOR_CODE_Get.contentType_implementation
         Return Me.m_ContentType
 		'}}
@@ -1607,7 +1625,7 @@ Class Map
 	
 		@return	Boolean
 	%END REM
-	Property Get hasContent As Boolean 
+	Public Property Get hasContent As Boolean 
 		'{{SETI_AUTHOR_CODE_Get.hasContent_implementation
         Return Me.m_KeySet.ElementCount > 0
 		'}}
@@ -1621,7 +1639,7 @@ Class Map
 	
 		@return	Boolean
 	%END REM
-	Property Get isSorted As Boolean 
+	Public Property Get isSorted As Boolean 
 		'{{SETI_AUTHOR_CODE_Get.isSorted_implementation
         Return Me.m_KeySet.isSorted
 		'}}
@@ -1635,7 +1653,7 @@ Class Map
 	
 		@return	Comparator
 	%END REM
-	Property Get comparator As Comparator 
+	Public Property Get comparator As Comparator 
 		'{{SETI_AUTHOR_CODE_Get.comparator_implementation
         Return Me.m_KeySet.comparator
 		'}}
@@ -1651,7 +1669,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 	
 		@return	Boolean
 	%END REM
-	Property Get suppressErrors As Boolean 
+	Public Property Get suppressErrors As Boolean 
 		'{{SETI_AUTHOR_CODE_Get.suppressErrors_implementation
         Return Me.m_suppressErrors
 		'}}
@@ -1666,7 +1684,7 @@ or attempting to putting an element at an index into a sorted Map.
 Instead of throwing an error, e.g. for wrong content type, the method will just return false
 	
 	%END REM
-	Property Set suppressErrors As Boolean 
+	Public Property Set suppressErrors As Boolean 
 		'{{SETI_AUTHOR_CODE_Set.suppressErrors_implementation
         Me.m_suppressErrors = suppressErrors
 		'}}
@@ -1683,7 +1701,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 	
 		@throws	Map is locked 	
 	%END REM
-	Sub reverse() 
+	Public Sub reverse() 
 		'{{SETI_AUTHOR_CODE_reverse_implementation
         Call checkLocked()
 
@@ -1699,7 +1717,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 	
 		@throws	Map is locked 	
 	%END REM
-	Sub clear() 
+	Public Sub clear() 
 		'{{SETI_AUTHOR_CODE_clear_implementation
         Call checkLocked()
 
@@ -1715,7 +1733,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 		Locks the map, so any put, remove, replace or reverse fiunctions trigger errors. Useful when passing a Map to other functions.
 	
 	%END REM
-	Sub lock() 
+	Public Sub lock() 
 		'{{SETI_AUTHOR_CODE_lock_implementation
         Call Me.m_keySet.lock()
 		'}}
@@ -1728,7 +1746,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 		Unlocks the Map, so put, remove, replace and reverse functions can be used again
 	
 	%END REM
-	Sub unlock() 
+	Public Sub unlock() 
 		'{{SETI_AUTHOR_CODE_unlock_implementation
         Call me.m_keySet.unlock()
 		'}}
@@ -1743,7 +1761,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 		@param	jsonObj 	JsonObject to put in the map
 
 	%END REM
-	Sub fromJson(jsonObj As JsonObject) 
+	Public Sub fromJson(jsonObj As JsonObject) 
 		'{{SETI_AUTHOR_CODE_fromJson_implementation
         Dim array as Variant
         If (jsonObj.childCount = 0) Then Exit Sub
@@ -1774,7 +1792,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 		@param	isSorted 	Flag indicatin if the keys within the Map shall be sorted
 
 	%END REM
-	Sub New(contentType As String, keyComparator As Comparator, isSorted As Boolean) 
+	Public Sub New(contentType As String, keyComparator As Comparator, isSorted As Boolean) 
 		'{{SETI_AUTHOR_CODE_New_implementation
         Dim tempComparator as Comparator
         Me.m_contentType = FullTrim(UCase(contentType))
@@ -1800,7 +1818,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 		@param	newMap 	Map to load transformed members into
 
 	%END REM
-	Sub transform(transformer As MapTransformer, newMap As Map) 
+	Public Sub transform(transformer As MapTransformer, newMap As Map) 
 		'{{SETI_AUTHOR_CODE_transform_implementation
         Dim innerTransformer as MapTransformer
         Dim i as Long
@@ -1840,7 +1858,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 	
 		@return	Map
 	%END REM
-	Function clone() As Map 
+	Public Function clone() As Map 
 		'{{SETI_AUTHOR_CODE_clone_implementation
         Dim newMap as New Map(Me.ContentType, Me.Comparator, Me.isSorted)
         Dim i as long
@@ -1870,7 +1888,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 		@return	Boolean
 		@throws	Map is locked 	
 	%END REM
-	Function removeByKey(keyVal As Variant) As Boolean 
+	Public Function removeByKey(keyVal As Variant) As Boolean 
 		'{{SETI_AUTHOR_CODE_removeByKey_implementation
         Call checkLocked()
 
@@ -1893,7 +1911,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 		@throws	Map is locked 	
 		@throws	If incorrect data type is passed 	
 	%END REM
-	Function putAll(source As Map) As Map 
+	Public Function putAll(source As Map) As Map 
 		'{{SETI_AUTHOR_CODE_putAll_implementation
         Call checkLocked()
 
@@ -1914,7 +1932,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 		@return	Pair
 		@throws	Map is locked 	
 	%END REM
-	Function getAndRemoveLastPair() As Pair 
+	Public Function getAndRemoveLastPair() As Pair 
 		'{{SETI_AUTHOR_CODE_getAndRemoveLastPair_implementation
         Dim tempVal as Pair
         Call checkLocked()
@@ -1922,7 +1940,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
         Dim keyVal as Variant
         keyVal = Me.m_KeySet.getAndRemoveLastRaw()
         If (IsEmpty(keyVal)) Then Return Nothing
-        
+
         Set tempVal= new Pair(keyVal, Me.p_Values(keyVal))
         Erase Me.p_Values(keyVal)
         Return tempVal
@@ -1941,7 +1959,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 		@throws	Map is locked 	
 		@throws	If incorrect data type is passed 	
 	%END REM
-	Function putPair(content As Pair) As Long 
+	Public Function putPair(content As Pair) As Long 
 		'{{SETI_AUTHOR_CODE_putPair_implementation
         Call checkLocked()
 
@@ -1963,7 +1981,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 		@throws	Map is locked 	
 		@throws	If incorrect data type is passed 	
 	%END REM
-	Function put(key As Variant, value As Variant) As Long 
+	Public Function put(key As Variant, value As Variant) As Long 
 		'{{SETI_AUTHOR_CODE_put_implementation
         Call checkLocked()
 
@@ -1997,7 +2015,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 		@return	Pair
 		@throws	Map is locked 	
 	%END REM
-	Function getAndRemoveFirstPair() As Pair 
+	Public Function getAndRemoveFirstPair() As Pair 
 		'{{SETI_AUTHOR_CODE_getAndRemoveFirstPair_implementation
         Dim tempVal as Pair
         Call checkLocked()
@@ -2005,7 +2023,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
         Dim keyVal as Variant
         keyVal = Me.m_KeySet.getAndRemoveFirstRaw()
         If (IsEmpty(keyVal)) Then Return Nothing
-        
+
         Set tempVal = new Pair(keyVal, Me.p_Values(keyVal))
         Erase Me.p_Values(keyVal)
         Return tempVal
@@ -2022,7 +2040,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 
 		@return	Variant
 	%END REM
-	Function getNthKeyRaw(index As Long) As Variant 
+	Public Function getNthKeyRaw(index As Long) As Variant 
 		'{{SETI_AUTHOR_CODE_getNthKeyRaw_implementation
         Return Me.m_KeySet.getNthElementRaw(index)
 		'}}
@@ -2038,12 +2056,12 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 
 		@return	Pair
 	%END REM
-	Function getNthPair(index As Long) As Pair 
+	Public Function getNthPair(index As Long) As Pair 
 		'{{SETI_AUTHOR_CODE_getNthPair_implementation
         Dim keyVal as Variant
         keyVal = getNthKeyRaw(index)
         If (IsEmpty(keyVal)) Then Return Nothing
-        
+
         Return new Pair(keyVal, Me.p_Values(keyVal))
 		'}}
 
@@ -2056,7 +2074,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 	
 		@return	Collection
 	%END REM
-	Function collectKeys() As Collection 
+	Public Function collectKeys() As Collection 
 		'{{SETI_AUTHOR_CODE_collectKeys_implementation
         Return Me.m_keySet.clone()
 		'}}
@@ -2070,7 +2088,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 	
 		@return	JsonObject
 	%END REM
-	Function toJson() As JsonObject 
+	Public Function toJson() As JsonObject 
 		'{{SETI_AUTHOR_CODE_toJson_implementation
         Dim i as Long
         Dim result as New JsonObject()
@@ -2082,7 +2100,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
                     Set temp = Me.getNthValueRaw(i).toJson()
                     Call result.insertValue(Me.m_keySet.getNthElementRaw(i), temp)
                 Catch
-                    
+
                 End Try
             Else
                 Call result.insertValue(Me.m_keySet.getNthElementRaw(i), Me.getNthValueRaw(i))
@@ -2103,7 +2121,7 @@ If the Map contains scalars, the return type is an empty variant.
 
 		@return	Variant
 	%END REM
-	Function getValueRawByKey(keyVal As Variant) As Variant 
+	Public Function getValueRawByKey(keyVal As Variant) As Variant 
 		'{{SETI_AUTHOR_CODE_getValueRawByKey_implementation
         If (Not IsElement(Me.p_Values(CStr(keyVal)))) Then
             If (Me.p_isObjects) Then Return Nothing
@@ -2123,7 +2141,7 @@ If the Map contains scalars, the return type is an empty variant.
 
 		@return	Collection
 	%END REM
-	Function collectValues(targetColl As Collection) As Collection 
+	Public Function collectValues(targetColl As Collection) As Collection 
 		'{{SETI_AUTHOR_CODE_collectValues_implementation
         Dim i as Long
 
@@ -2147,7 +2165,7 @@ If the Map contains scalars, the return type is an empty variant.
 
 		@return	Boolean
 	%END REM
-	Function containsKey(keyVal As Variant) As Boolean 
+	Public Function containsKey(keyVal As Variant) As Boolean 
 		'{{SETI_AUTHOR_CODE_containsKey_implementation
         Return Me.m_keySet.contains(keyVal)
 		'}}
@@ -2165,13 +2183,13 @@ If the Map contains scalars, the return type is an empty variant.
 
 		@return	Boolean
 	%END REM
-	Function contains(checkValue As Variant, valueComparator As Comparator) As Boolean 
+	Public Function contains(checkValue As Variant, valueComparator As Comparator) As Boolean 
 		'{{SETI_AUTHOR_CODE_contains_implementation
         Dim innerComparator as New Comparator(false)
         If (Not valueComparator is Nothing) Then
             Set innerComparator = valueComparator
         End If
-        
+
         ForAll elem in Me.p_Values
             If (innerComparator.equals(checkValue, elem)) Then
                 Return True
@@ -2191,7 +2209,7 @@ If the Map contains scalars, the return type is an empty variant.
 
 		@return	Variant
 	%END REM
-	Function getNthValueRaw(index As Long) As Variant 
+	Public Function getNthValueRaw(index As Long) As Variant 
 		'{{SETI_AUTHOR_CODE_getNthValueRaw_implementation
         Dim keyVal as String
         keyVal = getNthKeyRaw(index)
@@ -2217,7 +2235,7 @@ If the Map contains scalars, the return type is an empty variant.
 
 		@return	Map
 	%END REM
-	Function filter(filterObj As MapFilter) As Map 
+	Public Function filter(filterObj As MapFilter) As Map 
 		'{{SETI_AUTHOR_CODE_filter_implementation
         Dim newMap as New Map(Me.ContentType, Me.Comparator, Me.isSorted)
         Dim i as long
@@ -2243,7 +2261,7 @@ If the Map contains scalars, the return type is an empty variant.
                 Call newMap.putPair(pair)
             End If
         Loop While ++i < Me.ElementCount
-        
+
         If (me.suppressErrors) Then newMap.suppressErrors = False
 
         Return newMap
@@ -2265,7 +2283,7 @@ If the Map contains scalars, the return type is an empty variant.
 		@return	Boolean
 		@throws	Map is locked 	
 	%END REM
-	Function removeByValue(value As Variant, allMatches As Boolean, valueComparator As Comparator) As Boolean 
+	Public Function removeByValue(value As Variant, allMatches As Boolean, valueComparator As Comparator) As Boolean 
 		'{{SETI_AUTHOR_CODE_removeByValue_implementation
         Dim matchRemoved as Boolean
         Call checkLocked()
@@ -2302,7 +2320,7 @@ If the Map contains scalars, the return type is an empty variant.
     %END REM
     Private Function allRemoved(keyVal as Variant, removeAll as Boolean) as Boolean
         If (removeAll) Then Return True
-        
+
         Return Not Me.m_KeySet.contains(keyVal)
     End Function
 
@@ -2390,7 +2408,7 @@ End Class
 	Class for filtering elements when filtering a Map
  
 %END REM
-Class MapFilter 
+Public Class MapFilter 
 
 	'{{SETI_AUTHOR_CODE_MapFilter_Private_Variables
 	'}}
@@ -2403,7 +2421,7 @@ Class MapFilter
 		Sub New 
 
 	%END REM
-	Sub New() 
+	Public Sub New() 
 		'{{SETI_AUTHOR_CODE_New_implementation
 		'}}
 
@@ -2418,7 +2436,7 @@ Class MapFilter
 
 		@return	Boolean
 	%END REM
-	Function filter(kvPair As Pair) As Boolean 
+	Public Function filter(kvPair As Pair) As Boolean 
 		'{{SETI_AUTHOR_CODE_filter_implementation
         Return true
 		'}}
@@ -2436,7 +2454,7 @@ End Class
 	Class for transforming elements in a Map to something else
  
 %END REM
-Class MapTransformer 
+Public Class MapTransformer 
 
 	'{{SETI_AUTHOR_CODE_MapTransformer_Private_Variables
 	'}}
@@ -2449,7 +2467,7 @@ Class MapTransformer
 		Sub New 
 
 	%END REM
-	Sub New() 
+	Public Sub New() 
 		'{{SETI_AUTHOR_CODE_New_implementation
 		'}}
 
@@ -2465,7 +2483,7 @@ Thus this function can perform a filter and a transform simultaneously.
 
 		@return	Pair
 	%END REM
-	Function transform(kvPair As Pair) As Pair 
+	Public Function transform(kvPair As Pair) As Pair 
 		'{{SETI_AUTHOR_CODE_transform_implementation
         Return new Pair(kvPair.key, kvPair.value)
 		'}}
@@ -2479,92 +2497,75 @@ End Class
 
 
 %REM
-	Class CollectionFilter 
-	Class for filtering elements when filtering a Collection
+	Class Pair 
+	Base class for ky/value pair
  
 %END REM
-Class CollectionFilter 
+Public Class Pair 
 
-	'{{SETI_AUTHOR_CODE_CollectionFilter_Private_Variables
-	'}}
-
-	'{{SETI_AUTHOR_CODE_CollectionFilter_Private_Properties
-	'}}
-
-
-	%REM
-		Sub New 
-
-	%END REM
-	Sub New() 
-		'{{SETI_AUTHOR_CODE_New_implementation
-		'}}
-
-	End Sub
-
-
-	%REM
-		Function filter 
-		Function to filter an element "in" or "out" of the resulting collection
-	
-		@param	source 	True to filter the value *in*, False to filter *out*
-
-		@return	Boolean
-	%END REM
-	Function filter(source As Variant) As Boolean 
-		'{{SETI_AUTHOR_CODE_filter_implementation
-        filter = true
-		'}}
-
-	End Function
-
-	'{{SETI_AUTHOR_CODE_CollectionFilter_Private_Methods
-	'}} 
-
-End Class 
-
-
-%REM
-	Class CollectionTransformer 
-	Class to transform elements in a Collection to something else
- 
-%END REM
-Class CollectionTransformer 
-
-	'{{SETI_AUTHOR_CODE_CollectionTransformer_Private_Variables
-	'}}
-
-	'{{SETI_AUTHOR_CODE_CollectionTransformer_Private_Properties
+	'{{SETI_AUTHOR_CODE_Pair_Private_Variables
+    Private m_key as Variant
+    Private m_value as Variant
 	'}}
 
 
 	%REM
-		Sub New 
-
-	%END REM
-	Sub New() 
-		'{{SETI_AUTHOR_CODE_New_implementation
-		'}}
-
-	End Sub
-
-
-	%REM
-		Function transform 
-		Function to transform a member of a Collection. If there is no return value, the element is skipped and nothing gets added to the new Collection for this element. Thus the function can perform a filter and a transform simultaneously.
-	
-		@param	source 	Value to transform
+		Property value 
 
 		@return	Variant
 	%END REM
-	Function transform(source As Variant) As Variant 
-		'{{SETI_AUTHOR_CODE_transform_implementation
-        Return source
+	Public Property Get value As Variant 
+		'{{SETI_AUTHOR_CODE_Get.value_implementation
+        Return m_value
 		'}}
 
-	End Function
+	End Property
 
-	'{{SETI_AUTHOR_CODE_CollectionTransformer_Private_Methods
+
+	%REM
+		Property key 
+		Key for the pair
+	
+		@return	Variant
+	%END REM
+	Public Property Get key As Variant 
+		'{{SETI_AUTHOR_CODE_Get.key_implementation
+        key = m_key
+		'}}
+
+	End Property
+
+	'{{SETI_AUTHOR_CODE_Pair_Private_Properties
+	'}}
+
+
+	%REM
+		Sub New 
+
+		@param	key 	Key for the pair. Required at initialization, cannot be changed afterwards.
+
+		@param	value 	Value for the pair. Required at initialization, cannot be changed afterwards.
+
+	%END REM
+	Public Sub New(key As Variant, value As Variant) 
+		'{{SETI_AUTHOR_CODE_New_implementation
+        If (isObject(key)) Then
+            If (CStr(key) = "") Then Error 1400, "Key must be a scalar value"
+        Else
+            If (CStr(key) = "") Then Error 1400, "Key must not be empty"
+            Me.m_key = key
+        End If
+
+        If (isObject(value)) Then
+            Set Me.m_value = value
+        Else
+            Me.m_value = value
+        End If
+		'}}
+
+	End Sub
+
+	'{{SETI_AUTHOR_CODE_Pair_Private_Methods
 	'}} 
 
 End Class 
