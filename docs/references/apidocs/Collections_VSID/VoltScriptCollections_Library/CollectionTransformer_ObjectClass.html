@@ -4,8 +4,8 @@
 	<!-- {{vsidgenerated}} -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Class: CollectionTransformer</title>
-	<meta name="date" content="2023-10-18">
-	<meta name="keywords" content="New()"><meta name="keywords" content="transform()"><meta name="keywords" content="Collections.Collections.CollectionTransformer Class">
+	<meta name="date" content="2023-11-03">
+	<meta name="keywords" content="transform()"><meta name="keywords" content="New()"><meta name="keywords" content="Collections.VoltScriptCollections.CollectionTransformer Class">
 	<link rel="stylesheet" type="text/css" href="..\..\resources/vsid.css" title="balistyle">
 	<script type="text/javascript" src="..\..\resources/vsid.js"></script>
 </head>
@@ -39,7 +39,7 @@
 	</a>	
 	<ul class="navList" title="Navigation">
 		<!-- -->
-		<li><a href="..\Collections_VSID.html" title="Navigate to Collections">Collections</a></li><li><a href="..\Collections_Library.html" title="Navigate to Collections.Collections">Collections</a></li> 
+		<li><a href="..\Collections_VSID.html" title="Navigate to Collections">Collections</a></li><li><a href="..\VoltScriptCollections_Library.html" title="Navigate to Collections.VoltScriptCollections">VoltScriptCollections</a></li> 
 		<li class="navBarCell1Rev">CollectionTransformer</li>
 	</ul>
 </div>
@@ -77,7 +77,7 @@
 
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-	<h1 title="Class CollectionTransformer" class="title">Class CollectionTransformer</h1>
+	<h1 title="Class CollectionTransformer" class="title">Public Class CollectionTransformer</h1>
 </div>
 
 <div class="contentContainer">
@@ -88,7 +88,7 @@
 		<!-- --> 
 
 			<ul class="inheritance">
-				<li><h2>Collections.Collections.CollectionTransformer</h2></li>
+				<li><h2>Collections.VoltScriptCollections.CollectionTransformer</h2></li>
 			</ul>
 		</ul>
 	</ul>
@@ -106,7 +106,7 @@
 				
 				  
 				
-				<ul class="blockList">	<li class="blockList">		<a name="methods.summary"><!--   --></a>		<h3>Method Summaries</h3>		<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods and comments">			<thead>						</thead>			<tbody>			<tr class="rowColor"><td class="colFirst"><code><span class="memberNameLink"><a href="#Collections.Collections.CollectionTransformer.New-">New</a></span>()</code></td></tr><tr class="altColor"><td class="colFirst"><code><span class="memberNameLink"><a href="#Collections.Collections.CollectionTransformer.transform-">transform</a></span>(source As Variant) As Variant</code></td></tr>			</tbody>		</table>	</li></ul> 
+				<ul class="blockList">	<li class="blockList">		<a name="methods.summary"><!--   --></a>		<h3>Method Summaries</h3>		<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods and comments">			<thead>						</thead>			<tbody>			<tr class="rowColor"><td class="colFirst"><code><span class="memberNameLink"><a href="#Collections.VoltScriptCollections.CollectionTransformer.transform-">transform</a></span>(source As Variant) As Variant</code></td></tr><tr class="altColor"><td class="colFirst"><code><span class="memberNameLink"><a href="#Collections.VoltScriptCollections.CollectionTransformer.New-">New</a></span>()</code></td></tr>			</tbody>		</table>	</li></ul> 
 			</li>
 		</ul>
 	</div>
@@ -117,9 +117,7 @@
 				<!-- ========= CODE SAMPLE ======== --><ul class="blockList">	<li class="blockList">		<a name="{{fqn}}.codesample"><!-- --></a>		<h3>Code Sample</h3>		<ul class="blockListLast">			<li class="blockList">				<pre class="codesample">%REM<br />The following code shows how to create a transformer to convert scalars to doubles. The code is very basic with no error handling.<br />%END REM<br />Class DoubleTransformer as CollectionTransformer<br />    Function transform(source as Variant) as Variant<br />        If (IsNumeric(source)) Then<br />            If (Not TypeName(source) = "BOOLEAN" And Not IsDate(source)) Then<br />                transform = CDbl(source)<br />            End If<br />        End If<br />    End Function<br />End Class<br /><br />Dim coll1 as New Collection("SCALAR", Nothing, False, False)<br />Dim coll2 as New Collection("DOUBLE", Nothing, False, False)<br />Dim transformer as New DoubleTransformer()<br /><br />' Populating collection omitted<br /><br />Call coll1.transform(transformer, coll2)</pre>			</li>		</ul>	</li></ul>
 				
 				
-				
-				
-				<!-- ============ METHOD DETAIL ========== --><ul class="blockList">	<li class="blockList">		<a name="method.detail"><!--   --></a>		<h3>Methods Detail</h3>		<!-- Method Detail Element --><a name="Collections.Collections.CollectionTransformer.New-"><!--  --></a><ul class="blockList">	<li class="blockList">		<a name="Collections.Collections.CollectionTransformer.New"><!--   --></a>		<h4>New</h4>		<table class="methoddetail" border="0" cellpadding="3" cellspacing="0" summary="New method detail table">			<thead>				<tr><th class="colFirst" scope="col" colspan="5"><pre>Sub New<em>()</em></pre></th></tr>			</thead>			<tbody>					</tbody>		</table>			</li></ul><!-- Method Detail Element --><a name="Collections.Collections.CollectionTransformer.transform-"><!--  --></a><ul class="blockList">	<li class="blockList">		<a name="Collections.Collections.CollectionTransformer.transform"><!--   --></a>		<h4>transform</h4>		<table class="methoddetail" border="0" cellpadding="3" cellspacing="0" summary="transform method detail table">			<thead>				<tr><th class="colFirst" scope="col" colspan="5"><pre>Function transform<em>(source As Variant)</em> As Variant</pre></th></tr>			</thead>			<tbody>	<tr class="altColor"><td class="colFirst" colspan="5"><a name="Collections.Collections.CollectionTransformer.transform.comments"><!--   --></a>Function to transform a member of a Collection. If there is no return value, the element is skipped and nothing gets added to the new Collection for this element. Thus the function can perform a filter and a transform simultaneously.</td></tr>	<tr>	<th class="colFirst min" scope="col">idx</th>	<th class="colOne" scope="col"><a name="Collections.Collections.CollectionTransformer.transform.arguments"><!--   --></a>Argument</th>	<th class="colOne" scope="col">Data Type</th>	<th class="colOne attributes" scope="col">Attributes</th>	<th class="colLast comment" scope="col">Comments</th></tr><tr class="altColor"><td class="colFirst min">1</strong></td><td class="colOne"><strong>source</strong></td><td class="colOne">Variant</td><td class="colOne attributes"></td><td class="colLast comment"><em>Value to transform&nbsp;</em></td></tr>	<tr><td>&nbsp;</td></tr><tr><th class="colFirst" scope="col" colspan="5">Code Sample</th></tr><tr class="altColor"><td class="colFirst" colspan="5" style="padding-top:0;"><a name="Collections.Collections.CollectionTransformer.transform.codesample"><!--   --></a><pre class="codesample">%REM<br />The following code shows how to create a transformer to convert scalars to doubles. The code is very basic with no error handling.<br />%END REM<br />Class DoubleTransformer as CollectionTransformer<br />    Function transform(source as Variant) as Variant<br />        If (IsNumeric(source)) Then<br />            If (Not IsBoolean(source) And Not IsDate(source)) Then<br />                transform = CDbl(source)<br />            End If<br />        End If<br />    End Function<br />End Class<br />Dim coll1 as New Collection("SCALAR", Nothing, False, False)<br />Dim coll2 as New Collection("DOUBLE", Nothing, False, False)<br />Dim transformer as New DoubleTransformer()<br />' Populating collection omitted<br />Call coll1.transform(transformer, coll2)</pre></td></tr>		</tbody>		</table>			</li></ul>	</li></ul>
+				<!-- ============ METHOD DETAIL ========== --><ul class="blockList">	<li class="blockList">		<a name="method.detail"><!--   --></a>		<h3>Methods Detail</h3>		<!-- Method Detail Element --><a name="Collections.VoltScriptCollections.CollectionTransformer.transform-"><!--  --></a><ul class="blockList">	<li class="blockList">		<a name="Collections.VoltScriptCollections.CollectionTransformer.transform"><!--   --></a>		<h4>transform</h4>		<table class="methoddetail" border="0" cellpadding="3" cellspacing="0" summary="transform method detail table">			<thead>				<tr><th class="colFirst" scope="col" colspan="5"><pre>Public Function transform<em>(source As Variant)</em> As Variant</pre></th></tr>			</thead>			<tbody>	<tr class="altColor"><td class="colFirst" colspan="5"><a name="Collections.VoltScriptCollections.CollectionTransformer.transform.comments"><!--   --></a>Function to transform a member of a Collection. If there is no return value, the element is skipped and nothing gets added to the new Collection for this element. Thus the function can perform a filter and a transform simultaneously.</td></tr>	<tr>	<th class="colFirst min" scope="col">idx</th>	<th class="colOne" scope="col"><a name="Collections.VoltScriptCollections.CollectionTransformer.transform.arguments"><!--   --></a>Argument</th>	<th class="colOne" scope="col">Data Type</th>	<th class="colOne attributes" scope="col">Attributes</th>	<th class="colLast comment" scope="col">Comments</th></tr><tr class="altColor"><td class="colFirst min">1</strong></td><td class="colOne"><strong>source</strong></td><td class="colOne">Variant</td><td class="colOne attributes"></td><td class="colLast comment"><em>Value to transform&nbsp;</em></td></tr>	<tr><td>&nbsp;</td></tr><tr><th class="colFirst" scope="col" colspan="5">Code Sample</th></tr><tr class="altColor"><td class="colFirst" colspan="5" style="padding-top:0;"><a name="Collections.VoltScriptCollections.CollectionTransformer.transform.codesample"><!--   --></a><pre class="codesample">%REM<br />The following code shows how to create a transformer to convert scalars to doubles. The code is very basic with no error handling.<br />%END REM<br />Class DoubleTransformer as CollectionTransformer<br />    Function transform(source as Variant) as Variant<br />        If (IsNumeric(source)) Then<br />            If (Not IsBoolean(source) And Not IsDate(source)) Then<br />                transform = CDbl(source)<br />            End If<br />        End If<br />    End Function<br />End Class<br />Dim coll1 as New Collection("SCALAR", Nothing, False, False)<br />Dim coll2 as New Collection("DOUBLE", Nothing, False, False)<br />Dim transformer as New DoubleTransformer()<br />' Populating collection omitted<br />Call coll1.transform(transformer, coll2)</pre></td></tr>		</tbody>		</table>			</li></ul><!-- Method Detail Element --><a name="Collections.VoltScriptCollections.CollectionTransformer.New-"><!--  --></a><ul class="blockList">	<li class="blockList">		<a name="Collections.VoltScriptCollections.CollectionTransformer.New"><!--   --></a>		<h4>New</h4>		<table class="methoddetail" border="0" cellpadding="3" cellspacing="0" summary="New method detail table">			<thead>				<tr><th class="colFirst" scope="col" colspan="5"><pre>Public Sub New<em>()</em></pre></th></tr>			</thead>			<tbody>					</tbody>		</table>			</li></ul>	</li></ul>
 			</li>
 		</ul>
 	</div> 

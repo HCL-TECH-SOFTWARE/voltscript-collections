@@ -4,8 +4,8 @@
 	<!-- {{vsidgenerated}} -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Class: CollectionFilter</title>
-	<meta name="date" content="2023-10-18">
-	<meta name="keywords" content="filter()"><meta name="keywords" content="New()"><meta name="keywords" content="Collections.Collections.CollectionFilter Class">
+	<meta name="date" content="2023-11-03">
+	<meta name="keywords" content="filter()"><meta name="keywords" content="New()"><meta name="keywords" content="Collections.VoltScriptCollections.CollectionFilter Class">
 	<link rel="stylesheet" type="text/css" href="..\..\resources/vsid.css" title="balistyle">
 	<script type="text/javascript" src="..\..\resources/vsid.js"></script>
 </head>
@@ -39,7 +39,7 @@
 	</a>	
 	<ul class="navList" title="Navigation">
 		<!-- -->
-		<li><a href="..\Collections_VSID.html" title="Navigate to Collections">Collections</a></li><li><a href="..\Collections_Library.html" title="Navigate to Collections.Collections">Collections</a></li> 
+		<li><a href="..\Collections_VSID.html" title="Navigate to Collections">Collections</a></li><li><a href="..\VoltScriptCollections_Library.html" title="Navigate to Collections.VoltScriptCollections">VoltScriptCollections</a></li> 
 		<li class="navBarCell1Rev">CollectionFilter</li>
 	</ul>
 </div>
@@ -77,7 +77,7 @@
 
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-	<h1 title="Class CollectionFilter" class="title">Class CollectionFilter</h1>
+	<h1 title="Class CollectionFilter" class="title">Public Class CollectionFilter</h1>
 </div>
 
 <div class="contentContainer">
@@ -88,7 +88,7 @@
 		<!-- --> 
 
 			<ul class="inheritance">
-				<li><h2>Collections.Collections.CollectionFilter</h2></li>
+				<li><h2>Collections.VoltScriptCollections.CollectionFilter</h2></li>
 			</ul>
 		</ul>
 	</ul>
@@ -106,7 +106,7 @@
 				
 				  
 				
-				<ul class="blockList">	<li class="blockList">		<a name="methods.summary"><!--   --></a>		<h3>Method Summaries</h3>		<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods and comments">			<thead>						</thead>			<tbody>			<tr class="rowColor"><td class="colFirst"><code><span class="memberNameLink"><a href="#Collections.Collections.CollectionFilter.filter-">filter</a></span>(source As Variant) As Boolean</code></td></tr><tr class="altColor"><td class="colFirst"><code><span class="memberNameLink"><a href="#Collections.Collections.CollectionFilter.New-">New</a></span>()</code></td></tr>			</tbody>		</table>	</li></ul> 
+				<ul class="blockList">	<li class="blockList">		<a name="methods.summary"><!--   --></a>		<h3>Method Summaries</h3>		<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods and comments">			<thead>						</thead>			<tbody>			<tr class="rowColor"><td class="colFirst"><code><span class="memberNameLink"><a href="#Collections.VoltScriptCollections.CollectionFilter.filter-">filter</a></span>(source As Variant) As Boolean</code></td></tr><tr class="altColor"><td class="colFirst"><code><span class="memberNameLink"><a href="#Collections.VoltScriptCollections.CollectionFilter.New-">New</a></span>()</code></td></tr>			</tbody>		</table>	</li></ul> 
 			</li>
 		</ul>
 	</div>
@@ -117,9 +117,7 @@
 				<!-- ========= CODE SAMPLE ======== --><ul class="blockList">	<li class="blockList">		<a name="{{fqn}}.codesample"><!-- --></a>		<h3>Code Sample</h3>		<ul class="blockListLast">			<li class="blockList">				<pre class="codesample">%REM<br />The following code shows how to create a filter for even numbers and use it. The code is very basic with no error handling.<br />%END REM<br />Class EvenFilterer as CollectionFilter<br />    Function filter(source as Variant) as Boolean<br />        If (source Mod 2 = 0) Then Return True<br />    End Function<br />End Class<br /><br />Dim coll1 as New Collection("INTEGER", Nothing, False, False)<br />Dim coll2 as Collection<br />Dim filterer as New EvenFilterer<br /><br />' Populating collection omitted<br /><br />Set coll2 = coll1.filter(filterer)</pre>			</li>		</ul>	</li></ul>
 				
 				
-				
-				
-				<!-- ============ METHOD DETAIL ========== --><ul class="blockList">	<li class="blockList">		<a name="method.detail"><!--   --></a>		<h3>Methods Detail</h3>		<!-- Method Detail Element --><a name="Collections.Collections.CollectionFilter.filter-"><!--  --></a><ul class="blockList">	<li class="blockList">		<a name="Collections.Collections.CollectionFilter.filter"><!--   --></a>		<h4>filter</h4>		<table class="methoddetail" border="0" cellpadding="3" cellspacing="0" summary="filter method detail table">			<thead>				<tr><th class="colFirst" scope="col" colspan="5"><pre>Function filter<em>(source As Variant)</em> As Boolean</pre></th></tr>			</thead>			<tbody>	<tr class="altColor"><td class="colFirst" colspan="5"><a name="Collections.Collections.CollectionFilter.filter.comments"><!--   --></a>Function to filter an element "in" or "out" of the resulting collection</td></tr>	<tr>	<th class="colFirst min" scope="col">idx</th>	<th class="colOne" scope="col"><a name="Collections.Collections.CollectionFilter.filter.arguments"><!--   --></a>Argument</th>	<th class="colOne" scope="col">Data Type</th>	<th class="colOne attributes" scope="col">Attributes</th>	<th class="colLast comment" scope="col">Comments</th></tr><tr class="altColor"><td class="colFirst min">1</strong></td><td class="colOne"><strong>source</strong></td><td class="colOne">Variant</td><td class="colOne attributes"></td><td class="colLast comment"><em>True to filter the value *in*, False to filter *out*&nbsp;</em></td></tr>	<tr><td>&nbsp;</td></tr><tr><th class="colFirst" scope="col" colspan="5">Code Sample</th></tr><tr class="altColor"><td class="colFirst" colspan="5" style="padding-top:0;"><a name="Collections.Collections.CollectionFilter.filter.codesample"><!--   --></a><pre class="codesample">%REM<br />The following code shows how to create a filter for even numbers and use it. The code is very basic with no error handling.<br />%END REM<br />Class EvenFilterer as CollectionFilter<br />    Function filter(source as Variant) as Boolean<br />        If (source Mod 2 = 0) Then Return True<br />    End Function<br />End Class<br />Dim coll1 as New Collection("INTEGER", Nothing, False, False)<br />Dim coll2 as Collection<br />Dim filterer as New EvenFilterer()<br />' Populating collection omitted<br />Set coll2 = coll1.filter(filterer)</pre></td></tr>		</tbody>		</table>			</li></ul><!-- Method Detail Element --><a name="Collections.Collections.CollectionFilter.New-"><!--  --></a><ul class="blockList">	<li class="blockList">		<a name="Collections.Collections.CollectionFilter.New"><!--   --></a>		<h4>New</h4>		<table class="methoddetail" border="0" cellpadding="3" cellspacing="0" summary="New method detail table">			<thead>				<tr><th class="colFirst" scope="col" colspan="5"><pre>Sub New<em>()</em></pre></th></tr>			</thead>			<tbody>					</tbody>		</table>			</li></ul>	</li></ul>
+				<!-- ============ METHOD DETAIL ========== --><ul class="blockList">	<li class="blockList">		<a name="method.detail"><!--   --></a>		<h3>Methods Detail</h3>		<!-- Method Detail Element --><a name="Collections.VoltScriptCollections.CollectionFilter.filter-"><!--  --></a><ul class="blockList">	<li class="blockList">		<a name="Collections.VoltScriptCollections.CollectionFilter.filter"><!--   --></a>		<h4>filter</h4>		<table class="methoddetail" border="0" cellpadding="3" cellspacing="0" summary="filter method detail table">			<thead>				<tr><th class="colFirst" scope="col" colspan="5"><pre>Public Function filter<em>(source As Variant)</em> As Boolean</pre></th></tr>			</thead>			<tbody>	<tr class="altColor"><td class="colFirst" colspan="5"><a name="Collections.VoltScriptCollections.CollectionFilter.filter.comments"><!--   --></a>Function to filter an element "in" or "out" of the resulting collection</td></tr>	<tr>	<th class="colFirst min" scope="col">idx</th>	<th class="colOne" scope="col"><a name="Collections.VoltScriptCollections.CollectionFilter.filter.arguments"><!--   --></a>Argument</th>	<th class="colOne" scope="col">Data Type</th>	<th class="colOne attributes" scope="col">Attributes</th>	<th class="colLast comment" scope="col">Comments</th></tr><tr class="altColor"><td class="colFirst min">1</strong></td><td class="colOne"><strong>source</strong></td><td class="colOne">Variant</td><td class="colOne attributes"></td><td class="colLast comment"><em>True to filter the value *in*, False to filter *out*&nbsp;</em></td></tr>	<tr><td>&nbsp;</td></tr><tr><th class="colFirst" scope="col" colspan="5">Code Sample</th></tr><tr class="altColor"><td class="colFirst" colspan="5" style="padding-top:0;"><a name="Collections.VoltScriptCollections.CollectionFilter.filter.codesample"><!--   --></a><pre class="codesample">%REM<br />The following code shows how to create a filter for even numbers and use it. The code is very basic with no error handling.<br />%END REM<br />Class EvenFilterer as CollectionFilter<br />    Function filter(source as Variant) as Boolean<br />        If (source Mod 2 = 0) Then Return True<br />    End Function<br />End Class<br />Dim coll1 as New Collection("INTEGER", Nothing, False, False)<br />Dim coll2 as Collection<br />Dim filterer as New EvenFilterer()<br />' Populating collection omitted<br />Set coll2 = coll1.filter(filterer)</pre></td></tr>		</tbody>		</table>			</li></ul><!-- Method Detail Element --><a name="Collections.VoltScriptCollections.CollectionFilter.New-"><!--  --></a><ul class="blockList">	<li class="blockList">		<a name="Collections.VoltScriptCollections.CollectionFilter.New"><!--   --></a>		<h4>New</h4>		<table class="methoddetail" border="0" cellpadding="3" cellspacing="0" summary="New method detail table">			<thead>				<tr><th class="colFirst" scope="col" colspan="5"><pre>Public Sub New<em>()</em></pre></th></tr>			</thead>			<tbody>					</tbody>		</table>			</li></ul>	</li></ul>
 			</li>
 		</ul>
 	</div> 

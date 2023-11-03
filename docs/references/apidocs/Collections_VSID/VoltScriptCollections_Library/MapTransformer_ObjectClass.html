@@ -4,8 +4,8 @@
 	<!-- {{vsidgenerated}} -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Class: MapTransformer</title>
-	<meta name="date" content="2023-10-18">
-	<meta name="keywords" content="New()"><meta name="keywords" content="transform()"><meta name="keywords" content="Collections.Collections.MapTransformer Class">
+	<meta name="date" content="2023-11-03">
+	<meta name="keywords" content="transform()"><meta name="keywords" content="New()"><meta name="keywords" content="Collections.VoltScriptCollections.MapTransformer Class">
 	<link rel="stylesheet" type="text/css" href="..\..\resources/vsid.css" title="balistyle">
 	<script type="text/javascript" src="..\..\resources/vsid.js"></script>
 </head>
@@ -39,7 +39,7 @@
 	</a>	
 	<ul class="navList" title="Navigation">
 		<!-- -->
-		<li><a href="..\Collections_VSID.html" title="Navigate to Collections">Collections</a></li><li><a href="..\Collections_Library.html" title="Navigate to Collections.Collections">Collections</a></li> 
+		<li><a href="..\Collections_VSID.html" title="Navigate to Collections">Collections</a></li><li><a href="..\VoltScriptCollections_Library.html" title="Navigate to Collections.VoltScriptCollections">VoltScriptCollections</a></li> 
 		<li class="navBarCell1Rev">MapTransformer</li>
 	</ul>
 </div>
@@ -77,7 +77,7 @@
 
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-	<h1 title="Class MapTransformer" class="title">Class MapTransformer</h1>
+	<h1 title="Class MapTransformer" class="title">Public Class MapTransformer</h1>
 </div>
 
 <div class="contentContainer">
@@ -88,7 +88,7 @@
 		<!-- --> 
 
 			<ul class="inheritance">
-				<li><h2>Collections.Collections.MapTransformer</h2></li>
+				<li><h2>Collections.VoltScriptCollections.MapTransformer</h2></li>
 			</ul>
 		</ul>
 	</ul>
@@ -106,7 +106,7 @@
 				
 				  
 				
-				<ul class="blockList">	<li class="blockList">		<a name="methods.summary"><!--   --></a>		<h3>Method Summaries</h3>		<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods and comments">			<thead>						</thead>			<tbody>			<tr class="rowColor"><td class="colFirst"><code><span class="memberNameLink"><a href="#Collections.Collections.MapTransformer.New-">New</a></span>()</code></td></tr><tr class="altColor"><td class="colFirst"><code><span class="memberNameLink"><a href="#Collections.Collections.MapTransformer.transform-">transform</a></span>(kvPair As Pair) As Pair</code></td></tr>			</tbody>		</table>	</li></ul> 
+				<ul class="blockList">	<li class="blockList">		<a name="methods.summary"><!--   --></a>		<h3>Method Summaries</h3>		<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods and comments">			<thead>						</thead>			<tbody>			<tr class="rowColor"><td class="colFirst"><code><span class="memberNameLink"><a href="#Collections.VoltScriptCollections.MapTransformer.transform-">transform</a></span>(kvPair As Pair) As Pair</code></td></tr><tr class="altColor"><td class="colFirst"><code><span class="memberNameLink"><a href="#Collections.VoltScriptCollections.MapTransformer.New-">New</a></span>()</code></td></tr>			</tbody>		</table>	</li></ul> 
 			</li>
 		</ul>
 	</div>
@@ -117,9 +117,7 @@
 				<!-- ========= CODE SAMPLE ======== --><ul class="blockList">	<li class="blockList">		<a name="{{fqn}}.codesample"><!-- --></a>		<h3>Code Sample</h3>		<ul class="blockListLast">			<li class="blockList">				<pre class="codesample">%REM<br />The following code filters out values that are odd numbers<br />%END REM<br />Class AgeIncrementer as MapTransformer<br />    Function transform(kvPair as Pair) as Boolean<br />        Dim person as Person<br />        Set person = kvPair.value<br />        person.age++<br />        Return new Pair(kvPair, person)<br />    End Function<br />End Class<br />Dim map1 as New Map("PERSON", Nothing, False)<br />Dim map2 as Map("PERSON", Nothing, False)<br />Dim incrementer as New AgeIncrementer()<br />'Populate map1<br />Call map1.transform(incrementer, map2)</pre>			</li>		</ul>	</li></ul>
 				
 				
-				
-				
-				<!-- ============ METHOD DETAIL ========== --><ul class="blockList">	<li class="blockList">		<a name="method.detail"><!--   --></a>		<h3>Methods Detail</h3>		<!-- Method Detail Element --><a name="Collections.Collections.MapTransformer.New-"><!--  --></a><ul class="blockList">	<li class="blockList">		<a name="Collections.Collections.MapTransformer.New"><!--   --></a>		<h4>New</h4>		<table class="methoddetail" border="0" cellpadding="3" cellspacing="0" summary="New method detail table">			<thead>				<tr><th class="colFirst" scope="col" colspan="5"><pre>Sub New<em>()</em></pre></th></tr>			</thead>			<tbody>					</tbody>		</table>			</li></ul><!-- Method Detail Element --><a name="Collections.Collections.MapTransformer.transform-"><!--  --></a><ul class="blockList">	<li class="blockList">		<a name="Collections.Collections.MapTransformer.transform"><!--   --></a>		<h4>transform</h4>		<table class="methoddetail" border="0" cellpadding="3" cellspacing="0" summary="transform method detail table">			<thead>				<tr><th class="colFirst" scope="col" colspan="5"><pre>Function transform<em>(kvPair As Pair)</em> As Pair</pre></th></tr>			</thead>			<tbody>	<tr class="altColor"><td class="colFirst" colspan="5"><a name="Collections.Collections.MapTransformer.transform.comments"><!--   --></a>Function to transform a member of a value. If there is no return value, the element is skipped and nothing gets added to the new Map for this element.<br />Thus this function can perform a filter and a transform simultaneously.</td></tr>	<tr>	<th class="colFirst min" scope="col">idx</th>	<th class="colOne" scope="col"><a name="Collections.Collections.MapTransformer.transform.arguments"><!--   --></a>Argument</th>	<th class="colOne" scope="col">Data Type</th>	<th class="colOne attributes" scope="col">Attributes</th>	<th class="colLast comment" scope="col">Comments</th></tr><tr class="altColor"><td class="colFirst min">1</strong></td><td class="colOne"><strong>kvPair</strong></td><td class="colOne">Pair</td><td class="colOne attributes"></td><td class="colLast comment"><em>Pair containing key and value for the current element in the Map&nbsp;</em></td></tr>	<tr><td>&nbsp;</td></tr><tr><th class="colFirst" scope="col" colspan="5">Code Sample</th></tr><tr class="altColor"><td class="colFirst" colspan="5" style="padding-top:0;"><a name="Collections.Collections.MapTransformer.transform.codesample"><!--   --></a><pre class="codesample">%REM<br />The following code filters out values that are odd numbers<br />%END REM<br />Class AgeIncrementer as MapTransformer<br />    Function transform(kvPair as Pair) as Boolean<br />        Dim person as Person<br />        Set person = kvPair.value<br />        person.age++<br />        Return new Pair(kvPair, person)<br />    End Function<br />End Class<br />Dim map1 as New Map("PERSON", Nothing, False)<br />Dim map2 as Map("PERSON", Nothing, False)<br />Dim incrementer as New AgeIncrementer()<br />'Populate map1<br />Call map1.transform(incrementer, map2)</pre></td></tr>		</tbody>		</table>			</li></ul>	</li></ul>
+				<!-- ============ METHOD DETAIL ========== --><ul class="blockList">	<li class="blockList">		<a name="method.detail"><!--   --></a>		<h3>Methods Detail</h3>		<!-- Method Detail Element --><a name="Collections.VoltScriptCollections.MapTransformer.transform-"><!--  --></a><ul class="blockList">	<li class="blockList">		<a name="Collections.VoltScriptCollections.MapTransformer.transform"><!--   --></a>		<h4>transform</h4>		<table class="methoddetail" border="0" cellpadding="3" cellspacing="0" summary="transform method detail table">			<thead>				<tr><th class="colFirst" scope="col" colspan="5"><pre>Public Function transform<em>(kvPair As Pair)</em> As Pair</pre></th></tr>			</thead>			<tbody>	<tr class="altColor"><td class="colFirst" colspan="5"><a name="Collections.VoltScriptCollections.MapTransformer.transform.comments"><!--   --></a>Function to transform a member of a value. If there is no return value, the element is skipped and nothing gets added to the new Map for this element.<br />Thus this function can perform a filter and a transform simultaneously.</td></tr>	<tr>	<th class="colFirst min" scope="col">idx</th>	<th class="colOne" scope="col"><a name="Collections.VoltScriptCollections.MapTransformer.transform.arguments"><!--   --></a>Argument</th>	<th class="colOne" scope="col">Data Type</th>	<th class="colOne attributes" scope="col">Attributes</th>	<th class="colLast comment" scope="col">Comments</th></tr><tr class="altColor"><td class="colFirst min">1</strong></td><td class="colOne"><strong>kvPair</strong></td><td class="colOne">Pair</td><td class="colOne attributes"></td><td class="colLast comment"><em>Pair containing key and value for the current element in the Map&nbsp;</em></td></tr>	<tr><td>&nbsp;</td></tr><tr><th class="colFirst" scope="col" colspan="5">Code Sample</th></tr><tr class="altColor"><td class="colFirst" colspan="5" style="padding-top:0;"><a name="Collections.VoltScriptCollections.MapTransformer.transform.codesample"><!--   --></a><pre class="codesample">%REM<br />The following code filters out values that are odd numbers<br />%END REM<br />Class AgeIncrementer as MapTransformer<br />    Function transform(kvPair as Pair) as Boolean<br />        Dim person as Person<br />        Set person = kvPair.value<br />        person.age++<br />        Return new Pair(kvPair, person)<br />    End Function<br />End Class<br />Dim map1 as New Map("PERSON", Nothing, False)<br />Dim map2 as Map("PERSON", Nothing, False)<br />Dim incrementer as New AgeIncrementer()<br />'Populate map1<br />Call map1.transform(incrementer, map2)</pre></td></tr>		</tbody>		</table>			</li></ul><!-- Method Detail Element --><a name="Collections.VoltScriptCollections.MapTransformer.New-"><!--  --></a><ul class="blockList">	<li class="blockList">		<a name="Collections.VoltScriptCollections.MapTransformer.New"><!--   --></a>		<h4>New</h4>		<table class="methoddetail" border="0" cellpadding="3" cellspacing="0" summary="New method detail table">			<thead>				<tr><th class="colFirst" scope="col" colspan="5"><pre>Public Sub New<em>()</em></pre></th></tr>			</thead>			<tbody>					</tbody>		</table>			</li></ul>	</li></ul>
 			</li>
 		</ul>
 	</div> 
