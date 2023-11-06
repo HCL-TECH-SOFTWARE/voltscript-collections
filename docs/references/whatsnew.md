@@ -2,6 +2,23 @@
 
 The section provides information on the latest features, improvements, and resolved issues related to VoltScript Collections.
 
-## v1.0.0
+<!-- prettier-ignore -->
+!!! note "Important"
+    - Items marked in <span style="color:red">**red**</span> are API changes that may impact your applications and should be reviewed before upgrading.
 
-- First release version of VoltScript Collections.
+???+ info "v1.0.1 - What's new or changed"
+    ## v1.0.1
+
+    **Resolved Issues**
+    
+    - <span style="color:red">Fixed incorrect return type from putPair.</span>
+
+    **Improvements**
+    
+    - Updated API doc from VoltScript Interface Designer.
+    - Code merged with skeletons auto-generated from VoltScript Interface Designer.
+
+???+ info "v1.0.0 - What's new or changed"
+    ## v1.0.0
+
+    - First release version of VoltScript Collections.

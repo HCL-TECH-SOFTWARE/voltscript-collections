@@ -443,7 +443,7 @@ Function testJson(testRunner as TestRunner)
     End Try
 
     Call testSuite.describe("Test 16 elements in JSON").assertEqualsInteger(16, jsonOut.childCount)
-    Call testSuite.describe("Test last key in JSON is WA").assertEqualsString("Washington", jsonOut.getChild("WA").scalarValue, false)
+    Call testSuite.describe("Test last key in JSON is WA").assertEqualsString("Washington", CStr(jsonOut.getChild("WA").scalarValue), false)
 
     Dim map1 as New Map("PERSON", Nothing, False)
     Call loadPerson(map1, "Steward","Swannick",62)
