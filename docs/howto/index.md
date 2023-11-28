@@ -10,3 +10,4 @@ How-to guides instruct users in completing key goals and tasks related to VoltSc
 - [Extend Collection / Maps](override.md)
 - [Filter Collection / Maps](filter.md)
 - [Transform Collections / Maps](transform.md)
+- [Use dependency management](archipelago.md)
