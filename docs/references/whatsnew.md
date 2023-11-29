@@ -9,16 +9,17 @@ The section provides information on the latest features, improvements, and resol
 ???+ info "v1.0.1 - What's new or changed"
     ## v1.0.1
 
-    **Resolved Issues**
-    
-    - <span style="color:red">Fixed incorrect return type from putPair.</span>
-
-    **Improvements**
+     **Improvements**
     
     - Updated API doc from VoltScript Interface Designer.
     - Code merged with skeletons auto-generated from VoltScript Interface Designer.
+    
+    **Resolved Issues**
+    
+    - <span style="color:red">There was an incorrect return type from *putPair*.</span>
+    <!-- <span style="color:red">Fixed incorrect return type from putPair.</span>-->
 
-???+ info "v1.0.0 - What's new or changed"
+??? info "v1.0.0 - What's new or changed"
     ## v1.0.0
 
     - First release version of VoltScript Collections.
