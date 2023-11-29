@@ -32,20 +32,14 @@ To learn more, see [Why VoltScript Collections and Maps?](topicguides/why.md) an
     -->
 
 ---
-## Get started
-
-- For hands-on introduction on using VoltScript Collections, see [Tutorials](tutorials).
-- For using with dependency management, see [Use dependency management](howto/archipelago.md). 
-
----
 ## What's new
 
 For the latest release information about VoltScript Collections, see [What's new](references/whatsnew.md).
 
-<!---
+---
 ## Using via dependency management
 
-For using with dependency management, see [Using dependency management](howto/archipelago.md)-->
+For using with dependency management, see [Use dependency management](howto/archipelago.md).
 
 ---
 ## How the documentation is organized
