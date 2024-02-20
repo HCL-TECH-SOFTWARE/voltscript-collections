@@ -1,0 +1,18 @@
+# Compiled VoltScript files
+*.bso
+
+# .devcontainer
+.devcontainer/*
+
+# Unit tests
+test/unit-test-reports
+unit-test-reports/
+
+site/*
+
+# VoltScript
+effective-atlas.json
+seti.ini
+vses/*
+libs/*
+internal-atlas.json

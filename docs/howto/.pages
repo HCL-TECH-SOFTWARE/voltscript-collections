@@ -1,0 +1,11 @@
+nav:
+    - index.md
+    - create.md
+    - interrogate.md
+    - iterate.md
+    - stack_queue.md
+    - comparator.md
+    - override.md
+    - filter.md
+    - transform.md
+    - archipelago.md

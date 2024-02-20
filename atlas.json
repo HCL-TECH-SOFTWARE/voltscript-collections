@@ -1,0 +1,54 @@
+{
+    "name": "voltscript-collections",
+    "library": "hcl.core-modules",
+    "version": "1.0.0",
+    "displayName": "VoltScript Collections",
+    "description": "Collections and Maps for VoltScript and LotusScript",
+    "authors": [
+        "Paul Withers"
+    ],
+    "license": "Apache 2.0",
+    "publisher": "HCL America, Inc.",
+    "repo": "https://github01.hclpnp.com/Volt-MX-GO/voltscript-collections.git",
+    "sourceDir": "src",
+    "testDir": "test",
+    "libsDir": "libs",
+    "vsesDir": "vses",
+    "mainScripts": [
+        "VoltScriptCollections.vss"
+    ],
+    "unitTestScripts": [
+        "runAllTests.vss"
+    ],
+    "integrationTestScripts": [
+        
+    ],
+    "repositories": [
+        {
+            "id": "volt-mx-marketplace",
+            "type": "marketplace",
+            "url": "https://community.demo-hclvoltmx.com/marketplace/asset"
+        },
+        {
+            "id": "hcl-github",
+            "type": "github",
+            "url": "https://api.github.com/repos/HCL-TECH-SOFTWARE"
+        }
+    ],
+    "testDependencies": [
+        {
+            "library": "voltscript-testing",
+            "version": "1.0.1",
+            "module": "VoltScriptTesting.vss",
+            "repository": "hcl-github"
+        }
+    ],
+    "vseDependencies": {
+        "JsonVSE": {
+            "library": "25265",
+            "version": "1.0.0",
+            "module": "25264/19416",
+            "repository":"volt-mx-marketplace"
+        }
+    }
+}

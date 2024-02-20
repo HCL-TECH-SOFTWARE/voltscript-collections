@@ -1,0 +1,568 @@
+%REM
+    Copyright 2022-23 HCL America, Inc.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+%END REM
+Option Declare
+Use "../src/VoltScriptCollections"
+Use "../libs/VoltScriptTesting"
+
+Class DoeFilter as MapFilter
+
+    Function filter(kvPair as Pair) as Boolean
+        filter = CStr(kvPair.key) Like "*D"
+    End Function
+
+End Class
+
+Class Person
+    Public firstName as String
+    Public lastName as String
+    Public age as Integer
+    Public value1 as Integer
+    Public value2 as Integer
+
+    Sub New(firstName as String, lastName as String, age as Integer)
+        Me.firstName = firstName
+        Me.lastName = lastName
+        Me.age = age
+    End Sub
+
+    Function toJson() as JsonObject
+        Dim jsonObj as New JsonObject()
+        Call jsonObj.insertValue("firstName", Me.firstName)
+        Call jsonObj.insertValue("lastName", Me.lastName)
+        Call jsonObj.insertValue("age", Me.age)
+        Set toJson = jsonObj
+    End Function
+End Class
+
+Class PersonTransformer as MapTransformer
+
+    Function transform(kvPair as Pair) as Pair
+        Dim person as Person
+        Set person = kvPair.value
+        If (person.age > 40) Then
+            Set transform = new Pair(kvPair.key, person.lastName & ", " & person.firstName & " (" & person.age & ")")
+        End If
+    End Function
+
+End Class
+
+Class PersonSorter as Comparator
+
+    Sub New(isDescending as Boolean)
+
+    End Sub
+    
+    Function compare(source as Variant, target as Variant) as Integer
+        compare = Me.compareMatchingDataType(CStr(source.FirstName) & "~" & CStr(source.LastName), CStr(target.firstName) & "~" & CStr(target.LastName))
+        If (compare <> 0) Then Exit Function
+
+        compare = Me.compareMatchingDataType(source.Age, target.Age)
+    End Function
+
+    Function equals(source as Variant, target as Variant) as Boolean
+        Return CStr(source.firstName) = CStr(target.firstName) &&_
+            CStr(source.lastName) = CStr(target.lastName) &&_
+            CStr(source.age) = CStr(target.age) &&_
+            CStr(source.value1) = CStr(target.value1) &&_
+            CStr(source.value2) = CStr(target.value2)
+    End Function
+
+End Class
+
+Public Function runMapTests
+
+    Dim testRunner as New TestRunner("Test Maps")
+    Call testRunner.setOutputFormat("BOTH")
+    Dim retVal as Boolean
+
+    Try
+        Call testBasicMap(testRunner)
+        Call testSort(testRunner)
+        Call testRestrictions(testRunner)
+        Call testPersonMap(testRunner)
+        Call testJson(testRunner)
+        Call testSuppressErrors(testRunner)
+        Call testEmptyObjects(testRunner)
+    Catch
+        Print "Error " & Error() & " on line " & Erl()
+    End Try
+
+    retVal = True
+    ForAll suite in testRunner.testSuites
+        retVal = retVal And suite.ranSuccessfully()
+    End ForAll
+    Return retVal
+
+End Function
+
+Function testBasicMap(testRunner as TestRunner)
+
+    Dim testSuite as New TestSuite("Test Basic Map")
+    Dim newMap as Map
+    Dim i as Long
+    Dim count as Integer
+    Dim filter as New DoeFilter()
+    Dim pair as Pair
+    Dim emptyVar as Variant
+    Call testRunner.addTestSuite(testSuite)
+
+    Dim basicMap as New Map("STRING", Nothing, false)
+
+    Call basicMap.put("JohnD", "John Doe, 42")
+    Call basicMap.put("JaneD", "Jane Doe, 30")
+    Call basicMap.put("SS", "Steve Smith, 60")
+    Call testSuite.describe("Check three elements in map").assertEqualsLong(3, basicMap.ElementCount)
+    
+    Set newMap = basicMap.filter(filter)
+
+    Set pair = basicMap.getAndRemoveFirstPair()
+    Call testSuite.describe("Test getAndRemoveFirst did not return Nothing").assertFalse(pair is Nothing)
+    Call testSuite.describe("Check first element is John Doe, 42").assertEqualsString("John Doe, 42", pair.value, false)
+    Call testSuite.describe("Check last element is Steve Smith, 60").assertEqualsString("Steve Smith, 60", basicMap.getAndRemoveLastPair().value, false)
+    
+    Do
+        count++
+    Loop While ++i < basicMap.ElementCount
+    Call testSuite.describe("Check one value left").assertEqualsInteger(1, count)
+
+    Call testSuite.describe("Check filtered Map has two elements").assertEqualsLong(2, newMap.ElementCount)
+    Call testSuite.describe("Check get value by key").assertEqualsString("John Doe, 42", newMap.getValueRawByKey("JohnD"), false)
+
+    Call testSuite.describe("Test adding EMPTY")
+    Try
+        Call basicMap.put("EMPTY", emptyVar)
+        Call testSuite.addResult(False, "Map accepted EMPTY")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+
+    Call testSuite.describe("Test adding Nothing")
+    Try
+        Call basicMap.put("Nothing", Nothing)
+        Call testSuite.addResult(False, "Map accepted Nothing")
+    Catch
+        Call testSuite.addResult(True, "")
+    End Try
+
+End Function
+
+Function testSort(testRunner as TestRunner)
+
+    Dim testSuite as New TestSuite("Test Pairs and Reverse")
+    Call testRunner.addTestSuite(testSuite)
+    Dim state as Pair
+    Dim success as Boolean
+    Dim i as Long
+
+    Dim basicMap as New Map("STRING", Nothing, true)
+    Call basicMap.put("AZ", "Arizona")
+    Call basicMap.put("FL", "Florida")
+    Call basicMap.put("IO", "Iowa")
+    Call basicMap.put("NE", "Nebraska")
+    Call basicMap.put("PA", "Pennsylvania")
+    Call basicMap.put("AL", "Alabama")
+    Call basicMap.put("CA", "California")
+    Call basicMap.put("NY", "New York")
+    Call basicMap.put("WA", "Washington")
+    Call basicMap.put("CO", "Colorado")
+    Call basicMap.put("AR", "Arkansas")
+    Call basicMap.put("GA", "Georgia")
+    Call basicMap.put("KA", "Kansas")
+    Call basicMap.put("KY", "KJentucky")
+    Call basicMap.put("IN", "Indiana")
+    Call basicMap.put("DE", "Delaware")
+
+    Call testSuite.describe("Test 16 elements").assertEqualsLong(16, basicMap.elementCount)
+    Call testSuite.describe("Test last key is WA").assertEqualsString("WA", basicMap.getNthKeyRaw(15), false)
+    Dim coll as Collection
+    Set coll = basicMap.collectKeys()
+    Call testSuite.describe("Test last on collectKeys is WA").assertEqualsString("WA", basicMap.getNthKeyRaw(15), false)
+    Call testSuite.describe("Test last value is Washington").assertEqualsString("Washington", basicMap.getNthValueRaw(15), false)
+    Call testSuite.describe("Test KY value is KJentucky").assertEqualsString("KJentucky", basicMap.getValueRawByKey("KY"), false)
+    Set state = new Pair("AK", "Alaska")
+    Call basicMap.putPair(state)
+    Call testSuite.describe("Test first element now Alaska").assertEqualsString("Alaska", basicMap.getNthValueRaw(0), false)
+
+    Call basicMap.put("KY", "Kentucky")
+    Call testSuite.describe("Test element count is 17").assertEqualsLong(17, basicMap.elementCount)
+    Set state = basicMap.getNthPair(6)
+    Call testSuite.describe("Test returned key is DE").assertEqualsString("DE", state.key, false)
+    Call testSuite.describe("Test returned value is Delaware").assertEqualsString("Delaware", state.value, false)
+    
+    Call basicMap.reverse()
+    Call testSuite.describe("Test first element is now Washington").assertEqualsString("WA", basicMap.getNthKeyRaw(0), false)
+    Call basicMap.putPair(state)
+    Call testSuite.describe("Test element count is still 17").assertEqualsLong(17, basicMap.elementCount)
+    Set state = new Pair("NM", "New MNexico")
+    Call basicMap.putPair(state)
+    Call testSuite.describe("Test New Mexico at position 3").assertEqualsString("New MNexico", basicMap.getNthValueRaw(3), false)
+    Set state = new Pair("NM", "New Mexico")
+    Call basicMap.putPair(state)
+    Call testSuite.describe("Test updated New Mexico at position 3").assertEqualsString("New Mexico", basicMap.getNthValueRaw(3), false)
+
+    Call testSuite.describe("Test removeByKey NM returned success").assertTrue(basicMap.removeByKey("NM"))
+    Call testSuite.describe("Test removed NM").assertFalse(basicMap.containsKey("NM"))
+    Call testSuite.describe("Test removeByKey NM failed").assertFalse(basicMap.removeByKey("NM"))
+
+    Call testSuite.describe("Test removeByValue Washington returned success").assertTrue(basicMap.removeByValue("Washington", False, Nothing))
+    Call testSuite.describe("Test removed Washington").assertFalse(basicMap.contains("Washington", Nothing))
+    Call testSuite.describe("Test removeByValue Washington failed").assertFalse(basicMap.removeByValue("Washington", False, Nothing))
+
+End Function
+
+Function testRestrictions(testRunner as TestRunner)
+
+    Dim testSuite as New TestSuite("Test Restrictions")
+    Call testRunner.addTestSuite(testSuite)
+
+    Dim basicMap as New Map("STRING", Nothing, true)
+    Dim newMap as New Map("STRING", Nothing, true)
+    Call basicMap.put("AZ", "Arizona")
+    Call basicMap.put("FL", "Florida")
+    Call basicMap.put("IO", "Iowa")
+    Call basicMap.put("NE", "Nebraska")
+    Call basicMap.put("PA", "Pennsylvania")
+    
+    Call testSuite.describe("Test locking")
+    Try
+        Call basicMap.lock()
+        Call testSuite.assertTrue(basicMap.isLocked)
+    Catch
+        Call testSuite.addError("Error " & Error() & " on line " & Erl(), "")
+    End Try
+
+    Call testSuite.describe("Test map does not allow putting when locked")
+    Try
+        Call basicMap.put("WA", "Washington")
+        Call testSuite.addResult(false, "")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+    
+
+    Call testSuite.describe("Test map does not allow putting all when locked")
+    Try
+        Call basicMap.putAll(newMap)
+        Call testSuite.addResult(false, "")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+
+    Call testSuite.describe("Test map does not allow clear when locked")
+    Try
+        Call basicMap.clear()
+        Call testSuite.addResult(false, "")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+
+    Call testSuite.describe("Test collection does not allow removing first when locked")
+    Try
+        Call basicMap.getAndRemoveFirstPair()
+        Call testSuite.addResult(false, "")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+
+    Call testSuite.describe("Test collection does not allow removing last when locked")
+    Try
+        Call basicMap.getAndRemoveLastPair()
+        Call testSuite.addResult(false, "")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+
+    Call testSuite.describe("Test map does not allow remove by key when locked")
+    Try
+        Call basicMap.removeByKey("foo")
+        Call testSuite.addResult(false, "")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+
+    Call testSuite.describe("Test map does not allow remove by value when locked")
+    Try
+        Call basicMap.removeByValue("Washington", true, Nothing)
+        Call testSuite.addResult(false, "")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+
+    Call testSuite.describe("Test map does not allow reverse when locked")
+    Try
+        Call basicMap.reverse()
+        Call testSuite.addResult(false, "")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+
+    Call basicMap.unlock
+    Call testSuite.describe("Test adding again")
+    Try
+        Call basicMap.put("WA", "Washington")
+        Call testSuite.addResult(true, "")
+    Catch
+        Call testSuite.addError("", Error)
+    End Try
+
+    Call basicMap.clear()
+    Call testSuite.describe("Test map cleared").assertFalse(basicMap.hasContent)
+
+End Function
+
+Function testPersonMap(testRunner as TestRunner)
+
+    Dim map1 as New Map("PERSON", Nothing, True)
+    Dim map2 as New Map("PERSON", Nothing, False)
+    Dim descStringComparator as New MatchingDataTypeComparator(true)
+    Dim map3 as New Map("STRING", descStringComparator, True)
+    Dim transformer as New PersonTransformer()
+
+    Dim testSuite as New TestSuite("Test Person Map")
+    Call testRunner.addTestSuite(testSuite)
+
+    Call loadPerson(map1, "Steward","Swannick",62)
+    Call loadPerson(map1, "Ethyl","Kroll",35)
+    Call loadPerson(map1, "Mildred","Sharvill",47)
+    Call loadPerson(map1, "Corey","Grinyov",52)
+    Call loadPerson(map1, "Justinian","Truswell",48)
+    Call loadPerson(map1, "Shaylyn","Wombwell",47)
+    Call loadPerson(map1, "Montgomery","Emma",48)
+    Call loadPerson(map1, "Rey","Flint",71)
+    Call loadPerson(map1, "Thorny","Boards",84)
+    Call loadPerson(map1, "Devin","Balsillie",56)
+
+    Call loadPerson(map2, "Bernelle","de Pinna",66)
+    Call loadPerson(map2, "Marion","Remer",76)
+    Call loadPerson(map2, "Trstram","Natt",68)
+    Call loadPerson(map2, "Lauree","Oldcote",45)
+    Call loadPerson(map2, "Jeremie","Raulin",20)
+    Call loadPerson(map2, "Kinsley","Capin",71)
+    Call loadPerson(map2, "Pieter","Keech",20)
+    Call loadPerson(map2, "Lanny","Rydzynski",66)
+    Call loadPerson(map2, "Beryl","Bowdery",57)
+    Call loadPerson(map2, "Krystle","Bausor",54)
+
+    Call testSuite.describe("Test map1 contains 10 elements").assertEqualsLong(10, map1.elementCount)
+    Call testSuite.describe("Test map2 contains 10 elements").assertEqualsLong(10, map1.elementCount)
+
+    Call map1.putAll(map2)
+    Call testSuite.describe("Test map1 contains 20 elements").assertEqualsLong(20, map1.elementCount)
+
+    Call map1.transform(transformer, map3)
+    Call testSuite.describe("Test map3 contains 17 elements").assertEqualsLong(17, map3.elementCount)
+    Call testSuite.describe("Test first value is Natt, Trstram (68)").assertEqualsString("Natt, Trstram (68)", map3.getNthValueRaw(0), false)
+
+    Dim personSorter as New PersonSorter(false)
+    Dim coll as New Collection("PERSON", personSorter, true, true)
+    Call map1.collectValues(coll)
+    Call testSuite.describe("Test collection has 20 people in it").assertEqualsLong(20, coll.elementCount)
+
+    Dim person as New Person("Krystle","Bausor",54)
+    Call testSuite.describe("Test map2 contains Krystle Bausor").assertTrue(map2.contains(person, personSorter))
+    person.value1 = 1
+    Call testSuite.describe("Test map2 does not contain modified Krystle Bausor").assertFalse(map2.contains(person, personSorter))
+    person.value1 = 0
+    Call testSuite.describe("Test removing Krystle Bausor")
+    Call map2.removeByValue(person, false, personSorter)
+    Call testSuite.assertEqualsLong(9, map2.elementCount)
+    Set person = new Person("Beryl","Bowdery",60)
+    Dim pair as New Pair("Beryl Bowdery", person)
+    Call testSuite.describe("Test replacing")
+    Call testSuite.assertTrue(map2.put("Beryl Bowdery", person) > -1)
+    Call testSuite.describe("Test map2 contains new Beryl Bowdery").assertTrue(map2.contains(person, personSorter))
+
+    Call testSuite.describe("Test map1 has correct 4th element before replace").assertEqualsString(|{"age":56,"firstName":"Devin","lastName":"Balsillie"}|, map1.getNthValueRaw(3).toJson().toString(false), True)
+    Set person = new Person("Devin","Balsillie",60)
+    Call testSuite.describe("Test replacing in sorted")
+    Call testSuite.assertTrue(map1.put("Devin Balsillie", person) > -1)
+    Call testSuite.describe("Test map1 contains new Devin Balsillie").assertTrue(map1.contains(person, personSorter))
+    Call testSuite.describe("Test map1 still has 10 elements").assertEqualsLong(20, map1.elementCount)
+    Call testSuite.describe("Test map1 has correct 4th element").assertEqualsString(|{"age":60,"firstName":"Devin","lastName":"Balsillie"}|, map1.getNthValueRaw(3).toJson().toString(false), True)
+
+End Function
+
+Function testJson(testRunner as TestRunner)
+
+    Dim jsonObj as New JsonObject()
+    Dim jsonOut as New JsonObject()
+    Dim personJson as New JsonObject()
+    Dim basicMap as New Map("STRING", Nothing, true)
+    Dim testSuite as New TestSuite("JSON Tests")
+    Call testRunner.addTestSuite(testSuite)
+
+    Call jsonObj.insertValue("AZ", "Arizona")
+    Call jsonObj.insertValue("FL", "Florida")
+    Call jsonObj.insertValue("IO", "Iowa")
+    Call jsonObj.insertValue("NE", "Nebraska")
+    Call jsonObj.insertValue("PA", "Pennsylvania")
+    Call jsonObj.insertValue("AL", "Alabama")
+    Call jsonObj.insertValue("CA", "California")
+    Call jsonObj.insertValue("NY", "New York")
+    Call jsonObj.insertValue("WA", "Washington")
+    Call jsonObj.insertValue("CO", "Colorado")
+    Call jsonObj.insertValue("AR", "Arkansas")
+    Call jsonObj.insertValue("GA", "Georgia")
+    Call jsonObj.insertValue("KA", "Kansas")
+    Call jsonObj.insertValue("KY", "Kentucky")
+    Call jsonObj.insertValue("IN", "Indiana")
+    Call jsonObj.insertValue("DE", "Delaware")
+
+    Call testSuite.describe("Test loading JsonObject into Map")
+    Try
+        Call basicMap.fromJson(jsonObj)
+        Call testSuite.addResult(true, "")
+    Catch
+        Call testSuite.addError("Error " & Error() & " on line " & Erl(), "")
+    End Try
+
+    Call testSuite.describe("Test 16 elements").assertEqualsLong(16, basicMap.elementCount)
+    Call testSuite.describe("Test last key is WA").assertEqualsString("WA", basicMap.getNthKeyRaw(15), false)
+    Call testSuite.describe("Test last value is Washington").assertEqualsString("Washington", basicMap.getNthValueRaw(15), false)
+    Call testSuite.describe("Test KY value is Kentucky").assertEqualsString("Kentucky", basicMap.getValueRawByKey("KY"), false)
+
+    Call testSuite.describe("Test converting Map to JsonObject")
+    Try
+        Set jsonOut = basicMap.toJson()
+        Call testSuite.addResult(true, "")
+    Catch
+        Call testSuite.addError("Error " & Error() & " on line " & Erl(), "")
+    End Try
+
+    Call testSuite.describe("Test 16 elements in JSON").assertEqualsInteger(16, jsonOut.childCount)
+    Call testSuite.describe("Test last key in JSON is WA").assertEqualsString("Washington", CStr(jsonOut.getChild("WA").scalarValue), false)
+
+    Dim map1 as New Map("PERSON", Nothing, False)
+    Call loadPerson(map1, "Steward","Swannick",62)
+    Call loadPerson(map1, "Ethyl","Kroll",35)
+    Call loadPerson(map1, "Mildred","Sharvill",47)
+    Call loadPerson(map1, "Corey","Grinyov",52)
+
+    Call testSuite.describe("Test converting Person Map to JsonObject")
+    Try
+        Set personJson = map1.toJson()
+        Call testSuite.addResult(true, "")
+    Catch
+        Call testSuite.addError("Error " & Error() & " on line " & Erl(), "")
+    End Try
+
+    Call testSuite.describe("Test 4 elements").assertEqualsInteger(4, personJson.childCount)
+    'Map is unsorted, JSON object *is* sorted
+    Call testSuite.describe("Test first person output").assertEqualsString(|{"age":52,"firstName":"Corey","lastName":"Grinyov"}|, personJson.getChildren()(0).toString(false), false)
+
+    Dim emptyJson as New JsonObject()
+    Call testSuite.describe("Test empty JsonObj to Collection")
+    Try
+        Dim coll1 as New Collection("STRING", Nothing, False, False)
+        Call coll1.fromJson(emptyJson)
+        Call testSuite.assertFalse(coll1.hasContent)
+    Catch
+        Call testSuite.addError("Error " & Error() & " on line " & Erl(), "")
+    End Try
+
+    Call testSuite.describe("Test empty JsonObj to Map")
+    Try
+        Dim map2 as New Map("STRING", Nothing, False)
+        Call map2.fromJson(emptyJson)
+        Call testSuite.assertFalse(map2.hasContent)
+    Catch
+        Call testSuite.addError("Error " & Error() & " on line " & Erl(), "")
+    End Try
+
+    Call testSuite.describe("Test serializing empty Collection")
+    Try
+        Set emptyJson = coll1.toJson()
+        Call testSuite.assertEqualsString("{}", emptyJson.toString(False), True)
+    Catch
+        Call testSuite.addError("Error " & Error() & " on line " & Erl(), "")
+    End Try
+
+    Call testSuite.describe("Test serializing empty Map")
+    Try
+        Set emptyJson = map2.toJson()
+        Call testSuite.assertEqualsString("{}", emptyJson.toString(False), True)
+    Catch
+        Call testSuite.addError("Error " & Error() & " on line " & Erl(), "")
+    End Try
+
+End Function
+
+Function testSuppressErrors(testRunner as TestRunner) as Boolean
+
+    Dim testSuite as New TestSuite("Test Suppressing Errors")
+    Call testRunner.addTestSuite(testSuite)
+
+    Dim map1 as New Map("SCALAR", Nothing, False)
+    Call map1.put(1, 1)
+    Call map1.put(2, "2")
+    Call testSuite.describe("Test map1 contains 2 elements").assertEqualsLong(2, map1.elementCount)
+
+    Dim map2 as New Map("string", Nothing, false)
+    Call testSuite.describe("Test transforming Map throws error")
+    Try
+        call map1.transform(Nothing, map2)
+        Call testSuite.addResult(false, "")
+    Catch
+        Call testSuite.addResult(true, "")
+    End Try
+
+    map1.suppressErrors = true
+    Call testSuite.describe("Test transforming Map with suppressErrors doesn't throw error")
+    Try
+        call map1.transform(Nothing, map2)
+        Call testSuite.addResult(true, "")
+    Catch
+        Call testSuite.addResult(False, "Error " & Error & " on line " & Erl)
+    End Try
+    Call testSuite.describe("Test only one element in StringCollection").assertEqualsLong(1, map2.elementCount)
+
+End Function
+
+Function testEmptyObjects(testRunner as TestRunner) as Boolean
+
+    Dim testSuite as New TestSuite("Empty objects")
+    Dim pair as Pair
+    Call testRunner.addTestSuite(testSuite)
+
+    Dim Map as New Map("OBJECT", Nothing, False)
+    Call testSuite.describe("Test getAndRemoveFirst on Empty")
+    Try
+        Set pair = map.getAndRemoveFirstPair()
+        Call testSuite.addResult(True, "")
+        Call testSuite.describe("Test first pair value is Nothing").assertTrue(pair is nothing)
+    Catch
+        Call testSuite.addError(Error, GetThreadInfo(12))
+    End Try
+    Try
+        Set pair = map.getAndRemoveLastPair()
+        Call testSuite.addResult(True, "")
+        Call testSuite.describe("Test last pair value is Nothing").assertTrue(pair is nothing)
+    Catch
+        Call testSuite.addError(Error, GetThreadInfo(12))
+    End Try
+    Call testSuite.describe("Test 12th key").assertTrue(IsEmpty(map.getNthKeyRaw(12)))
+    Call testSuite.describe("Test 12th element").assertTrue(map.getNthValueRaw(12) Is Nothing)
+    Call testSuite.describe("Test 12th pair value is Nothing").assertTrue(map.getNthPair(12) is nothing)
+    Call testSuite.describe("Test bad element by key").assertTrue(map.getValueRawByKey(200) Is Nothing)
+
+End Function
+
+Sub loadPerson(map as Map, firstName as String, lastName as String, age as Integer)
+
+    Dim person as New Person(firstName, lastName, age)
+    Call map.put(firstName & " " & lastName, person)
+
+End Sub
