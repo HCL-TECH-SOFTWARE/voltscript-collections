@@ -1959,7 +1959,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 		@throws	Map is locked 	
 		@throws	If incorrect data type is passed 	
 	%END REM
-	Public Function putPair(content As Pair) As Boolean 
+	Public Function putPair(content As Pair) As Long 
 		'{{SETI_AUTHOR_CODE_putPair_implementation
         Call checkLocked()
 
