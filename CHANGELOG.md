@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [1.0.2] - 2024-04-17
+
+- MXOP-8159: Fixed outputting arrays from empty Collections
+- MXOP-8489: Fixed adding to sorted Collections returning correct index
+
 ## [1.0.1] - 2023-11-06
 
 - MXGO-6326: Fixed incorrect return type from putPair 

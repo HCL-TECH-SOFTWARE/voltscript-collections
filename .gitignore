@@ -1,6 +1,3 @@
-# Compiled VoltScript files
-*.bso
-
 # .devcontainer
 .devcontainer/*
 

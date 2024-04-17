@@ -193,7 +193,8 @@ Function testSort(testRunner as TestRunner)
     Call testSuite.describe("Test last value is Washington").assertEqualsString("Washington", basicMap.getNthValueRaw(15), false)
     Call testSuite.describe("Test KY value is KJentucky").assertEqualsString("KJentucky", basicMap.getValueRawByKey("KY"), false)
     Set state = new Pair("AK", "Alaska")
-    Call basicMap.putPair(state)
+    i = basicMap.putPair(state)
+    Call testSuite.describe("Check Alaska put first").assertEqualsLong(0, i)
     Call testSuite.describe("Test first element now Alaska").assertEqualsString("Alaska", basicMap.getNthValueRaw(0), false)
 
     Call basicMap.put("KY", "Kentucky")
@@ -485,7 +486,7 @@ Function testJson(testRunner as TestRunner)
     Call testSuite.describe("Test serializing empty Collection")
     Try
         Set emptyJson = coll1.toJson()
-        Call testSuite.assertEqualsString("{}", emptyJson.toString(False), True)
+        Call testSuite.assertEqualsString("[]", emptyJson.toString(False), True)
     Catch
         Call testSuite.addError("Error " & Error() & " on line " & Erl(), "")
     End Try

@@ -424,7 +424,7 @@ If the array values are objects, the code will try to call a toJson method on th
 	Public Function toJson() As JsonObject 
 		'{{SETI_AUTHOR_CODE_toJson_implementation
         Dim i as Long
-        Dim result as New JsonObject()
+        Dim result as New JsonObject(True)
         Dim temp as JsonObject
         If (Not Me.hasContent) Then Return result
         Do
@@ -1091,7 +1091,7 @@ If the Collection is sorted, the old elements are removed and new ones inserted 
             Call insertIntoContent(source, pos)
         End If
         m_elementCount++
-        Return m_elementCount - 1
+        Return pos
 
     End Function
 

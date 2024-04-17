@@ -35,7 +35,7 @@ You'll need to add the following relevant dependency to your **dependencies** or
 ```json
     {
         "library": "voltscript-collections",
-        "version": "1.0.1",
+        "version": "1.0.2",
         "module": "VoltScriptCollections.vss",
         "repository": "hcl-github"
     }
