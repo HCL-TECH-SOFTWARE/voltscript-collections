@@ -35,7 +35,10 @@ index.md
 - VoltScript Console Colors
     - [Source code](https://github.com/HCL-TECH-SOFTWARE/voltscript-console-colors){: target="_blank" rel="noopener noreferrer"}
     <!-- [Documentation](https://opensource.hcltechsw.com/voltscript-console-colors){: target="_blank" rel="noopener noreferrer"}-->
-
+- VoltScript Interface Designer
+    - [Documentation](https://opensource.hcltechsw.com/voltscript-interface-designer){: target="_blank" rel="noopener noreferrer"}
+- VoltScript Volt MX Middleware
+    - [Documentation](https://opensource.hcltechsw.com/voltscript-voltmx-middleware){: target="_blank" rel="noopener noreferrer"}
 
 ## Support
 
