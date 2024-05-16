@@ -1,0 +1,155 @@
+%REM
+    Copyright 2022-23 HCL America, Inc.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+%END REM
+Option Declare
+Use "../../src/VoltScriptCollections"  ' change this to point to the location of your VoltScriptCollections.vss file
+
+Class Person
+
+    Public firstName as String
+    Public lastName as String
+    Public age as Integer
+
+End Class
+
+Class PersonAlt
+    
+    Public fullName as String
+    Public ageRange as String
+
+End Class
+
+Class PersonComparator as Comparator
+
+    Sub New(isDescending as Boolean)
+        'Nothing needed here
+    End Sub
+
+    Function compare(source as Variant, target as Variant) as Integer
+        Try
+            Dim person1 as Person
+            Dim person2 as Person
+            Dim check as Integer
+
+            Set person1 = source
+            Set person2 = target
+            If (person1.age < person2.age) Then ' (1)!
+                Return -1
+            ElseIf (person1.age > person2.age) Then
+                Return 1
+            Else
+                check = StrCompare(Person1.firstName, person2.firstName, 0)
+                If (check = 0) Then check = StrCompare(Person1.lastName, person2.lastName, 0)
+                Return check
+            End If
+        Catch
+            Print "Error " & Error() & " on line " & Erl()
+            Print "Stack trace: " & GetThreadInfo(12)
+        End Try
+    End Function
+
+    Function equals(source as Variant, target as Variant) as Boolean
+        If compare(source, target) = 0 Then Return True
+    End Function
+
+End Class
+
+Class PersonFilter as CollectionFilter
+
+    Function filter(source as Variant) as Boolean
+        Return CInt(source.age) < 80
+    End Function
+
+End Class
+
+Class PersonTransformer as CollectionTransformer
+
+    Function transform(source as Variant) as Variant
+        Dim newPerson as new PersonAlt()
+        Dim oldPerson as Person
+
+        Set oldPerson = source
+        newPerson.fullname = oldPerson.firstName & " " & oldPerson.lastName
+        Select Case oldPerson.age
+            Case Is < 18:
+                newPerson.ageRange = "Child"
+            Case 16 To 30
+                newPerson.ageRange = "Young Person"
+            Case Is > 60
+                newPerson.ageRange = "Pensioner"
+            Case Else
+                newPerson.ageRange = "Adult"
+        End Select
+        Return newPerson
+    End Function
+
+End Class
+
+Class PersonAltCollection as Collection
+
+    Sub New(), Collection("PERSONALT", Nothing, False, False)
+        ' Nothing to do
+    End Sub
+
+    Function getNthElement(index as Long) as PersonAlt
+        Return getNthElementRaw(index)
+    End Function
+
+End Class
+
+Sub Initialize
+
+    Dim personColl as New Collection("PERSON", Nothing, False, False)
+    Call personColl.add(createPerson("Dennis", "Doe", 84))
+    Call personColl.add(createPerson("Denise", "Doe", 82))
+    Call personColl.add(createPerson("Andrew", "Doe", 65))
+    Call personColl.add(createPerson("Fred", "Doe", 65))
+    Call personColl.add(createPerson("Frances", "Doe", 67))
+    Call personColl.add(createPerson("John", "Doe", 42))
+    Call personColl.add(createPerson("Jane", "Doe", 30))
+    Call personColl.add(createPerson("Johnathan", "Doe", 12))
+    Call personColl.add(createPerson("Janet", "Doe", 6))
+    Call personColl.add(createPerson("Ken", "Doe", 41))
+    Call personColl.add(createPerson("Karen", "Doe", 39))
+    Call personColl.add(createPerson("Bill", "Doe", 19))
+    Call personColl.add(createPerson("Bob", "Doe", 17))
+    Call personColl.add(createPerson("Ben", "Doe", 10))
+
+    Dim filter as New PersonFilter()
+    Dim compar as New PersonComparator(false)
+    Dim sortedPersonColl as New Collection("PERSON", compar, True, True)
+    Dim personAltTransformer as New PersonTransformer()
+    Dim personAltColl as New PersonAltCollection()
+
+    ' Then convert
+    Call sortedPersonColl.addAll(personColl.filter(filter)).transform(personAltTransformer, personAltColl)
+
+    Dim i as Long
+    Dim altPerson as PersonAlt
+    Do
+        Set altPerson = personAltColl.getNthElement(i)
+        Print altPerson.fullName & " - " & altPerson.ageRange
+    Loop While ++i < personAltColl.elementCount
+
+End Sub
+
+Function createPerson(firstName as String, lastName as String, age as Integer) as Person
+
+    Set createPerson = new Person()
+    createPerson.firstName = firstName
+    createPerson.lastName = lastName
+    createPerson.age = age
+
+End Function
