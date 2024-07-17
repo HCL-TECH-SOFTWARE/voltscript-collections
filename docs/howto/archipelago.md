@@ -13,6 +13,12 @@ You'll need a [Personal Access Token](https://help.hcltechsw.com/docs/voltscript
     "hcl-github": {
         "type": "github",
         "token": "${env.TOKEN}"
+    },
+    "volt-mx-marketplace": {
+        "type": "marketplace",
+        "username": "YOUR_USERNAME",
+        "password": "YOUR_PASSWORD",
+        "authUrl": "https://accounts.auth.hclvoltmx.net/login"
     }
 ```
 
