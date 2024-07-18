@@ -919,7 +919,7 @@ If the Collection is sorted, the old elements are removed and new ones inserted 
         Dim actualType as String
         Dim idex as Integer
 
-        If (Not IsArray(source)) Then
+        If (IsEmpty(source) || (Not IsArray(source))) Then
             Error 1400, "Source must be an array, passed " & TypeName(source)
         End If
 

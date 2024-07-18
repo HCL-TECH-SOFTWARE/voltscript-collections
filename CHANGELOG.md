@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [1.0.3] - 2024-07-18
+
+- MXOP-13771: Repointing atlas.json for VSEs and adding VSID database
+- MXOP-13771: Adding check for isEmpty on addArray
+
 ## [1.0.2] - 2024-04-17
 
 - MXOP-8159: Fixed outputting arrays from empty Collections
