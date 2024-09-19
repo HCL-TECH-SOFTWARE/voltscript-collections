@@ -1,7 +1,7 @@
 {
     "name": "voltscript-collections",
     "library": "hcl.core-modules",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "displayName": "VoltScript Collections",
     "description": "Collections and Maps for VoltScript and LotusScript",
     "authors": [
@@ -27,7 +27,7 @@
         {
             "id": "volt-mx-marketplace",
             "type": "marketplace",
-            "url": "https://community.hclvoltmx.com/marketplace/asset"
+            "url": "https://community.hclvoltmx.com/marketplace"
         },
         {
             "id": "hcl-github",
@@ -45,9 +45,9 @@
     ],
     "vseDependencies": {
         "JsonVSE": {
-            "library": "25265",
+            "library": "JsonVSE VoltScript Extension",
             "version": "1.0.1",
-            "module": "25877/20841",
+            "module": "jsonvse",
             "repository":"volt-mx-marketplace"
         }
     }
