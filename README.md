@@ -58,7 +58,7 @@ You'll need the relevant dependency to add to your **dependencies** or **testDep
 ```json
         {
             "library": "voltscript-collections",
-            "version": "1.0.2",
+            "version": "1.0.4",
             "module": "VoltScriptCollections.vss",
             "repository": "hcl-github"
         }
