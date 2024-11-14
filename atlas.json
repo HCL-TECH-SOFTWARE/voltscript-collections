@@ -35,6 +35,15 @@
             "url": "https://api.github.com/repos/HCL-TECH-SOFTWARE"
         }
     ],
+    "dependencies": [
+        {
+            "library": "voltscript-logging",
+            "version": "1.0.0",
+            "module": "VoltScriptLogging.vss",
+            "repository": "hcl-github"
+        }
+
+    ],
     "testDependencies": [
         {
             "library": "voltscript-testing",

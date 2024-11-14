@@ -25,6 +25,7 @@
 Option Declare
 Option Public
 UseVSE "*JsonVSE"
+Use "../libs/VoltScriptLogging"
 
 
 
@@ -210,6 +211,9 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 	End Property
 
 	'{{SETI_AUTHOR_CODE_Collection_Private_Properties
+    Private Property Get CLASS_NAME As String 
+        Return |Collection|
+    End Property 
 	'}}
 
 
@@ -433,7 +437,7 @@ If the array values are objects, the code will try to call a toJson method on th
                     Set temp = Me.p_Content(i).toJson()
                     Call result.appendToJsonArray(temp)
                 Catch
-
+                    Call getErrorSession().createErrorEntity(CLASS_NAME, LOG_INFO) 
                 End Try
             Else
                 Call result.appendToJsonArray(Me.p_Content(i))
@@ -587,6 +591,8 @@ If the collection is empty it just exits the function
                 content = content & Me.p_Content(i) & delim
             Catch
                 content = content & "NOT STRINGABLE" & delim
+                Call getErrorSession.createCustomErrorEntity(CLASS_NAME, Error$() & | (content(| & i & |) NOT STRINGABLE|, 0, 0, LOG_INFO)
+
             End Try
         Next
 
@@ -731,6 +737,8 @@ If the collection is empty it just exits the function
                Call addArray(source)
             End If
         Catch
+            Call getErrorSession.createErrorEntity(CLASS_NAME, LOG_INFO)
+
             ' Reset collection
             Erase p_Content
             ForAll elem in origList
@@ -830,6 +838,7 @@ If the Collection is sorted, the old elements are removed and new ones inserted 
                 Return m_elementCount - 1
             End If
         Catch
+            Call getErrorSession.createErrorEntity(CLASS_NAME, LOG_INFO)
             If Not Me.suppressErrors Then Error Err, Error$
         End Try
 		'}}
@@ -880,6 +889,7 @@ If the Collection is sorted, the old elements are removed and new ones inserted 
             m_elementCount ++
             Return True
         Catch
+            Call getErrorSession.createErrorEntity(CLASS_NAME, LOG_INFO)
             If Not Me.suppressErrors Then Error Err, Error$
         End Try
 		'}}
@@ -1154,6 +1164,9 @@ Public Class StringCollection As Collection
 	'}}
 
 	'{{SETI_AUTHOR_CODE_StringCollection_Private_Properties
+    Private Property Get CLASS_NAME As String 
+        Return |StringCollection|
+    End Property     
 	'}}
 
 
@@ -1231,6 +1244,9 @@ Public Class CollectionFilter
 	'}}
 
 	'{{SETI_AUTHOR_CODE_CollectionFilter_Private_Properties
+    Private Property Get CLASS_NAME As String 
+        Return |CollectionFilter|
+    End Property     
 	'}}
 
 
@@ -1277,6 +1293,9 @@ Public Class CollectionTransformer
 	'}}
 
 	'{{SETI_AUTHOR_CODE_CollectionTransformer_Private_Properties
+    Private Property Get CLASS_NAME As String 
+        Return |CollectionTransformer|
+    End Property 
 	'}}
 
 
@@ -1337,6 +1356,9 @@ Public Class Comparator
 	End Property
 
 	'{{SETI_AUTHOR_CODE_Comparator_Private_Properties
+    Private Property Get CLASS_NAME As String 
+        Return |Comparator|
+    End Property 
 	'}}
 
 
@@ -1503,6 +1525,9 @@ Public Class MatchingDataTypeComparator As Comparator
 	'}}
 
 	'{{SETI_AUTHOR_CODE_MatchingDataTypeComparator_Private_Properties
+    Private Property Get CLASS_NAME As String 
+        Return |MatchingDataTypeComparator|
+    End Property 
 	'}}
 
 
@@ -1696,7 +1721,9 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 	End Property
 
 	'{{SETI_AUTHOR_CODE_Map_Private_Properties
-	'}}
+    Private Property Get CLASS_NAME As String 
+        Return |Map|
+    End Property 	'}}
 
 
 	%REM
@@ -1777,6 +1804,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
                     Call Me.put(child.label, child.scalarValue)
                 End ForAll
             Catch
+                Call getErrorSession.createErrorEntity(CLASS_NAME, LOG_INFO)
                 If Not Me.suppressErrors Then Error Err, Error$
             End Try
         End If
@@ -1846,6 +1874,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
                     Call newMap.putPair(returnVal)
                 End If
             Catch
+                Call getErrorSession.createCustomErrorEntity(CLASS_NAME, Error$() & | (iteration | & i & |)|, 0, 0, LOG_INFO)
                 If Not suppressErrors Then Error Err, Error$ & " on line " & Erl
             End Try
         Loop While ++i < Me.ElementCount
@@ -1997,7 +2026,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
                     Set temp = Me.getNthValueRaw(i).toJson()
                     Call result.insertValue(Me.m_keySet.getNthElementRaw(i), temp)
                 Catch
-
+                    Call getErrorSession.createErrorEntity(CLASS_NAME, LOG_INFO)
                 End Try
             Else
                 Call result.insertValue(Me.m_keySet.getNthElementRaw(i), Me.getNthValueRaw(i))
@@ -2180,6 +2209,7 @@ If the Map contains scalars, the return type is an empty variant.
             End If
             Return assignedIndex
         Catch
+            Call getErrorSession.createErrorEntity(CLASS_NAME, LOG_INFO)
             If Not Me.suppressErrors Then Error Err, Error$
         End Try
 		'}}
@@ -2366,6 +2396,7 @@ If the Map contains scalars, the return type is an empty variant.
         Try
             Return Me.m_keySet.add(key)
         Catch
+            Call getErrorSession.createErrorEntity(CLASS_NAME, LOG_INFO)
             Error Error(), Erl()
         End Try
     End Function
@@ -2418,6 +2449,9 @@ Public Class MapFilter
 	'}}
 
 	'{{SETI_AUTHOR_CODE_MapFilter_Private_Properties
+    Private Property Get CLASS_NAME As String 
+        Return |MapFilter|
+    End Property
 	'}}
 
 
@@ -2465,6 +2499,9 @@ Public Class MapTransformer
 	'}}
 
 	'{{SETI_AUTHOR_CODE_MapTransformer_Private_Properties
+    Private Property Get CLASS_NAME As String 
+        Return |MapTransformer|
+    End Property
 	'}}
 
 
@@ -2541,6 +2578,9 @@ Public Class Pair
 	End Property
 
 	'{{SETI_AUTHOR_CODE_Pair_Private_Properties
+    Private Property Get CLASS_NAME As String 
+        Return |Pair|
+    End Property
 	'}}
 
 
