@@ -8,4 +8,5 @@ nav:
     - override.md
     - filter.md
     - transform.md
-    - archipelago.md
+    - archipelago.md 
+    - errorhandling.md

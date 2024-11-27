@@ -11,3 +11,4 @@ How-to guides instruct users in completing key goals and tasks related to VoltSc
 - [Filter Collection / Maps](filter.md)
 - [Transform Collections / Maps](transform.md)
 - [Use dependency management](archipelago.md)
+- [Error Handling](errorhandling.md)

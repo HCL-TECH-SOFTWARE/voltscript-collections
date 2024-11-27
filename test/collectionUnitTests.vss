@@ -153,6 +153,8 @@ Sub testBasicCollection(testRunner as TestRunner)
     Dim idex as Long
     Dim arr(2) as Variant
     Dim emptyVar as Variant
+    Dim errors as Variant 
+    
     Call testRunner.addTestSuite(testSuite)
 
     Call tryFailingCollection("", testSuite, "contentType should be a comma-delimited string of one or more explicit datatypes, or SCALAR or OBJECT")
@@ -196,6 +198,11 @@ Sub testBasicCollection(testRunner as TestRunner)
     Catch
         Call testSuite.assertEqualsString(|This collection can only accept SCALARS, passed value is EMPTY|, Error(), False)
     End Try
+
+    Call testSuite.describe(|Check last Error in ErrorSession matches last Error.|)
+    errors = getErrorSession().errors 
+    Call testSuite.assertEqualsString(|This collection can only accept SCALARS, passed value is EMPTY|, errors(Ubound(errors)).message, False)
+
     Call testSuite.describe("Check collection still has 3 elements after adding EMPTY").assertEqualsInteger(3, coll.ElementCount)
     Call coll.add("")
     Call testSuite.describe("Check collection 4 elements after adding blank string").assertEqualsInteger(4, coll.ElementCount)
@@ -346,12 +353,16 @@ Sub testStringCollection(testRunner as TestRunner)
     Call testSuite.describe("Test string collection will accept variant array with suppressErrors")
     Try
         stringColl.suppressErrors = True
+        Call getErrorSession().reset()
         Call stringColl.addAll(arr)
         Call testSuite.addResult(True, "")
     Catch
         Call testSuite.addError("", Error())
     End Try
     Call testSuite.describe("Test collection after variant array has 5 elements").assertEqualsInteger(5, stringColl.ElementCount)
+
+    Call testSuite.describe("Test no ErrorEntity instances spawned with suppressErrors enabled")
+    Call testSuite.assertEqualsLong(0, getErrorSession().errorCount)
         
 End Sub
 

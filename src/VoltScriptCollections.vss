@@ -211,9 +211,6 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 	End Property
 
 	'{{SETI_AUTHOR_CODE_Collection_Private_Properties
-    Private Property Get CLASS_NAME As String 
-        Return |Collection|
-    End Property 
 	'}}
 
 
@@ -339,6 +336,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 		'{{SETI_AUTHOR_CODE_transform_implementation
         Dim i as Long
         Dim innerTransformer as CollectionTransformer
+        Dim resetneeded as Boolean 
 
         If (Not me.hasContent) Then Exit Sub
 
@@ -349,13 +347,18 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
             Set innerTransformer = transformer
         End if
 
-        If (me.suppressErrors) Then newColl.suppressErrors = true
+        ' grab the initial suppressErrors value of newColl 
+        If (me.suppressErrors) Then 
+            If Not newColl.suppressErrors Then resetNeeded = True 
+            newColl.suppressErrors = True
+        End if 
 
         Do
             Call newColl.add(innerTransformer.transform(Me.p_Content(i)))
         Loop While ++i < Me.ElementCount
 
-        If (me.suppressErrors) Then newColl.suppressErrors = false
+        ' conditionally reset the suppressErrors of newColl 
+        If (me.suppressErrors && resetNeeded) Then newColl.suppressErrors = False  
 		'}}
 
 	End Sub
@@ -437,7 +440,7 @@ If the array values are objects, the code will try to call a toJson method on th
                     Set temp = Me.p_Content(i).toJson()
                     Call result.appendToJsonArray(temp)
                 Catch
-                    Call getErrorSession().createErrorEntity(CLASS_NAME, LOG_INFO) 
+                    If Not Me.suppressErrors Then Call getErrorSession().createErrorEntity(LOG_INFO) 
                 End Try
             Else
                 Call result.appendToJsonArray(Me.p_Content(i))
@@ -591,8 +594,7 @@ If the collection is empty it just exits the function
                 content = content & Me.p_Content(i) & delim
             Catch
                 content = content & "NOT STRINGABLE" & delim
-                Call getErrorSession.createCustomErrorEntity(CLASS_NAME, Error$() & | (content(| & i & |) NOT STRINGABLE|, 0, 0, LOG_INFO)
-
+                If Not Me.suppressErrors Then Call getErrorSession.createCustomErrorEntity(Error$() & | (content(| & i & |) NOT STRINGABLE|, 0, 0, LOG_INFO)
             End Try
         Next
 
@@ -717,7 +719,7 @@ If the collection is empty it just exits the function
 		@param	source 	Variant array or Collection of elements matching the Collection's ContentType
 
 		@return	Collection
-		@throws	This collection can only accept *ContentType*, passed value is *passedType* 	if source is different to ContentType
+		@throws	This collection can only accept *ContentType*, passed value is *passedType* if source is different to ContentType
 
 		@throws	Collection is locked 	
 	%END REM
@@ -725,6 +727,7 @@ If the collection is empty it just exits the function
 		'{{SETI_AUTHOR_CODE_addAll_implementation
         Dim origList as Variant
         Dim origElemCount as Long
+
         Call checkLocked()
 
         origList = Me.p_Content
@@ -737,7 +740,7 @@ If the collection is empty it just exits the function
                Call addArray(source)
             End If
         Catch
-            Call getErrorSession.createErrorEntity(CLASS_NAME, LOG_INFO)
+            If Not Me.suppressErrors Then Call getErrorSession.createErrorEntity(LOG_INFO)
 
             ' Reset collection
             Erase p_Content
@@ -749,9 +752,10 @@ If the collection is empty it just exits the function
                 End If
             End ForAll
             m_elementCount = origElemCount
-            ' add has already checked suppressErrors
-            Error Err, Error$
+
+            If Not Me.suppressErrors Then Error Err(), Error$() 
         End Try
+
         Return Me
 		'}}
 
@@ -815,13 +819,14 @@ If the Collection is sorted, the old elements are removed and new ones inserted 
 		@param	source 	Must match Collection's ContentType
 
 		@return	Long
-		@throws	This collection can only accept *ContentType*, passed value is *passedType* 	if source is different to ContentType
+		@throws	This collection can only accept *ContentType*, passed value is *passedType* if source is different to ContentType
 
 		@throws	Collection is locked 	
 	%END REM
 	Public Function add(source As Variant) As Long 
 		'{{SETI_AUTHOR_CODE_add_implementation
         Call checkLocked()
+ 
         Dim checkIndex as Variant
 
         Try
@@ -838,8 +843,10 @@ If the Collection is sorted, the old elements are removed and new ones inserted 
                 Return m_elementCount - 1
             End If
         Catch
-            Call getErrorSession.createErrorEntity(CLASS_NAME, LOG_INFO)
-            If Not Me.suppressErrors Then Error Err, Error$
+            If Not Me.suppressErrors Then 
+                Call getErrorSession.createErrorEntity(LOG_INFO)
+                Error Err(), Error$() 
+            End If 
         End Try
 		'}}
 
@@ -866,9 +873,9 @@ If the Collection is sorted, the old elements are removed and new ones inserted 
         Dim i as Long
         Dim temp as Variant
 
-        If (Me.isSorted) Then
+        If (Me.isSorted) Then 
             Error 1403, "insertAt is not allowed for sorted collections"
-        End If
+        End If 
 
         Try
             If Not continueAdd(source) Then Exit Function
@@ -889,14 +896,14 @@ If the Collection is sorted, the old elements are removed and new ones inserted 
             m_elementCount ++
             Return True
         Catch
-            Call getErrorSession.createErrorEntity(CLASS_NAME, LOG_INFO)
-            If Not Me.suppressErrors Then Error Err, Error$
+            If Not Me.suppressErrors Then 
+                Call getErrorSession.createErrorEntity(LOG_INFO)
+                Error Err(), Error$() 
+            End If 
         End Try
 		'}}
 
 	End Function
-
-	'{{SETI_AUTHOR_CODE_Collection_Private_Methods
 
     %REM
         Destructor
@@ -904,6 +911,10 @@ If the Collection is sorted, the old elements are removed and new ones inserted 
     Sub Delete
         Erase Me.p_Content
     End Sub
+
+
+
+	'{{SETI_AUTHOR_CODE_Collection_Private_Methods
 
     %REM
         Adds a collection to this Collection.
@@ -1119,7 +1130,7 @@ If the Collection is sorted, the old elements are removed and new ones inserted 
     %REM
         Ensures content types being passed into New function are valid
     %END REM
-    Function validateContentType() as Boolean
+    Private Function validateContentType() as Boolean
 
         Dim isOneScalar as Boolean
 
@@ -1163,10 +1174,7 @@ Public Class StringCollection As Collection
 	'{{SETI_AUTHOR_CODE_StringCollection_Private_Variables
 	'}}
 
-	'{{SETI_AUTHOR_CODE_StringCollection_Private_Properties
-    Private Property Get CLASS_NAME As String 
-        Return |StringCollection|
-    End Property     
+	'{{SETI_AUTHOR_CODE_StringCollection_Private_Properties    
 	'}}
 
 
@@ -1243,10 +1251,7 @@ Public Class CollectionFilter
 	'{{SETI_AUTHOR_CODE_CollectionFilter_Private_Variables
 	'}}
 
-	'{{SETI_AUTHOR_CODE_CollectionFilter_Private_Properties
-    Private Property Get CLASS_NAME As String 
-        Return |CollectionFilter|
-    End Property     
+	'{{SETI_AUTHOR_CODE_CollectionFilter_Private_Properties   
 	'}}
 
 
@@ -1293,9 +1298,6 @@ Public Class CollectionTransformer
 	'}}
 
 	'{{SETI_AUTHOR_CODE_CollectionTransformer_Private_Properties
-    Private Property Get CLASS_NAME As String 
-        Return |CollectionTransformer|
-    End Property 
 	'}}
 
 
@@ -1356,9 +1358,6 @@ Public Class Comparator
 	End Property
 
 	'{{SETI_AUTHOR_CODE_Comparator_Private_Properties
-    Private Property Get CLASS_NAME As String 
-        Return |Comparator|
-    End Property 
 	'}}
 
 
@@ -1525,9 +1524,6 @@ Public Class MatchingDataTypeComparator As Comparator
 	'}}
 
 	'{{SETI_AUTHOR_CODE_MatchingDataTypeComparator_Private_Properties
-    Private Property Get CLASS_NAME As String 
-        Return |MatchingDataTypeComparator|
-    End Property 
 	'}}
 
 
@@ -1720,10 +1716,8 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 
 	End Property
 
-	'{{SETI_AUTHOR_CODE_Map_Private_Properties
-    Private Property Get CLASS_NAME As String 
-        Return |Map|
-    End Property 	'}}
+	'{{SETI_AUTHOR_CODE_Map_Private_Properties	
+    '}}
 
 
 	%REM
@@ -1796,6 +1790,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 		'{{SETI_AUTHOR_CODE_fromJson_implementation
         Dim array as Variant
         If (jsonObj.childCount = 0) Then Exit Sub
+        
         If (Not jsonObj.isObject()) Then
             Error 1400, "A map can only accept an object"
         Else
@@ -1804,9 +1799,12 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
                     Call Me.put(child.label, child.scalarValue)
                 End ForAll
             Catch
-                Call getErrorSession.createErrorEntity(CLASS_NAME, LOG_INFO)
-                If Not Me.suppressErrors Then Error Err, Error$
+                If Not Me.suppressErrors Then 
+                    Call getErrorSession.createErrorEntity(LOG_INFO)
+                    Error Err(), Error$() 
+                End If 
             End Try
+
         End If
 		'}}
 
@@ -1874,9 +1872,12 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
                     Call newMap.putPair(returnVal)
                 End If
             Catch
-                Call getErrorSession.createCustomErrorEntity(CLASS_NAME, Error$() & | (iteration | & i & |)|, 0, 0, LOG_INFO)
-                If Not suppressErrors Then Error Err, Error$ & " on line " & Erl
+                If Not Me.suppressErrors Then 
+                    Call getErrorSession.createCustomErrorEntity(Error$() & | (iteration | & i & |)|, 0, 0, LOG_INFO)
+                    Error Err(), Error$() 
+                End If 
             End Try
+
         Loop While ++i < Me.ElementCount
 
         If Me.suppressErrors Then newMap.suppressErrors = False
@@ -2026,7 +2027,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
                     Set temp = Me.getNthValueRaw(i).toJson()
                     Call result.insertValue(Me.m_keySet.getNthElementRaw(i), temp)
                 Catch
-                    Call getErrorSession.createErrorEntity(CLASS_NAME, LOG_INFO)
+                    If Not Me.suppressErrors Then Call getErrorSession.createErrorEntity(LOG_INFO)
                 End Try
             Else
                 Call result.insertValue(Me.m_keySet.getNthElementRaw(i), Me.getNthValueRaw(i))
@@ -2207,10 +2208,14 @@ If the Map contains scalars, the return type is an empty variant.
                     Me.p_Values(CStr(key)) = value
                 End If
             End If
+
             Return assignedIndex
+
         Catch
-            Call getErrorSession.createErrorEntity(CLASS_NAME, LOG_INFO)
-            If Not Me.suppressErrors Then Error Err, Error$
+            If Not Me.suppressErrors Then 
+                Call getErrorSession.createErrorEntity(LOG_INFO)
+                Error Err(), Error$() 
+            End If 
         End Try
 		'}}
 
@@ -2341,13 +2346,16 @@ If the Map contains scalars, the return type is an empty variant.
 
 	End Function
 
-	'{{SETI_AUTHOR_CODE_Map_Private_Methods
     %REM
         Destructor
     %END REM
     Sub Delete
         Erase p_Values
     End Sub
+    
+
+	'{{SETI_AUTHOR_CODE_Map_Private_Methods
+
 
     %REM
         Can be removed once we have OrElse
@@ -2370,41 +2378,69 @@ If the Map contains scalars, the return type is an empty variant.
     %END REM
     Private Function continueAdd(source as Variant) as Boolean
         Dim actualType as String
+
         actualType = TypeName(source)
-        If (Me.m_contentType = "SCALAR") Then
-            If (Not isScalar(source)) Then Error 1400, |This map can only accept SCALARS, passed value is | & actualType
-            If (isEmpty(source)) Then Error 1400, |This map can only accept SCALARS, passed value is | & actualType
-        ElseIf (Me.m_contentType = "OBJECT") Then
-            If (Not isObject(source)) Then Error 1400, |This map can only accept OBJECTS, passed value is | & actualType
-            If (source is Nothing) Then Error 1400, |This map can only accept SCALARS, passed value is NOTHING|
-        Else
-            ForAll ct in Me.p_allowedContents
-                If (actualType = ct) Then
-                    Return True
-                End If
-            End ForAll
-            Error 1400, |This map can only accept | & Me.m_contentType & |, passed value is | & actualType
-        End If
+    
+        If Me.suppressErrors Then 
+            If (Me.m_contentType = "SCALAR") Then
+                If (Not isScalar(source)) Then Return False 
+                If (isEmpty(source)) Then Return False 
+
+            ElseIf (Me.m_contentType = "OBJECT") Then
+                If (Not isObject(source)) Then Return False 
+                If (source is Nothing) Then Return False 
+
+            Else
+                ForAll ct in Me.p_allowedContents
+                    If (actualType = ct) Then
+                        Return True
+                    End If
+                End ForAll
+
+                Return False 
+            End If
+
+        Else 
+            If (Me.m_contentType = "SCALAR") Then
+                If (Not isScalar(source)) Then Error 1400, |This map can only accept SCALARS, passed value is | & actualType
+                If (isEmpty(source)) Then Error 1400, |This map can only accept SCALARS, passed value is | & actualType
+
+            ElseIf (Me.m_contentType = "OBJECT") Then
+                If (Not isObject(source)) Then Error 1400, |This map can only accept OBJECTS, passed value is | & actualType
+                If (source is Nothing) Then Error 1400, |This map can only accept SCALARS, passed value is NOTHING|
+
+            Else
+                ForAll ct in Me.p_allowedContents
+                    If (actualType = ct) Then
+                        Return True
+                    End If
+                End ForAll
+
+                Error 1400, |This map can only accept | & Me.m_contentType & |, passed value is | & actualType
+            End If
+        End If 
 
         Return true
     End Function
 
     %REM
-        Will return true if the key can be added or already exists in the Collection
+        Will return a value if the key can be added or already exists in the Collection
     %END REM
     Private Function getAssignedIndex(key as Variant) as Long
         Try
             Return Me.m_keySet.add(key)
         Catch
-            Call getErrorSession.createErrorEntity(CLASS_NAME, LOG_INFO)
-            Error Error(), Erl()
+            If Not Me.suppressErrors Then 
+                Call getErrorSession.createErrorEntity(LOG_INFO)
+                Error Err(), Error$() 
+            End If 
         End Try
     End Function
 
     %REM
         Ensures content types being passed into New function are valid
     %END REM
-    Function validateContentType() as Boolean
+    Private Function validateContentType() as Boolean
 
         Dim isOneScalar as Boolean
 
@@ -2415,10 +2451,13 @@ If the Map contains scalars, the return type is an empty variant.
             Select Case ct
             Case "NULL","EMPTY","VARIANT","NOTHING","ARRAY","LIST":
                 Error 1400, "Invalid data type for Collection: " & ct
+
             Case "SCALAR":
                 If (UBound(Me.p_allowedContents) > 0) Then Error 1400, "SCALAR cannot be mixed with other datatypes"
+
             Case "STRING","INTEGER","LONG","SINGLE","DOUBLE","CURRENCY","DATE/TIME","BOOLEAN","BYTE":
                 isOneScalar = True
+
             Case Else:
                 If (ct = "OBJECT") Then
                     If (UBound(Me.p_allowedContents) > 0) Then Error 1400, "OBJECT cannot be mixed with other datatypes"
@@ -2430,6 +2469,7 @@ If the Map contains scalars, the return type is an empty variant.
         If (Me.p_isObjects And isOneScalar) Then
             Error 1400, "Invalid mixture of scalar and object datatypes"
         End If
+
         Return True
 
     End Function
@@ -2449,9 +2489,6 @@ Public Class MapFilter
 	'}}
 
 	'{{SETI_AUTHOR_CODE_MapFilter_Private_Properties
-    Private Property Get CLASS_NAME As String 
-        Return |MapFilter|
-    End Property
 	'}}
 
 
@@ -2499,9 +2536,6 @@ Public Class MapTransformer
 	'}}
 
 	'{{SETI_AUTHOR_CODE_MapTransformer_Private_Properties
-    Private Property Get CLASS_NAME As String 
-        Return |MapTransformer|
-    End Property
 	'}}
 
 
@@ -2578,9 +2612,6 @@ Public Class Pair
 	End Property
 
 	'{{SETI_AUTHOR_CODE_Pair_Private_Properties
-    Private Property Get CLASS_NAME As String 
-        Return |Pair|
-    End Property
 	'}}
 
 

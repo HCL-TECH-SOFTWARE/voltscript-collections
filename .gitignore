@@ -14,3 +14,6 @@ vses/*
 libs/*
 internal-atlas.json
 *_UNMERGED.vss
+
+# vscode 
+.vscode/* 
