@@ -30,6 +30,9 @@ Use "../libs/VoltScriptLogging"
 
 
 '{{SETI_AUTHOR_CODE_VoltScriptCollections_Private_Constants
+Private Const ERR_COLLECTION_ADD_FAILED =   1020
+Private Const MSG_COLLECTION_ADD_FAILED =   |One or more errors occured while adding elements to the collection.  |
+
 '}}
 
 '{{SETI_AUTHOR_CODE_VoltScriptCollections_Private_Variables
@@ -225,7 +228,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
         Call checkLocked()
 
         Erase Me.p_Content
-        m_elementCount = 0
+        Me.m_elementCount = 0
         Me.p_isCollReversed = false
 		'}}
 
@@ -440,7 +443,7 @@ If the array values are objects, the code will try to call a toJson method on th
                     Set temp = Me.p_Content(i).toJson()
                     Call result.appendToJsonArray(temp)
                 Catch
-                    If Not Me.suppressErrors Then Call getErrorSession().createErrorEntity(LOG_INFO) 
+                    If Not Me.suppressErrors Then Call getErrorSession().createErrorEntry(LOG_INFO) 
                 End Try
             Else
                 Call result.appendToJsonArray(Me.p_Content(i))
@@ -527,7 +530,7 @@ If the collection is empty it just exits the function
         End If
 
         Erase p_content(Me.ElementCount - 1)
-        m_elementCount--
+        Me.m_elementCount--
         Return tempVal
 		'}}
 
@@ -567,7 +570,7 @@ If the collection is empty it just exits the function
         Else
             Erase Me.p_Content("0")
         End If
-        m_elementCount--
+        Me.m_elementCount--
         Return tempVal
 		'}}
 
@@ -594,7 +597,7 @@ If the collection is empty it just exits the function
                 content = content & Me.p_Content(i) & delim
             Catch
                 content = content & "NOT STRINGABLE" & delim
-                If Not Me.suppressErrors Then Call getErrorSession.createCustomErrorEntity(Error$() & | (content(| & i & |) NOT STRINGABLE|, 0, 0, LOG_INFO)
+                If Not Me.suppressErrors Then Call getErrorSession.createCustomErrorEntry(Error$() & | (content(| & i & |) NOT STRINGABLE|, 0, 0, LOG_INFO)
             End Try
         Next
 
@@ -658,7 +661,7 @@ If the collection is empty it just exits the function
                     Call insertIntoContent(Me.p_Content(i), tempSize)
                     Erase Me.p_Content(i)
                 End If
-                tempSize++ ' Running count of new m_elementCount
+                tempSize++ ' Running count of new Me.m_elementCount
             Else
                 ' Remove value, increment count of removed, and set matchRemoved to True if we are not removing all matches
                 Erase Me.p_Content(i)
@@ -725,6 +728,7 @@ If the collection is empty it just exits the function
 	%END REM
 	Public Function addAll(source As Variant) As Collection 
 		'{{SETI_AUTHOR_CODE_addAll_implementation
+
         Dim origList as Variant
         Dim origElemCount as Long
 
@@ -740,8 +744,6 @@ If the collection is empty it just exits the function
                Call addArray(source)
             End If
         Catch
-            If Not Me.suppressErrors Then Call getErrorSession.createErrorEntity(LOG_INFO)
-
             ' Reset collection
             Erase p_Content
             ForAll elem in origList
@@ -751,9 +753,9 @@ If the collection is empty it just exits the function
                     p_Content(ListTag(elem)) = elem
                 End If
             End ForAll
-            m_elementCount = origElemCount
+            Me.m_elementCount = origElemCount
 
-            If Not Me.suppressErrors Then Error Err(), Error$() 
+            Error Err(), Error$() 
         End Try
 
         Return Me
@@ -839,14 +841,14 @@ If the Collection is sorted, the old elements are removed and new ones inserted 
                     checkIndex = Me.getIndex(source)
                     If (Not IsNull(checkIndex)) Then Return checkIndex
                 End If
-                Call insertIntoContent(source, m_elementCount++)
-                Return m_elementCount - 1
+                Call insertIntoContent(source, Me.m_elementCount++)
+                Return Me.m_elementCount - 1
             End If
         Catch
-            If Not Me.suppressErrors Then 
-                Call getErrorSession.createErrorEntity(LOG_INFO)
-                Error Err(), Error$() 
-            End If 
+            If Me.suppressErrors Then Return -1 
+
+            Call getErrorSession.createErrorEntry(LOG_INFO)
+            Error Err(), Error$() 
         End Try
 		'}}
 
@@ -893,11 +895,11 @@ If the Collection is sorted, the old elements are removed and new ones inserted 
 
             Call insertIntoContent(source, index)
 
-            m_elementCount ++
+            Me.m_elementCount ++
             Return True
         Catch
             If Not Me.suppressErrors Then 
-                Call getErrorSession.createErrorEntity(LOG_INFO)
+                Call getErrorSession.createErrorEntry(LOG_INFO)
                 Error Err(), Error$() 
             End If 
         End Try
@@ -923,13 +925,25 @@ If the Collection is sorted, the old elements are removed and new ones inserted 
     Private Sub addCollection(source as Variant)
         Dim idex as Long
         Dim passedColl as Collection
+        Dim errorcount as Integer 
 
         Set passedColl = source
-        If (Not passedColl.hasContent) Then Exit Sub
+        If passedColl.hasContent Then
+            errorcount = getErrorSession().errorcount
 
-        Do
-            Call Me.add(passedColl.getNthElementRaw(idex))
-        Loop While ++idex < passedColl.elementCount
+            Do
+                Try 
+                    Call Me.add(passedColl.getNthElementRaw(idex))
+                Catch 
+                    ' Error has already been added to the ErrorSession by add() method.
+                    Call globalLogSession.createLogEntry(LOG_INFO, |Collection Index: | & idex, ||)
+                End Try 
+
+            Loop While ++idex < passedColl.elementCount
+
+            If (getErrorSession().errorcount > errorcount) Then Error ERR_COLLECTION_ADD_FAILED, MSG_COLLECTION_ADD_FAILED
+        End If 
+
     End Sub
 
     %REM
@@ -939,14 +953,21 @@ If the Collection is sorted, the old elements are removed and new ones inserted 
     Private Sub addArray(source as Variant)
         Dim actualType as String
         Dim idex as Integer
+        Dim errorcount as Integer 
 
-        If (IsEmpty(source) || (Not IsArray(source))) Then
-            Error 1400, "Source must be an array, passed " & TypeName(source)
-        End If
+        If (IsEmpty(source) || (Not IsArray(source))) Then Error 1400, "Source must be an array, source type: " & TypeName(source)
 
+        errorcount = getErrorSession().errorcount         
         For idex = 0 To UBound(source)
-            Me.add(source(idex))
+            Try 
+                Call Me.add(source(idex))
+            Catch 
+                ' Error has already been added to the ErrorSession by add() method.
+                Call globalLogSession.createLogEntry(LOG_INFO, |Collection Index: | & idex, ||)
+           End Try 
         Next
+
+        If (getErrorSession().errorcount > errorcount) Then Error ERR_COLLECTION_ADD_FAILED, MSG_COLLECTION_ADD_FAILED
 
     End Sub
 
@@ -1084,14 +1105,15 @@ If the Collection is sorted, the old elements are removed and new ones inserted 
     %REM
         Inserts an element into a sorted list at the relevant position
         @param source           To insert into the List
+        @return 
     %END REM
-    Private Function insertSorted(source as Variant) as Boolean
+    Private Function insertSorted(source as Variant) as Long
         Dim pos as Long
         Dim i as Long
         Dim checkIndex as Variant
 
         If (Not Me.hasContent) Then
-            Call insertIntoContent(source, m_elementCount++)
+            Call insertIntoContent(source, Me.m_elementCount++)
             Return 0
         End If
 
@@ -1111,7 +1133,7 @@ If the Collection is sorted, the old elements are removed and new ones inserted 
             Next
             Call insertIntoContent(source, pos)
         End If
-        m_elementCount++
+        Me.m_elementCount++
         Return pos
 
     End Function
@@ -1800,7 +1822,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
                 End ForAll
             Catch
                 If Not Me.suppressErrors Then 
-                    Call getErrorSession.createErrorEntity(LOG_INFO)
+                    Call getErrorSession.createErrorEntry(LOG_INFO)
                     Error Err(), Error$() 
                 End If 
             End Try
@@ -1873,7 +1895,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
                 End If
             Catch
                 If Not Me.suppressErrors Then 
-                    Call getErrorSession.createCustomErrorEntity(Error$() & | (iteration | & i & |)|, 0, 0, LOG_INFO)
+                    Call getErrorSession.createCustomErrorEntry(Error$() & | (iteration | & i & |)|, 0, 0, LOG_INFO)
                     Error Err(), Error$() 
                 End If 
             End Try
@@ -2027,7 +2049,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
                     Set temp = Me.getNthValueRaw(i).toJson()
                     Call result.insertValue(Me.m_keySet.getNthElementRaw(i), temp)
                 Catch
-                    If Not Me.suppressErrors Then Call getErrorSession.createErrorEntity(LOG_INFO)
+                    If Not Me.suppressErrors Then Call getErrorSession.createErrorEntry(LOG_INFO)
                 End Try
             Else
                 Call result.insertValue(Me.m_keySet.getNthElementRaw(i), Me.getNthValueRaw(i))
@@ -2213,7 +2235,7 @@ If the Map contains scalars, the return type is an empty variant.
 
         Catch
             If Not Me.suppressErrors Then 
-                Call getErrorSession.createErrorEntity(LOG_INFO)
+                Call getErrorSession.createErrorEntry(LOG_INFO)
                 Error Err(), Error$() 
             End If 
         End Try
@@ -2431,7 +2453,7 @@ If the Map contains scalars, the return type is an empty variant.
             Return Me.m_keySet.add(key)
         Catch
             If Not Me.suppressErrors Then 
-                Call getErrorSession.createErrorEntity(LOG_INFO)
+                Call getErrorSession.createErrorEntry(LOG_INFO)
                 Error Err(), Error$() 
             End If 
         End Try

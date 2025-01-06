@@ -102,6 +102,37 @@ Class PersonTransformer as CollectionTransformer
 
 End Class
 
+
+Class LogValidator as BaseLogWriter
+
+    Public expected as Variant
+
+    Sub New(), BaseLogWriter("LogValidator", LOG_DEBUG, LOG_ERROR, "{{MESSAGE}}")
+    End Sub
+
+    Sub outputMessage(msg as String)
+        
+    End Sub
+
+    Function getUnexpectedMessage() as String
+        Dim elem as Integer
+        Dim temp as variant
+        Dim logEntry as LogEntry
+        temp = globalLogSession.entryIDs    ' Need to cast before doing ForAll
+        ForAll msg in temp
+            Set logEntry = globalLogSession.getLogEntryByID(CStr(msg))
+            If logEntry.message = expected(elem) Then
+                elem++
+            Else
+                Return logEntry.message
+            End If
+        End ForAll
+        Return ""
+    End Function
+
+End Class
+
+
 Public Function runCollectionTests as Boolean
     Dim testRunner as New TestRunner("Test Collections")
     Call testRunner.setOutputFormat("BOTH")
@@ -288,9 +319,9 @@ Sub testAddingCollection(testRunner as TestRunner)
 End Sub
 
 Sub testStringCollection(testRunner as TestRunner)
-
     Dim testSuite as New TestSuite("Test String collection")
     Call testRunner.addTestSuite(testSuite)
+  
     Dim StringColl as New Collection("STRING", Nothing, True, False)
     Dim mixedColl as New Collection("SCALAR", Nothing, False, False)
 
@@ -323,16 +354,19 @@ Sub testStringCollection(testRunner as TestRunner)
         Call testSuite.addResult(False, "Did not throw error")
     Catch
         Call testSuite.addResult(True, "")
+        Call testSuite.describe("Test adding elements to collection error").assertEqualsString(Trim$(Error$()), "One or more errors occured while adding elements to the collection.", True)
+        Call testSuite.describe("POST ERROR: Test LastEntry.message is 'Collection Index: 1'").assertEqualsString(globalLogSession.lastEntry.message, "Collection Index: 1", True)
     End Try
-    Call testSuite.describe("Test collection after variant coll elements has 2 elements").assertEqualsInteger(2, stringColl.ElementCount)
 
+    Call testSuite.describe("Test collection after variant coll elements has 2 elements").assertEqualsInteger(2, stringColl.ElementCount)
     Call testSuite.describe("Test string collection will only accept strings from variant collection")
     Try
         stringColl.suppressErrors = True
         Call stringColl.addAll(mixedColl)
         Call testSuite.addResult(True, "")
+        Call testSuite.describe("SUPPRESS ERRORS: Test LastEntry.message is 'Collection Index: 1'").assertEqualsString(globalLogSession.lastEntry.message, "Collection Index: 1", True)
     Catch
-        Call testSuite.addResult(False, "")
+        Call testSuite.addResult(False, "Should not have thrown an Error")
     End Try
     Call testSuite.describe("Test collection after variant coll elements has 4 elements").assertEqualsInteger(4, stringColl.ElementCount)
 
@@ -825,7 +859,7 @@ Function testFromJson(testRunner as TestRunner)
     Call testSuite.describe("Loading from JsonObject array")
     Try
         Call coll.fromJson(jsonObj)
-        Call testSuite.addResult(true, "")
+        Call testSuite.addResult(True, "")
     Catch
         Call testSuite.addError("Error " & Error() & " on line " & Erl(), "")
     End Try
@@ -849,7 +883,7 @@ Currently causes crash
     Call badJson.appendToJsonArray(jsonObj)
     Call testSuite.describe("Try loading from JsonObject array of objects")
     Try
-        Call coll.fromJson(badJson)
+        Call coll.fromJson(badJson)   ' < ---- THIS LINE CAUSES Crash, cause documented in Jira ticket #MXOP-22406
         Call testSuite.addResult(false, "")
     Catch
         Call testSuite.addResult(true, "")
