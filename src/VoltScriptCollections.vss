@@ -936,7 +936,7 @@ If the Collection is sorted, the old elements are removed and new ones inserted 
                     Call Me.add(passedColl.getNthElementRaw(idex))
                 Catch 
                     ' Error has already been added to the ErrorSession by add() method.
-                    Call globalLogSession.createLogEntry(LOG_INFO, |Collection Index: | & idex, ||)
+                    Call globalLogSession.createLogEntry(LOG_INFO, |Collection Index: | & idex, ||, Nothing)
                 End Try 
 
             Loop While ++idex < passedColl.elementCount
@@ -963,7 +963,7 @@ If the Collection is sorted, the old elements are removed and new ones inserted 
                 Call Me.add(source(idex))
             Catch 
                 ' Error has already been added to the ErrorSession by add() method.
-                Call globalLogSession.createLogEntry(LOG_INFO, |Collection Index: | & idex, ||)
+                Call globalLogSession.createLogEntry(LOG_INFO, |Collection Index: | & idex, ||, Nothing)
            End Try 
         Next
 
