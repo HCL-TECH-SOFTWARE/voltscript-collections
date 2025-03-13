@@ -1,6 +1,7 @@
 nav:
     - index.md
     - why.md
+    - valid.md
     - Sorting and Comparators: sorting.md
-    - size_and_performance.md
     - pair.md
+    - size_and_performance.md

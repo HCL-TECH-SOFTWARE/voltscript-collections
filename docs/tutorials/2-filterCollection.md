@@ -48,7 +48,7 @@ Function createPerson(firstName as String, lastName as String, age as Integer) a
     Set createPerson = new Person()
     createPerson.firstName = firstName
     createPerson.lastName = lastName
-    createPerson.age = age ' (1)
+    createPerson.age = age ' (1)!
 
 End Function
 ```
@@ -93,7 +93,7 @@ Class PersonComparator as Comparator
 
         Set person1 = source
         Set person2 = target
-        If (person1.age < person2.age) Then ' (1)!
+        If (person1.age < person2.age) Then 
             Return -1
         ElseIf (person1.age > person2.age) Then
             Return 1
@@ -250,6 +250,6 @@ After declaring variables you use `Do...Loop While` to iterate the Collection an
 !!! note
     There are quite a few iterations of the initial Collection here. The code could be streamlined, if nothing more than the incoming Collection and outgoing printout were required. But the example shows using the broad variety of the Collection class functionality.
 
-<a href="../../example_code/people-coll.txt" target="_new">Example Code</a>
+<a href="../example_code/people-coll.txt" target="_new">Example Code</a>
 
 *[empty constructor]: "New" method that takes no arguments, i.e. Sub New()

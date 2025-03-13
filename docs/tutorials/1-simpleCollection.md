@@ -6,7 +6,7 @@ With the following code you can create an unsorted, non-unique Collection and pr
 
 ```vbscript linenums="1"
 Dim coll as New Collection("SCALAR", Nothing, False, False)
-Dim i as Long ' (1)
+Dim i as Long ' (1)!
 Dim j as Long
 Dim dbls(3) as Double
 
@@ -103,4 +103,4 @@ Hello
 1
 ```
 
-<a href="../../example_code/basic-coll.txt" target="_new">Example Code</a>
+<a href="../example_code/basic-coll.txt" target="_new">Example Code</a>

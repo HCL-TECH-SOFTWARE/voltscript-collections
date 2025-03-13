@@ -100,7 +100,8 @@ edit_uri: ""
 
 # Customization
 extra_css:
-  - /voltscript-collections/assets/css/style.css
+  - assets/css/style.css
+
 watch:
   - docs/includes/glossary.md
 

@@ -4,7 +4,7 @@
 
 Collections store their content in an internal Variant List. The ListTag (key) is the position (zero-indexed), as a Long. The value is the value being put into the collection. This means a collection can surpass the bounds of an array, does not need to have its size redeclared when adding elements, but is still performant.
 
-The downside is that when removing values, all subsequent entries need their ListTag updating.
+The downside is that when removing values, all subsequent entries need their ListTag to be updated.
 
 Maps use a collection (with an internal Variant List) for the keys, and an internal Variant List for the values. The map's List of values has the key as its ListTag and the value as the value. Thus the map is a List, with a separate List for its order.
 

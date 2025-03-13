@@ -72,7 +72,7 @@ Class PersonFilter as MapFilter
 End Class
 ```
 
-For the Collection, you created a Comparator to sort the Person objects. But the Comparator for a Map compares the keys, not the values. And the keys must be a scalar value. But it must also be unique. You're filtering out people at a maximum age threshold of 80, so you know the age will be a maximum of two digits. If you force the age to two digits, add a separator, then the full name, another separator, then the ID - this will give you a unique key to allow you to sort alphabetically on age, then name. For maximum efficiency, you can use the `MatchingDataTypeComparator`.
+For the Collection, you created a Comparator to sort the Person objects. But the Comparator for a Map compares the keys, not the values. Each key must be a scalar value, and must also be unique. You're filtering out people at a maximum age threshold of 80, so you know the age will be a maximum of two digits. If you force the age to two digits, add a separator, then the full name, another separator, then the ID - this will give you a unique key to allow you to sort alphabetically on age, then name. For maximum efficiency, you can use the `MatchingDataTypeComparator`.
 
 ### Passing to the Sorted Map
 
@@ -175,4 +175,4 @@ Loop While ++i < sortedPersonMap.elementCount
 
 On the first line, you create a map to hold the transformed objects, then you create the PersonTransformer. On line 5, you perform the transformation. Then you iterate through the Map, printing out the details.
 
-<a href="../../example_code/people-map.txt" target="_new">Example Code</a>
+<a href="../example_code/people-map.txt" target="_new">Example Code</a>

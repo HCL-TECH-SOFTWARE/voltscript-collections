@@ -19,12 +19,7 @@ Map keys can be any scalar value, but cannot be objects. If combining properties
 
 ## Defining Content Type(s)
 
-The content type is a string. You cannot use "NULL", "EMPTY", "VARIANT", "NOTHING", "ARRAY" or "LIST". It is checked in `continueAdd()` function and will be compared to the result of `TypeName(value)`, where value is the variable being added to the collection or map. The string can be:
-
-- A single datatype or class name.
-- "SCALAR", to match any scalar value (e.g. String, Integer, Double, Boolean etc).
-- "OBJECT", to match any non-scalar value, any instance of a Class.
-- A comma-delimited list of datatype(s) or class name(s).
+The content type is a string. You cannot use "NULL", "EMPTY", "VARIANT", "NOTHING", "ARRAY" or "LIST". It is checked in `continueAdd()` function and will be compared to the result of `TypeName(value)`, where value is the variable being added to the collection or map. Additional details can be found in [Valid Content Types](../topicguides/valid.md).
 
 `TypeName()` only returns the specific class used, there is no way to identify all parent classes of a derived class. As a result, you must include all explicit class names in the instantiation.
 

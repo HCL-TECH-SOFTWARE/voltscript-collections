@@ -38,7 +38,7 @@ Loop While ++i < map.elementCount
 You can't change this Map to be sorted. But to sort the elements, you can create a new sorted Map and copy all the elements across. 
 
 ```vbscript
-Dim map2 = New Map("STRING", Nothing, False) '(1)!
+Dim map2 = New Map("STRING", Nothing, True) ' (1)!
 Call map2.putAll(map)
 ```
 
@@ -92,4 +92,4 @@ In the first if statement, you try to return the value for a passed key and chec
 
     The `contains` methods will need to iterate and use a Comparator in order to try to return an answer. `getValueRawByKey()` will just go directly to the element matching that key.
 
-<a href="../../example_code/basic-map.txt" target="_new">Example Code</a>
+<a href="../example_code/basic-map.txt" target="_new">Example Code</a>
