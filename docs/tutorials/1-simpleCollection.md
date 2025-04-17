@@ -65,7 +65,7 @@ Call coll2.add("Hello")
 
 When you iterate this Collection, the numeric values will be inserted at the start of the Collection and the strings at the end. Integers and doubles will be treated as the same data-type, so 2.5 will appear between 2 and 3. The duplicate "Hello" will be ignored. When you iterate the Collection to print the values out, you will get:
 
-```
+```bash
 1
 2
 2.5
@@ -93,7 +93,7 @@ Loop While ++i < coll.ElementCount
 
 This will now print:
 
-```
+```bash
 World
 Hello
 3

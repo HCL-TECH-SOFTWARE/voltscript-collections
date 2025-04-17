@@ -1,4 +1,4 @@
-# Sorting and Comparators
+# Sorting and Comparators
 
 The VoltScript collections and maps are not sorted as a retrieval operation but ordered during insertion.
 
@@ -10,7 +10,7 @@ By default entries are ordered on insertion order. The first entry added will be
 
 To override insertion order, the developer needs to do two things:
 
-- The `isSorted` argument in the collection or map's constructor must be set to `True` (e.g. `Dim coll as New Collection("SCALAR", Nothing, False, True)`) 
+- The `isSorted` argument in the collection or map's constructor must be set to `True` (e.g. `Dim coll as New Collection("SCALAR", Nothing, False, True)`)
 - The collection or map needs a Comparator passing as the second argument. If `Nothing` is passed, an instance of the base Comparator class will be used, see [below](#base-comparator).
 
 The collection does not define whether it is ordered ascending or descending (e.g. for strings A-Z vs Z-A, for numbers 1 to 1000 vs 1000 to 1). This is defined using the argument when creating the Comparator instance (e.g. `Dim comp as New Comparator(False)` orders ascending, `Dim comp as New Comparator(True)` orders descending).

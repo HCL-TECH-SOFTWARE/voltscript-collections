@@ -18,7 +18,7 @@ You'll need a [Personal Access Token](https://help.hcltechsw.com/docs/voltscript
         "type": "marketplace",
         "username": "YOUR_USERNAME",
         "password": "YOUR_PASSWORD",
-        "authUrl": "https://accounts.auth.hclvoltmx.net/login"
+        "authUrl": "https://accounts.auth.demo-hclvoltmx.net/login"
     }
 ```
 
@@ -27,6 +27,11 @@ You'll need a [Personal Access Token](https://help.hcltechsw.com/docs/voltscript
 You'll need to add the following to your **repositories** object in the `atlas.json` of your project:
 
 ```json
+    {
+        "id": "volt-mx-marketplace",
+        "type": "marketplace",
+        "url": "https://community.demo-hclvoltmx.com/marketplace"
+    },
     {
         "id": "hcl-github",
         "type": "github",
@@ -41,7 +46,7 @@ You'll need to add the following relevant dependency to your **dependencies** or
 ```json
     {
         "library": "voltscript-collections",
-        "version": "1.0.4",
+        "version": "1.0.5",
         "module": "VoltScriptCollections.vss",
         "repository": "hcl-github"
     }

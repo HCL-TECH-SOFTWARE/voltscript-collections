@@ -7,4 +7,3 @@ Topic guides discuss and explain topics and concepts about VoltScript Collection
 - [Sorting](sorting.md)
 - [Pair Class](pair.md)
 - [Understanding Collection Sorting Performance](size_and_performance.md)
-

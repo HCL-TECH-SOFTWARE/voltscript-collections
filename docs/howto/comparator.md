@@ -10,7 +10,7 @@ The first step is to create the constructor. A constructor is required because t
 
 The `compare()` function just needs to be coded for ascending comparison, that is A-Z, 0 to 9. The base class's `compareAscDesc()` function handles flipping the result if the comparator should be sorted descending or the collection is reversed.
 
-There are private `compareDataType()` and `compareMatchingDataType()` functions in the base class which can be called to avoid having to manually code comparisons, and these takes the same arguments as the `compare()` function. 
+There are private `compareDataType()` and `compareMatchingDataType()` functions in the base class which can be called to avoid having to manually code comparisons, and these takes the same arguments as the `compare()` function.
 
 !!! note
     For more details on how these handle different data types, see [Base Comparator](../topicguides/sorting.md#base-comparator) and [MatchingDataType Comparator](../topicguides/sorting.md#matchingdatatypecomparator).

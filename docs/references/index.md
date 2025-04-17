@@ -4,7 +4,8 @@ References provide technical references and descriptions for VoltScript Collecti
 
 ## What's new
 
-Check the [latest information](whatsnew.md) about VoltScript Collections. 
+Check the [latest information](whatsnew.md) about VoltScript Collections.
+
 ## Repository structure
 
 - All the code for the framework itself is in `src/VoltScriptCollections.vss`.
@@ -12,7 +13,7 @@ Check the [latest information](whatsnew.md) about VoltScript Collections.
 - `runAllTests.vss` is a script file that can be run to verify all tests pass. Output will be written to `unit-test-reports` directory.
 index.md
 
-## API Documentation
+## API Documentation
 
 [Full API Documentation for VoltScript Collections](./apidocs/index.html){: target="_blank" rel="noopener noreferrer"}
 
@@ -34,7 +35,6 @@ index.md
     - [Source code](https://github.com/HCL-TECH-SOFTWARE/voltscript-json-converter){: target="_blank" rel="noopener noreferrer"}
 - VoltScript Console Colors
     - [Source code](https://github.com/HCL-TECH-SOFTWARE/voltscript-console-colors){: target="_blank" rel="noopener noreferrer"}
-    <!-- [Documentation](https://opensource.hcltechsw.com/voltscript-console-colors){: target="_blank" rel="noopener noreferrer"}-->
 - VoltScript Interface Designer
     - [Documentation](https://opensource.hcltechsw.com/voltscript-interface-designer){: target="_blank" rel="noopener noreferrer"}
 - VoltScript Volt MX Middleware

@@ -1,6 +1,6 @@
 # Simple map examples
 
-## Unsorted Map
+## Unsorted Map
 
 There are many examples of unsorted maps across all technologies, whether that be Java HashMaps, JSON objects or even various settings files. With the following code you can create an unsorted Map and print out the contents:
 
@@ -35,7 +35,8 @@ Loop While ++i < map.elementCount
 ```
 
 ## Sorted Map
-You can't change this Map to be sorted. But to sort the elements, you can create a new sorted Map and copy all the elements across. 
+
+You can't change this Map to be sorted. But to sort the elements, you can create a new sorted Map and copy all the elements across.
 
 ```vbscript
 Dim map2 = New Map("STRING", Nothing, True) ' (1)!

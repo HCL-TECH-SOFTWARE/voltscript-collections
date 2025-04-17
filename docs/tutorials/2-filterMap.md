@@ -1,6 +1,6 @@
 # Filters, Transformers, Custom Comparators
 
-## Person Class
+## Person Class
 
 Imagine you have a class like so:
 

@@ -3,8 +3,8 @@
 !!! warning
     VoltScript is designed for middleware, so any data has to be retrieved over HTTP(S). As a result, optimizing performance for large collections is not a priority for the framework, because performance will always be compromised for large collections in retrieving the data from whatever database it resides in and / or sending the data to the end user. <br/><br/>
     This means you need to work with smaller sets of data to maximize performance.
-    
-Historically, the core LotusScript and VoltScript languages have had **Arrays** and **Lists**. 
+
+Historically, the core LotusScript and VoltScript languages have had **Arrays** and **Lists**.
 
 !!! note "Arrays vs Lists"
     <div style="float:left;display:inline;width:48%">
@@ -27,7 +27,7 @@ Historically, the core LotusScript and VoltScript languages have had **Arrays** 
     - Requires `Erase` to remove an element or the entire list from memory.
     </div>
 
-While Arrays and Lists are very useful, they are not as robust as the collection handling found in modern programming languages. 
+While Arrays and Lists are very useful, they are not as robust as the collection handling found in modern programming languages.
 
 ## VoltScript Collections classes
 
@@ -47,7 +47,7 @@ The two primary classes which most closely resemble Arrays and Lists are are **C
 !!! info "Collection vs Map"
     <div style="float:left;display:inline;width:48%">
     **Collection** <br/>
-    - can contain *almost* any data type, including class instances.<br/> 
+    - can contain *almost* any data type, including class instances.<br/>
     - elements can be sorted or unsorted.<br/>
     - elements can be unique or non unique.<br/>
     - are 0 indexed.<br/>
@@ -56,14 +56,13 @@ The two primary classes which most closely resemble Arrays and Lists are are **C
     </div>
     <div style="float:right;display:inline;width:48%">
     **Map**<br/>
-    - can contain *almost* any data type, including class instances.<br/> 
+    - can contain *almost* any data type, including class instances.<br/>
     - are keyed using VoltScript scalars (`String`, `Integer`, `Long`, `Single`, etc)
     - have unique keys.<br/>
     - uses `contains()` to check for element existence.<br/>
     - allow access based on key, or *indirectly* by using one of the `getNthXXX` or `getAndRemoveXXX` methods.<br/>
     - elements can be removed by using one of the `removeByXXX` methods.
     </div>
-
 
 Some of the common operations for Collections and Maps are:
 
@@ -77,4 +76,3 @@ Some of the common operations for Collections and Maps are:
 - `collectKeys()` method to retrieve map keys as a collection.
 - `getAndRemoveFirst()` methods to provide the functionality of a Queue (FIFO).
 - `getAndRemoveLast()` methods to provide the functionality of a Stack (LIFO).
-

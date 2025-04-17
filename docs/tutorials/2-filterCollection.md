@@ -1,6 +1,6 @@
 # Filters, Transformers, Custom Comparators and Custom Collections
 
-## Person Class
+## Person Class
 
 Imagine you have a class like so:
 
@@ -38,7 +38,7 @@ Call personColl.add(createPerson("Ben", "Doe", 10))
 
 On the first line, you create a Collection that will only accept `Person` objects, but will be non-unique and unsorted.
 
-Imagine the feed of data you have is based on a family tree format: Dennis and Denise had twins - William and Fred; William did not marry, but Fred married Frances and had two sons, John and Ken; John married Jane and had two children; Ken married Karen and had three children. 
+Imagine the feed of data you have is based on a family tree format: Dennis and Denise had twins - William and Fred; William did not marry, but Fred married Frances and had two sons, John and Ken; John married Jane and had two children; Ken married Karen and had three children.
 
 You add each Person object in turn to the Collection. For brevity of code, you do this using a function:
 
@@ -75,7 +75,7 @@ End Class
 
 ### PersonComparator
 
-The sort options for a Collection can't be changed once it's created, and the `filter()` method uses the same settings as the Collection it's filtering. But you can add the entries to a new Collection that's sorted. To sort, you need to create a custom Comparator. 
+The sort options for a Collection can't be changed once it's created, and the `filter()` method uses the same settings as the Collection it's filtering. But you can add the entries to a new Collection that's sorted. To sort, you need to create a custom Comparator.
 
 This can be done with:
 
@@ -183,11 +183,11 @@ Class PersonTransformer as CollectionTransformer
 End Class
 ```
 
-The CollectionTransformer has an empty constructor, so we don't need to include the `Sub New`. We just need to extend the `transform` function, from line 3. This takes an incoming value as a Variant (`source`) and returns the transformed value as a Variant. 
+The CollectionTransformer has an empty constructor, so we don't need to include the `Sub New`. We just need to extend the `transform` function, from line 3. This takes an incoming value as a Variant (`source`) and returns the transformed value as a Variant.
 
 For readability, you create a `newPerson` on line 4 using the `PersonAlt` class you need to output. And you declare an `oldPerson` object on line 5 as the `Person` class you expect incoming. On line 7, you explicitly cast `source` into the `oldPerson` object.
 
-On line 8, you set the `fullName` property. 
+On line 8, you set the `fullName` property.
 
 From line 9, you have a `Select Case` statement to convert age to a textual range value. Lines 10 and 14 use `Is` with a comparison operator, to identify children or pensioners. Line 12 uses a range expression, which is inclusive, to pick up values from and including 16 through to and including 30. Line 16 then picks up all remaining ages. The `ageRange` variable in `newPerson` is set accordingly. Finally, on line 19, you return the newPerson object.
 

@@ -1,7 +1,7 @@
 {
     "name": "voltscript-collections",
     "library": "hcl.core-modules",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "displayName": "VoltScript Collections",
     "description": "Collections and Maps for VoltScript and LotusScript",
     "authors": [
@@ -38,11 +38,10 @@
     "dependencies": [
         {
             "library": "voltscript-logging",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "module": "VoltScriptLogging.vss",
             "repository": "hcl-github"
         }
-
     ],
     "testDependencies": [
         {
@@ -55,7 +54,7 @@
     "vseDependencies": {
         "JsonVSE": {
             "library": "JsonVSE VoltScript Extension",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "module": "jsonvse",
             "repository":"volt-mx-marketplace"
         }

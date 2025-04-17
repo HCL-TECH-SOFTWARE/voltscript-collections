@@ -13,6 +13,7 @@ End Sub
 ```
 
 The structure of the method signature is:
+
 1. Public Sub New
 1. Parameters required for this class's constructor
 1. Comma

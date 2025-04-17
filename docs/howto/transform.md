@@ -10,8 +10,6 @@ Transforming a collection or map is done using a CollectionTransformer or a MapT
 
 The transform is a Sub, so must be the last call in a chain.
 
-
-
 ## Sample Transformer
 
 A CollectionTransformer class can be constructed like so:

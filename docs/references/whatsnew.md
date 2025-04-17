@@ -4,7 +4,15 @@ The section provides information on the latest features, improvements, and resol
 
 <!-- prettier-ignore -->
 !!! note "Important"
+    <!-- markdownlint-disable MD033 -->
     - Items marked in <span style="color:red">**red**</span> are API changes that may impact your applications and should be reviewed before upgrading.
+
+???+ info "v1.0.5 - What's new or changed"
+    ## v1.0.5
+    **Improvements**
+
+    - Integrating VoltScript Logging for error handling
+    - <span style="color:red">Repointing atlas.json from demo marketplace. atlas-settings marketplace url will need updating to "https://accounts.auth.hclvoltmx.net/login"</span>
 
 ???+ info "v1.0.4 - What's new or changed"
 

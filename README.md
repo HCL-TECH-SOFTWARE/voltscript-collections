@@ -35,7 +35,7 @@ You'll then need to add this to the JSON object in your [atlas-settings.json](ht
         "type": "marketplace",
         "username": "YOUR_USERNAME",
         "password": "YOUR_PASSWORD",
-        "authUrl": "https://accounts.auth.hclvoltmx.net/login"
+        "authUrl": "https://accounts.auth.demo-hclvoltmx.net/login"
     }
 ```
 
@@ -44,6 +44,11 @@ You'll then need to add this to the JSON object in your [atlas-settings.json](ht
 You'll need to add to your **repositories** object in the atlas.json of your project:
 
 ```json
+        {
+            "id": "volt-mx-marketplace",
+            "type": "marketplace",
+            "url": "https://community.demo-hclvoltmx.com/marketplace"
+        },
         {
             "id": "hcl-github",
             "type": "github",
@@ -58,7 +63,7 @@ You'll need the relevant dependency to add to your **dependencies** or **testDep
 ```json
         {
             "library": "voltscript-collections",
-            "version": "1.0.4",
+            "version": "1.0.5",
             "module": "VoltScriptCollections.vss",
             "repository": "hcl-github"
         }
@@ -68,7 +73,7 @@ You'll need the relevant dependency to add to your **dependencies** or **testDep
 
 See [CONTRIBUTING.md](contributing.md).
 
-## Code of Conduct
+## Code of Conduct
 
 See [CODE_OF_CONDUCT.md](code_of_conduct.md).
 

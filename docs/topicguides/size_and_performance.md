@@ -31,6 +31,6 @@ The process starts at the largest chunk size that is lower than the number of el
 
 This process can be used to quickly identify where a new entry should be inserted and where an existing entry can be found.
 
-## Filtering and transforming
+## Filtering and transforming
 
 Both filtering and transforming is done by iterating the collection or map and processing each entry. If not empty / null, the relevant output - the current entry (filter) or modified output (transform) - is put in the resulting collection or map. As a result, when there is a requirement to filter _and_ transform a collection or map, it may be more efficient to just use a transformer and return an invalid or empty object, while suppressing errors in the resulting collection.
