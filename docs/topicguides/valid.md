@@ -21,7 +21,7 @@ Nearly all Content Types are allowed
 
 !!! note "Multiple Content Types"
     Collections and Maps can optionally contain multiple data types, as long as they are Scalar or Object compatible.  
-    Multiple content types are declared using a comma delmited string -refer the Constructor methods in the [API documentation](../references/apidocs/Collections_VSID/VoltScriptCollections_Library.html)
+    Multiple content types are declared using a comma delmited string -refer the Constructor methods in the [API documentation](../references/apidoc/Collections_VSID/VoltScriptCollections_Library.html)
 
 However the following **restrictions** exist
 
@@ -38,4 +38,4 @@ Violating the above restricitons will result in a **run-time error** for the Con
 !!! warning "Comparison without Introspection and Reflection"
     Because VoltScript language lacks [Type Introspection](https://thecodeboss.dev/2016/02/programming-concepts-type-introspection-and-reflection) or [Reflective](https://en.wikipedia.org/wiki/Reflective_programming) capabilities, creating generic code to compare object instances is inherently risky and can quickly become quite complex.
 
-    It is up to the developer using VoltScript Collections to know and understand the necessary properties and methods of any Class objects they intend to use as elements within a Collection or Map, and how to compare such instances when extending the [Comparator](../references/apidocs/Collections_VSID/VoltScriptCollections_Library/Comparator_ObjectClass.html) class to [Create their own](../howto/comparator.md) comparator. 
+    It is up to the developer using VoltScript Collections to know and understand the necessary properties and methods of any Class objects they intend to use as elements within a Collection or Map, and how to compare such instances when extending the [Comparator](../references/apidoc/Collections_VSID/VoltScriptCollections_Library/Comparator_ObjectClass.html) class to [Create their own](../howto/comparator.md) comparator. 

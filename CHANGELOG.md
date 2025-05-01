@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [1.0.5] - 2025-05-12
+## [1.0.5] - May 2025
 
 - MXOP-25899: Updated marketplace URLs
 - MXOP-20704: Adding VoltScript Logging error handling

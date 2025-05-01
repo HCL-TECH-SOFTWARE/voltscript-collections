@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="Test Maps" tests="82" time="231103T114905" failures="0" errors="0">
+<?xml version="1.0" encoding="UTF-8"?><testrun name="Test Maps" tests="83" time="250425T145329" failures="0" errors="0">
   <testsuite name="Test Basic Map" time="0" displayname="Test Basic Map" id="[engine:testsuite-voltscript]/[Test Basic Map]">
     <testcase name="Check three elements in map" classname="Test Basic Map" time="0" displayname="Check three elements in map" id="[engine:testsuite-voltscript]/[Test Basic Map]/[Check three elements in map]">
     </testcase>
@@ -29,6 +29,8 @@
     <testcase name="Test last value is Washington" classname="Test Pairs and Reverse" time="0" displayname="Test last value is Washington" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Test last value is Washington]">
     </testcase>
     <testcase name="Test KY value is KJentucky" classname="Test Pairs and Reverse" time="0" displayname="Test KY value is KJentucky" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Test KY value is KJentucky]">
+    </testcase>
+    <testcase name="Check Alaska put first" classname="Test Pairs and Reverse" time="0" displayname="Check Alaska put first" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Check Alaska put first]">
     </testcase>
     <testcase name="Test first element now Alaska" classname="Test Pairs and Reverse" time="0" displayname="Test first element now Alaska" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Test first element now Alaska]">
     </testcase>

@@ -1,6 +1,6 @@
 nav:
     - index.md
     - whatsnew.md
-    - API documentation: ./references/apidocs/index.html
+    - API documentation: ./references/apidoc/index.html
     - Collection test report: ./references/testreports/TestCollections/index.html
     - Map test report: ./references/testreports/TestMaps/index.html

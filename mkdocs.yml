@@ -109,7 +109,6 @@ plugins:
   - awesome-pages
   - search
   - tags
-  - section-index
   # disabled unti we get rid of reletove URL - markdownextradata
   #- mike:
   #    canonical_version: latest

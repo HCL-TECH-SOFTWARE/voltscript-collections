@@ -15,7 +15,7 @@ index.md
 
 ## API Documentation
 
-[Full API Documentation for VoltScript Collections](./apidocs/index.html){: target="_blank" rel="noopener noreferrer"}
+[Full API Documentation for VoltScript Collections](./apidoc/index.html){: target="_blank" rel="noopener noreferrer"}
 
 ## Test reports
 
