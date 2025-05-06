@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="Test Maps" tests="83" time="250425T145329" failures="0" errors="0">
+  <testsuite name="Test Basic Map" time="0" displayname="Test Basic Map" id="[engine:testsuite-voltscript]/[Test Basic Map]">
+    <testcase name="Check three elements in map" classname="Test Basic Map" time="0" displayname="Check three elements in map" id="[engine:testsuite-voltscript]/[Test Basic Map]/[Check three elements in map]">
+    </testcase>
+    <testcase name="Test getAndRemoveFirst did not return Nothing" classname="Test Basic Map" time="0" displayname="Test getAndRemoveFirst did not return Nothing" id="[engine:testsuite-voltscript]/[Test Basic Map]/[Test getAndRemoveFirst did not return Nothing]">
+    </testcase>
+    <testcase name="Check first element is John Doe, 42" classname="Test Basic Map" time="0" displayname="Check first element is John Doe, 42" id="[engine:testsuite-voltscript]/[Test Basic Map]/[Check first element is John Doe, 42]">
+    </testcase>
+    <testcase name="Check last element is Steve Smith, 60" classname="Test Basic Map" time="0" displayname="Check last element is Steve Smith, 60" id="[engine:testsuite-voltscript]/[Test Basic Map]/[Check last element is Steve Smith, 60]">
+    </testcase>
+    <testcase name="Check one value left" classname="Test Basic Map" time="0" displayname="Check one value left" id="[engine:testsuite-voltscript]/[Test Basic Map]/[Check one value left]">
+    </testcase>
+    <testcase name="Check filtered Map has two elements" classname="Test Basic Map" time="0" displayname="Check filtered Map has two elements" id="[engine:testsuite-voltscript]/[Test Basic Map]/[Check filtered Map has two elements]">
+    </testcase>
+    <testcase name="Check get value by key" classname="Test Basic Map" time="0" displayname="Check get value by key" id="[engine:testsuite-voltscript]/[Test Basic Map]/[Check get value by key]">
+    </testcase>
+    <testcase name="Test adding EMPTY" classname="Test Basic Map" time="0" displayname="Test adding EMPTY" id="[engine:testsuite-voltscript]/[Test Basic Map]/[Test adding EMPTY]">
+    </testcase>
+    <testcase name="Test adding Nothing" classname="Test Basic Map" time="0" displayname="Test adding Nothing" id="[engine:testsuite-voltscript]/[Test Basic Map]/[Test adding Nothing]">
+    </testcase>
+  </testsuite>
+  <testsuite name="Test Pairs and Reverse" time="0" displayname="Test Pairs and Reverse" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]">
+    <testcase name="Test 16 elements" classname="Test Pairs and Reverse" time="0" displayname="Test 16 elements" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Test 16 elements]">
+    </testcase>
+    <testcase name="Test last key is WA" classname="Test Pairs and Reverse" time="0" displayname="Test last key is WA" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Test last key is WA]">
+    </testcase>
+    <testcase name="Test last on collectKeys is WA" classname="Test Pairs and Reverse" time="0" displayname="Test last on collectKeys is WA" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Test last on collectKeys is WA]">
+    </testcase>
+    <testcase name="Test last value is Washington" classname="Test Pairs and Reverse" time="0" displayname="Test last value is Washington" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Test last value is Washington]">
+    </testcase>
+    <testcase name="Test KY value is KJentucky" classname="Test Pairs and Reverse" time="0" displayname="Test KY value is KJentucky" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Test KY value is KJentucky]">
+    </testcase>
+    <testcase name="Check Alaska put first" classname="Test Pairs and Reverse" time="0" displayname="Check Alaska put first" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Check Alaska put first]">
+    </testcase>
+    <testcase name="Test first element now Alaska" classname="Test Pairs and Reverse" time="0" displayname="Test first element now Alaska" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Test first element now Alaska]">
+    </testcase>
+    <testcase name="Test element count is 17" classname="Test Pairs and Reverse" time="0" displayname="Test element count is 17" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Test element count is 17]">
+    </testcase>
+    <testcase name="Test returned key is DE" classname="Test Pairs and Reverse" time="0" displayname="Test returned key is DE" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Test returned key is DE]">
+    </testcase>
+    <testcase name="Test returned value is Delaware" classname="Test Pairs and Reverse" time="0" displayname="Test returned value is Delaware" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Test returned value is Delaware]">
+    </testcase>
+    <testcase name="Test first element is now Washington" classname="Test Pairs and Reverse" time="0" displayname="Test first element is now Washington" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Test first element is now Washington]">
+    </testcase>
+    <testcase name="Test element count is still 17" classname="Test Pairs and Reverse" time="0" displayname="Test element count is still 17" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Test element count is still 17]">
+    </testcase>
+    <testcase name="Test New Mexico at position 3" classname="Test Pairs and Reverse" time="0" displayname="Test New Mexico at position 3" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Test New Mexico at position 3]">
+    </testcase>
+    <testcase name="Test updated New Mexico at position 3" classname="Test Pairs and Reverse" time="0" displayname="Test updated New Mexico at position 3" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Test updated New Mexico at position 3]">
+    </testcase>
+    <testcase name="Test removeByKey NM returned success" classname="Test Pairs and Reverse" time="0" displayname="Test removeByKey NM returned success" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Test removeByKey NM returned success]">
+    </testcase>
+    <testcase name="Test removed NM" classname="Test Pairs and Reverse" time="0" displayname="Test removed NM" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Test removed NM]">
+    </testcase>
+    <testcase name="Test removeByKey NM failed" classname="Test Pairs and Reverse" time="0" displayname="Test removeByKey NM failed" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Test removeByKey NM failed]">
+    </testcase>
+    <testcase name="Test removeByValue Washington returned success" classname="Test Pairs and Reverse" time="0" displayname="Test removeByValue Washington returned success" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Test removeByValue Washington returned success]">
+    </testcase>
+    <testcase name="Test removed Washington" classname="Test Pairs and Reverse" time="0" displayname="Test removed Washington" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Test removed Washington]">
+    </testcase>
+    <testcase name="Test removeByValue Washington failed" classname="Test Pairs and Reverse" time="0" displayname="Test removeByValue Washington failed" id="[engine:testsuite-voltscript]/[Test Pairs and Reverse]/[Test removeByValue Washington failed]">
+    </testcase>
+  </testsuite>
+  <testsuite name="Test Restrictions" time="0" displayname="Test Restrictions" id="[engine:testsuite-voltscript]/[Test Restrictions]">
+    <testcase name="Test locking" classname="Test Restrictions" time="0" displayname="Test locking" id="[engine:testsuite-voltscript]/[Test Restrictions]/[Test locking]">
+    </testcase>
+    <testcase name="Test map does not allow putting when locked" classname="Test Restrictions" time="0" displayname="Test map does not allow putting when locked" id="[engine:testsuite-voltscript]/[Test Restrictions]/[Test map does not allow putting when locked]">
+    </testcase>
+    <testcase name="Test map does not allow putting all when locked" classname="Test Restrictions" time="0" displayname="Test map does not allow putting all when locked" id="[engine:testsuite-voltscript]/[Test Restrictions]/[Test map does not allow putting all when locked]">
+    </testcase>
+    <testcase name="Test map does not allow clear when locked" classname="Test Restrictions" time="0" displayname="Test map does not allow clear when locked" id="[engine:testsuite-voltscript]/[Test Restrictions]/[Test map does not allow clear when locked]">
+    </testcase>
+    <testcase name="Test collection does not allow removing first when locked" classname="Test Restrictions" time="0" displayname="Test collection does not allow removing first when locked" id="[engine:testsuite-voltscript]/[Test Restrictions]/[Test collection does not allow removing first when locked]">
+    </testcase>
+    <testcase name="Test collection does not allow removing last when locked" classname="Test Restrictions" time="0" displayname="Test collection does not allow removing last when locked" id="[engine:testsuite-voltscript]/[Test Restrictions]/[Test collection does not allow removing last when locked]">
+    </testcase>
+    <testcase name="Test map does not allow remove by key when locked" classname="Test Restrictions" time="0" displayname="Test map does not allow remove by key when locked" id="[engine:testsuite-voltscript]/[Test Restrictions]/[Test map does not allow remove by key when locked]">
+    </testcase>
+    <testcase name="Test map does not allow remove by value when locked" classname="Test Restrictions" time="0" displayname="Test map does not allow remove by value when locked" id="[engine:testsuite-voltscript]/[Test Restrictions]/[Test map does not allow remove by value when locked]">
+    </testcase>
+    <testcase name="Test map does not allow reverse when locked" classname="Test Restrictions" time="0" displayname="Test map does not allow reverse when locked" id="[engine:testsuite-voltscript]/[Test Restrictions]/[Test map does not allow reverse when locked]">
+    </testcase>
+    <testcase name="Test adding again" classname="Test Restrictions" time="0" displayname="Test adding again" id="[engine:testsuite-voltscript]/[Test Restrictions]/[Test adding again]">
+    </testcase>
+    <testcase name="Test map cleared" classname="Test Restrictions" time="0" displayname="Test map cleared" id="[engine:testsuite-voltscript]/[Test Restrictions]/[Test map cleared]">
+    </testcase>
+  </testsuite>
+  <testsuite name="Test Person Map" time="0" displayname="Test Person Map" id="[engine:testsuite-voltscript]/[Test Person Map]">
+    <testcase name="Test map1 contains 10 elements" classname="Test Person Map" time="0" displayname="Test map1 contains 10 elements" id="[engine:testsuite-voltscript]/[Test Person Map]/[Test map1 contains 10 elements]">
+    </testcase>
+    <testcase name="Test map2 contains 10 elements" classname="Test Person Map" time="0" displayname="Test map2 contains 10 elements" id="[engine:testsuite-voltscript]/[Test Person Map]/[Test map2 contains 10 elements]">
+    </testcase>
+    <testcase name="Test map1 contains 20 elements" classname="Test Person Map" time="0" displayname="Test map1 contains 20 elements" id="[engine:testsuite-voltscript]/[Test Person Map]/[Test map1 contains 20 elements]">
+    </testcase>
+    <testcase name="Test map3 contains 17 elements" classname="Test Person Map" time="0" displayname="Test map3 contains 17 elements" id="[engine:testsuite-voltscript]/[Test Person Map]/[Test map3 contains 17 elements]">
+    </testcase>
+    <testcase name="Test first value is Natt, Trstram (68)" classname="Test Person Map" time="0" displayname="Test first value is Natt, Trstram (68)" id="[engine:testsuite-voltscript]/[Test Person Map]/[Test first value is Natt, Trstram (68)]">
+    </testcase>
+    <testcase name="Test collection has 20 people in it" classname="Test Person Map" time="0" displayname="Test collection has 20 people in it" id="[engine:testsuite-voltscript]/[Test Person Map]/[Test collection has 20 people in it]">
+    </testcase>
+    <testcase name="Test map2 contains Krystle Bausor" classname="Test Person Map" time="0" displayname="Test map2 contains Krystle Bausor" id="[engine:testsuite-voltscript]/[Test Person Map]/[Test map2 contains Krystle Bausor]">
+    </testcase>
+    <testcase name="Test map2 does not contain modified Krystle Bausor" classname="Test Person Map" time="0" displayname="Test map2 does not contain modified Krystle Bausor" id="[engine:testsuite-voltscript]/[Test Person Map]/[Test map2 does not contain modified Krystle Bausor]">
+    </testcase>
+    <testcase name="Test removing Krystle Bausor" classname="Test Person Map" time="0" displayname="Test removing Krystle Bausor" id="[engine:testsuite-voltscript]/[Test Person Map]/[Test removing Krystle Bausor]">
+    </testcase>
+    <testcase name="Test replacing" classname="Test Person Map" time="0" displayname="Test replacing" id="[engine:testsuite-voltscript]/[Test Person Map]/[Test replacing]">
+    </testcase>
+    <testcase name="Test map2 contains new Beryl Bowdery" classname="Test Person Map" time="0" displayname="Test map2 contains new Beryl Bowdery" id="[engine:testsuite-voltscript]/[Test Person Map]/[Test map2 contains new Beryl Bowdery]">
+    </testcase>
+    <testcase name="Test map1 has correct 4th element before replace" classname="Test Person Map" time="0" displayname="Test map1 has correct 4th element before replace" id="[engine:testsuite-voltscript]/[Test Person Map]/[Test map1 has correct 4th element before replace]">
+    </testcase>
+    <testcase name="Test replacing in sorted" classname="Test Person Map" time="0" displayname="Test replacing in sorted" id="[engine:testsuite-voltscript]/[Test Person Map]/[Test replacing in sorted]">
+    </testcase>
+    <testcase name="Test map1 contains new Devin Balsillie" classname="Test Person Map" time="0" displayname="Test map1 contains new Devin Balsillie" id="[engine:testsuite-voltscript]/[Test Person Map]/[Test map1 contains new Devin Balsillie]">
+    </testcase>
+    <testcase name="Test map1 still has 10 elements" classname="Test Person Map" time="0" displayname="Test map1 still has 10 elements" id="[engine:testsuite-voltscript]/[Test Person Map]/[Test map1 still has 10 elements]">
+    </testcase>
+    <testcase name="Test map1 has correct 4th element" classname="Test Person Map" time="0" displayname="Test map1 has correct 4th element" id="[engine:testsuite-voltscript]/[Test Person Map]/[Test map1 has correct 4th element]">
+    </testcase>
+  </testsuite>
+  <testsuite name="JSON Tests" time="0" displayname="JSON Tests" id="[engine:testsuite-voltscript]/[JSON Tests]">
+    <testcase name="Test loading JsonObject into Map" classname="JSON Tests" time="0" displayname="Test loading JsonObject into Map" id="[engine:testsuite-voltscript]/[JSON Tests]/[Test loading JsonObject into Map]">
+    </testcase>
+    <testcase name="Test 16 elements" classname="JSON Tests" time="0" displayname="Test 16 elements" id="[engine:testsuite-voltscript]/[JSON Tests]/[Test 16 elements]">
+    </testcase>
+    <testcase name="Test last key is WA" classname="JSON Tests" time="0" displayname="Test last key is WA" id="[engine:testsuite-voltscript]/[JSON Tests]/[Test last key is WA]">
+    </testcase>
+    <testcase name="Test last value is Washington" classname="JSON Tests" time="0" displayname="Test last value is Washington" id="[engine:testsuite-voltscript]/[JSON Tests]/[Test last value is Washington]">
+    </testcase>
+    <testcase name="Test KY value is Kentucky" classname="JSON Tests" time="0" displayname="Test KY value is Kentucky" id="[engine:testsuite-voltscript]/[JSON Tests]/[Test KY value is Kentucky]">
+    </testcase>
+    <testcase name="Test converting Map to JsonObject" classname="JSON Tests" time="0" displayname="Test converting Map to JsonObject" id="[engine:testsuite-voltscript]/[JSON Tests]/[Test converting Map to JsonObject]">
+    </testcase>
+    <testcase name="Test 16 elements in JSON" classname="JSON Tests" time="0" displayname="Test 16 elements in JSON" id="[engine:testsuite-voltscript]/[JSON Tests]/[Test 16 elements in JSON]">
+    </testcase>
+    <testcase name="Test last key in JSON is WA" classname="JSON Tests" time="0" displayname="Test last key in JSON is WA" id="[engine:testsuite-voltscript]/[JSON Tests]/[Test last key in JSON is WA]">
+    </testcase>
+    <testcase name="Test converting Person Map to JsonObject" classname="JSON Tests" time="0" displayname="Test converting Person Map to JsonObject" id="[engine:testsuite-voltscript]/[JSON Tests]/[Test converting Person Map to JsonObject]">
+    </testcase>
+    <testcase name="Test 4 elements" classname="JSON Tests" time="0" displayname="Test 4 elements" id="[engine:testsuite-voltscript]/[JSON Tests]/[Test 4 elements]">
+    </testcase>
+    <testcase name="Test first person output" classname="JSON Tests" time="0" displayname="Test first person output" id="[engine:testsuite-voltscript]/[JSON Tests]/[Test first person output]">
+    </testcase>
+    <testcase name="Test empty JsonObj to Collection" classname="JSON Tests" time="0" displayname="Test empty JsonObj to Collection" id="[engine:testsuite-voltscript]/[JSON Tests]/[Test empty JsonObj to Collection]">
+    </testcase>
+    <testcase name="Test empty JsonObj to Map" classname="JSON Tests" time="0" displayname="Test empty JsonObj to Map" id="[engine:testsuite-voltscript]/[JSON Tests]/[Test empty JsonObj to Map]">
+    </testcase>
+    <testcase name="Test serializing empty Collection" classname="JSON Tests" time="0" displayname="Test serializing empty Collection" id="[engine:testsuite-voltscript]/[JSON Tests]/[Test serializing empty Collection]">
+    </testcase>
+    <testcase name="Test serializing empty Map" classname="JSON Tests" time="0" displayname="Test serializing empty Map" id="[engine:testsuite-voltscript]/[JSON Tests]/[Test serializing empty Map]">
+    </testcase>
+  </testsuite>
+  <testsuite name="Test Suppressing Errors" time="0" displayname="Test Suppressing Errors" id="[engine:testsuite-voltscript]/[Test Suppressing Errors]">
+    <testcase name="Test map1 contains 2 elements" classname="Test Suppressing Errors" time="0" displayname="Test map1 contains 2 elements" id="[engine:testsuite-voltscript]/[Test Suppressing Errors]/[Test map1 contains 2 elements]">
+    </testcase>
+    <testcase name="Test transforming Map throws error" classname="Test Suppressing Errors" time="0" displayname="Test transforming Map throws error" id="[engine:testsuite-voltscript]/[Test Suppressing Errors]/[Test transforming Map throws error]">
+    </testcase>
+    <testcase name="Test transforming Map with suppressErrors doesn't throw error" classname="Test Suppressing Errors" time="0" displayname="Test transforming Map with suppressErrors doesn't throw error" id="[engine:testsuite-voltscript]/[Test Suppressing Errors]/[Test transforming Map with suppressErrors doesn't throw error]">
+    </testcase>
+    <testcase name="Test only one element in StringCollection" classname="Test Suppressing Errors" time="0" displayname="Test only one element in StringCollection" id="[engine:testsuite-voltscript]/[Test Suppressing Errors]/[Test only one element in StringCollection]">
+    </testcase>
+  </testsuite>
+  <testsuite name="Empty objects" time="0" displayname="Empty objects" id="[engine:testsuite-voltscript]/[Empty objects]">
+    <testcase name="Test getAndRemoveFirst on Empty" classname="Empty objects" time="0" displayname="Test getAndRemoveFirst on Empty" id="[engine:testsuite-voltscript]/[Empty objects]/[Test getAndRemoveFirst on Empty]">
+    </testcase>
+    <testcase name="Test first pair value is Nothing" classname="Empty objects" time="0" displayname="Test first pair value is Nothing" id="[engine:testsuite-voltscript]/[Empty objects]/[Test first pair value is Nothing]">
+    </testcase>
+    <testcase name="Test 3" classname="Empty objects" time="0" displayname="Test 3" id="[engine:testsuite-voltscript]/[Empty objects]/[Test 3]">
+    </testcase>
+    <testcase name="Test last pair value is Nothing" classname="Empty objects" time="0" displayname="Test last pair value is Nothing" id="[engine:testsuite-voltscript]/[Empty objects]/[Test last pair value is Nothing]">
+    </testcase>
+    <testcase name="Test 12th key" classname="Empty objects" time="0" displayname="Test 12th key" id="[engine:testsuite-voltscript]/[Empty objects]/[Test 12th key]">
+    </testcase>
+    <testcase name="Test 12th element" classname="Empty objects" time="0" displayname="Test 12th element" id="[engine:testsuite-voltscript]/[Empty objects]/[Test 12th element]">
+    </testcase>
+    <testcase name="Test 12th pair value is Nothing" classname="Empty objects" time="0" displayname="Test 12th pair value is Nothing" id="[engine:testsuite-voltscript]/[Empty objects]/[Test 12th pair value is Nothing]">
+    </testcase>
+    <testcase name="Test bad element by key" classname="Empty objects" time="0" displayname="Test bad element by key" id="[engine:testsuite-voltscript]/[Empty objects]/[Test bad element by key]">
+    </testcase>
+  </testsuite>
+</testrun>
