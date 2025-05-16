@@ -677,7 +677,8 @@ If the collection is empty it just exits the function
 
 	%REM
 		Function getNthElementRaw 
-		Gets the nth elment as a raew variant, starting at index 0
+		Gets the nth element as a raw variant, starting at index 0
+        Passing a negative index will return the nth element from the end of the collection.
 	
 		@param	index 	Index of the element to return
 
@@ -686,11 +687,15 @@ If the collection is empty it just exits the function
 	Public Function getNthElementRaw(index As Long) As Variant 
 		'{{SETI_AUTHOR_CODE_getNthElementRaw_implementation
         'If you pass a non-existent indexed element of a List to a function it does not throw an error.
-        If (index >= Me.elementCount) Then
+        If (Abs(index) >= Me.elementCount) Then
             If (p_isObjects) Then Return Nothing Else Return
         End If
 
-        Return p_content(index)
+        If (index >= 0) Then
+            Return p_content(index)
+        Else
+            Return p_content(Me.elementCount + index)
+        End If
 		'}}
 
 	End Function
@@ -2111,6 +2116,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 	%REM
 		Function getNthKeyRaw 
 		Returns the key at a particular index
+        Passing a negative index will return the nth key from the end of the map.
 	
 		@param	index 	Index of key to get, starting at 0
 
@@ -2127,6 +2133,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 	%REM
 		Function getNthPair 
 		Returns the element at the relevant index as a key/value Pair
+        Passing a negative index will return the nth pair from the end of the map.
 	
 		@param	index 	Index at which to find the element
 
@@ -2147,6 +2154,7 @@ Instead of throwing an error, e.g. for wrong content type, the method will just 
 	%REM
 		Function getNthValueRaw 
 		Gets the value at a particular index. If no matching value is found, the return type will depend on the content defined. If the Map contains objects, the return value is Nothing. If the Map contains scalars, the return value is an empty variant.
+        Passing a negative index will return the nth value from the end of the map.
 	
 		@param	index 	Index of the value to get, starting at 0
 

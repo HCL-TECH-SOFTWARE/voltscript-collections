@@ -1,4 +1,4 @@
-# Interrogate the Collection
+# Interrogate the Collection / Map
 
 ## Check empty or size
 
@@ -13,3 +13,14 @@ For maps, `containsKey()` will check whether the key is in the map. Because the 
 If you wish to know at which index an element is within the collection, the `getIndex()` method can be used. This will use the Comparator to check the value being passed against the elements in the collection. It will return a variant that is either the index or NULL. As a result, you will need to use `IsNull()` for safety.
 
 There is no provided function to get the position in the map for a value. If you have the key, the keyset is a Collection, so you can call its `getIndex()` method. Otherwise, you would need to iterate the map.
+
+## Getting by index
+
+You can get an element by position in the Collection by using `getNthElementRaw()`:
+
+- To get the first element, use `getNthElementRaw(0)`.
+- To get an element at 5th position, use `getNthElementRaw(4)` - remember the index starts at zero!
+- To get the last element, use `getNthElementRaw(-1)`.
+- Negative numbers can be used to count back from the end, so to get the penultimate entry, use `getNthElementRaw(-2)`.
+
+The same process of positive or negative numbers can be used to get keys or values in a map using `getNthKeyRaw()` or `getNthValueRaw()`.
