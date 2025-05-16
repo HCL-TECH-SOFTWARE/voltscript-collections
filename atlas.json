@@ -1,7 +1,7 @@
 {
     "name": "voltscript-collections",
     "library": "hcl.core-modules",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "displayName": "VoltScript Collections",
     "description": "Collections and Maps for VoltScript and LotusScript",
     "authors": [
