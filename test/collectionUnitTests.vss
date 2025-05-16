@@ -415,6 +415,8 @@ Sub testInsertion(testRunner as TestRunner)
     Call coll.add("Three")
 
     Call testSuite.describe("Test third element is Three").assertEqualsString("Three", Cstr(coll.getNthElementRaw(2)), false)
+    Call testSuite.describe("Test first element is One").assertEqualsString("One", Cstr(coll.getNthElementRaw(0)), false)
+    Call testSuite.describe("Test penultimate is Two").assertEqualsString("Two", Cstr(coll.getNthElementRaw(-2)), false)
 
     Call coll.insertAt("Four", 2)
     Call testSuite.describe("Test third element is now Four").assertEqualsString("Four", Cstr(coll.getNthElementRaw(2)), false)

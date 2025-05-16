@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [1.0.6] - Unreleased
+
+- MXOP-30159: Support for negative numbers in getNth... APIs
+
 ## [1.0.5] - May 2025
 
 - MXOP-25899: Updated marketplace URLs
