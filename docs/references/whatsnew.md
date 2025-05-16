@@ -7,6 +7,12 @@ The section provides information on the latest features, improvements, and resol
     <!-- markdownlint-disable MD033 -->
     - Items marked in <span style="color:red">**red**</span> are API changes that may impact your applications and should be reviewed before upgrading.
 
+???+ info "v1.0.6 - What's new or changed"
+    ## v1.0.6
+    **Improvements**
+
+    - Support for negative numbers in getNth... APIs. This will get the nth element working from the end.
+
 ???+ info "v1.0.5 - What's new or changed"
     ## v1.0.5
     **Improvements**
