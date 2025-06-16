@@ -2602,7 +2602,7 @@ End Class
 
 %REM
 	Class Pair 
-	Base class for ky/value pair
+	Base class for key/value pair
  
 %END REM
 Public Class Pair 

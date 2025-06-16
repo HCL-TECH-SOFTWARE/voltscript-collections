@@ -39,7 +39,7 @@ Loop While ++i < map.elementCount
 You can't change this Map to be sorted. But to sort the elements, you can create a new sorted Map and copy all the elements across.
 
 ```vbscript
-Dim map2 = New Map("STRING", Nothing, True) ' (1)!
+Dim map2 as New Map("STRING", Nothing, True) ' (1)!
 Call map2.putAll(map)
 ```
 

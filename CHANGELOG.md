@@ -3,6 +3,7 @@
 ## [1.0.6] - Unreleased
 
 - MXOP-30159: Support for negative numbers in getNth... APIs
+- MXOP-31275: Corrected API Documentation
 
 ## [1.0.5] - May 2025
 
