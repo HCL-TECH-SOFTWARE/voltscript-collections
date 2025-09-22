@@ -17,7 +17,7 @@ Dependency management is available in the documentation for each project, but al
 
 ### Authentication
 
-You'll need a [Personal Access Token](https://help.hcltechsw.com/docs/voltscript/early-access/howto/writing/archipelago.md#github-personal-access-token) to use GitHub REST APIs. You'll then need to add this to the JSON object in your [atlas-settings.json](https://help.hcltechsw.com/docs/voltscript/early-access/howto/writing/archipelago.md#atlas-settingsjson), in the .vss directory of your user home directory:
+You'll need a [Personal Access Token](https://opensource.hcltechsw.com/voltscript-docs/howto/writing/archipelago.md#github-personal-access-token) to use GitHub REST APIs. You'll then need to add this to the JSON object in your [atlas-settings.json](https://opensource.hcltechsw.com/voltscript-docs/howto/writing/archipelago.md#atlas-settingsjson), in the .vss directory of your user home directory:
 
 ```json
     "hcl-github": {
@@ -26,9 +26,9 @@ You'll need a [Personal Access Token](https://help.hcltechsw.com/docs/voltscript
     }
 ```
 
-For JsonVSE downstream dependency, you'll need to sign up for the Volt MX Marketplace. Instructions are in the [how-to-guide](https://help.hcltechsw.com/docs/voltscript/early-access/howto/writing/archipelago.html#volt-mx-marketplace-credentials). **NOTE:** Ensure you log into the Volt MX Marketplace via a browser after confirming your account, to ensure the account is properly activated. Otherwise authentication to gain an access token will fail.
+For JsonVSE downstream dependency, you'll need to sign up for the Volt MX Marketplace. Instructions are in the [how-to-guide](https://opensource.hcltechsw.com/voltscript-docs/howto/writing/archipelago.html#volt-mx-marketplace-credentials). **NOTE:** Ensure you log into the Volt MX Marketplace via a browser after confirming your account, to ensure the account is properly activated. Otherwise authentication to gain an access token will fail.
 
-You'll then need to add this to the JSON object in your [atlas-settings.json](https://help.hcltechsw.com/docs/voltscript/early-access/howto/writing/archipelago.md#atlas-settingsjson), in the .vss directory of your user home directory:
+You'll then need to add this to the JSON object in your [atlas-settings.json](https://opensource.hcltechsw.com/voltscript-docs/howto/writing/archipelago.md#atlas-settingsjson), in the .vss directory of your user home directory:
 
 ```json
     "volt-mx-marketplace": {

@@ -1,3 +1,8 @@
+---
+hide:
+    - navigation
+---
+
 # What's new
 
 The section provides information on the latest features, improvements, and resolved issues related to VoltScript Collections.
@@ -5,7 +10,7 @@ The section provides information on the latest features, improvements, and resol
 <!-- prettier-ignore -->
 !!! note "Important"
     <!-- markdownlint-disable MD033 -->
-    - Items marked in <span style="color:red">**red**</span> are API changes that may impact your applications and should be reviewed before upgrading.
+    Items marked in <span style="color:red">**red**</span> are API changes that may impact your applications and should be reviewed before upgrading.
 
 ???+ info "v1.0.6 - What's new or changed"
     ## v1.0.6
@@ -13,28 +18,28 @@ The section provides information on the latest features, improvements, and resol
 
     - Support for negative numbers in getNth... APIs. This will get the nth element working from the end.
 
-???+ info "v1.0.5 - What's new or changed"
+??? info "v1.0.5 - What's new or changed"
     ## v1.0.5
     **Improvements**
 
     - Integrating VoltScript Logging for error handling
     - <span style="color:red">Repointing atlas.json from demo marketplace. atlas-settings marketplace url will need updating to "https://accounts.auth.hclvoltmx.net/login"</span>
 
-???+ info "v1.0.4 - What's new or changed"
+??? info "v1.0.4 - What's new or changed"
 
     ## v1.0.4
     **Improvements**
 
     - <span style="color:red">Repointing atlas.json to use VSE title and filename as library and module.</span>
 
-???+ info "v1.0.3 - What's new or changed"
+??? info "v1.0.3 - What's new or changed"
     ## v1.0.3
     **Improvements**
 
     - Added VSID database to repo
     - <span style="color:red">Repointing atlas.json from demo marketplace. atlas-settings marketplace url will need updating to "https://accounts.auth.hclvoltmx.net/login"</span>
 
-???+ info "v1.0.2 - What's new or changed"
+??? info "v1.0.2 - What's new or changed"
     ## v1.0.2
 
     **Resolved Issues**
@@ -42,7 +47,7 @@ The section provides information on the latest features, improvements, and resol
     - <span style="color:red">Adding to a sorted Collection returned the total elements in the Collection, not the index at which the element was added.</span>
     - <span style="color:red">Converting an empty Collection to JSON returned a JSON object, not a JSON array.</span>
 
-???+ info "v1.0.1 - What's new or changed"
+??? info "v1.0.1 - What's new or changed"
     ## v1.0.1
 
      **Improvements**

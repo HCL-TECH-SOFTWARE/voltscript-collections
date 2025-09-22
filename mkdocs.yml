@@ -20,26 +20,26 @@ theme:
     - content.code.annotate
     - content.code.copy
     - content.tooltips
-  #custom_dir: theme_overrides/
+  custom_dir: theme_overrides/
   icon:
     repo: fontawesome/brands/github
   font: false
   #  text: Roboto
   #  code: Roboto Mono
   favicon: assets/images/favicon.png
-  palette:
-    - scheme: default
-      primary: indigo
-      accent: indigo
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
-    - scheme: slate
-      primary: indigo
-      accent: indigo
-      toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
+#  palette:
+#    - scheme: default
+#      primary: indigo
+#      accent: indigo
+#      toggle:
+#        icon: material/brightness-7
+#        name: Switch to dark mode
+#    - scheme: slate
+#      primary: indigo
+#      accent: indigo
+#      toggle:
+#        icon: material/brightness-4
+#        name: Switch to light mode
 
   # Static files
   static_templates:
@@ -51,6 +51,7 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.superfences
   - attr_list
+  - md_in_html
   - abbr
   - footnotes
   - pymdownx.tabbed:
@@ -70,12 +71,12 @@ markdown_extensions:
 
 # Copyright
 copyright: >-
-  Copyright &copy; 2023, HCL America, Inc. | <a href="https://www.hcl-software.com/legal/privacy" target="_blank">Privacy Statement</a> | <a href="https://www.hcl-software.com/legal/terms-use" target="_blank">Terms of Use</a> <br/>
+  Copyright &copy; 2023-2025, HCL America, Inc. | <a href="https://www.hcl-software.com/legal/privacy" target="_blank">Privacy Statement</a> | <a href="https://www.hcl-software.com/legal/terms-use" target="_blank">Terms of Use</a> <br/>
   <a href="#__consent">Change cookie settings</a>
 #  Copyright &copy; 2022-23, HCL America, Inc. -
 #  <a href="#__consent">Change cookie settings</a>
 extra:
-  productversion: 1.0.1
+  productversion: 1.0.6
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/HCL-TECH-SOFTWARE
@@ -101,6 +102,7 @@ edit_uri: ""
 # Customization
 extra_css:
   - assets/css/style.css
+  - assets/css/style1.css
 
 watch:
   - docs/includes/glossary.md

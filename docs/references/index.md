@@ -2,10 +2,11 @@
 
 References provide technical references and descriptions for VoltScript Collections.
 
+<!--
 ## What's new
 
 Check the [latest information](whatsnew.md) about VoltScript Collections.
-
+-->
 ## Repository structure
 
 - All the code for the framework itself is in `src/VoltScriptCollections.vss`.
@@ -25,8 +26,7 @@ index.md
 ## Documentation and source code
 
 - [HCL Volt MX Go Documentation](https://opensource.hcltechsw.com/voltmxgo-documentation/index.html){: target="_blank"}
-- VoltScript
-    - [Documentation](https://help.hcltechsw.com/docs/voltscript/early-access/index.html){: target="_blank" rel="noopener noreferrer"}
+- [VoltScript](https://opensource.hcltechsw.com/voltscript-docs/index.html){: target="_blank" rel="noopener noreferrer"}
 - VoltScript Testing
     - [Documentation](https://opensource.hcltechsw.com/voltscript-testing){: target="_blank" rel="noopener noreferrer"}
     - [Source code](https://github.com/HCL-TECH-SOFTWARE/voltscript-testing){: target="_blank" rel="noopener noreferrer"}
@@ -46,4 +46,4 @@ index.md
 
 ## Support
 
-To share information, ask questions, and learn about VoltScript Collections, go to the [Community](https://support.hcltechsw.com/community?id=community_forum&sys_id=999cdacbdb82ed9055f38d6d13961961){: target="_blank"}.
+To share information, ask questions, and learn about VoltScript Collections, go to the [Community](https://developer.ds.hcl-software.com/){: target="_blank"}.
