@@ -1,0 +1,89 @@
+%REM
+    Copyright 2022-23 HCL America, Inc.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+%END REM
+Option Declare
+Use "../../src/VoltScriptCollections"  ' change this to point to the location of your VoltScriptCollections.vss file
+
+Class NumFilter as CollectionFilter
+
+    Function filter(source as Variant) as Boolean
+        Return IsNumeric(source)
+    End Function
+
+End Class
+
+Class IndexTransformer as CollectionTransformer
+
+    Public count as Integer     ' So it can be reset if the transformer is re-used
+
+    Function transform(source as Variant) as Variant
+        Return "Element " & count++ & " is " & source
+    End Function
+
+End Class
+
+Sub Initialize
+
+    Dim coll as New Collection("SCALAR", Nothing, False, False)
+    Dim i as Long
+    Dim dbls(3) as Double
+
+    Call coll.add("Hello")
+    Call coll.add("World")
+    Call coll.add(1)
+    Call coll.add(2)
+    Call coll.add(3)
+    Call coll.add("Hello")
+
+    dbls(0) = 1.23
+    dbls(1) = 21.648
+    dbls(2) = 8472.6
+    dbls(3) = 746.0
+    Call coll.addAll(dbls)
+
+    Do
+        Print coll.getNthElementRaw(i)
+    Loop While ++i < coll.ElementCount
+
+    Print "===Insertion==="
+    Call coll.insertAt("New", 1)
+    Print coll.join(",")
+
+    Print "===Coll2==="
+    i = 0
+    Dim coll2 as New Collection("SCALAR", Nothing, True, True)
+
+    Call coll2.add("Hello")
+    Call coll2.add("World")
+    Call coll2.add(1)
+    Call coll2.add(2)
+    Call coll2.add(3)
+    Call coll2.add(2.5)
+    Call coll2.add("Hello")
+
+    Do
+        Print coll2.getNthElementRaw(i)
+    Loop While ++i < coll2.ElementCount
+
+    Print "===Coll2 reversed==="
+    i = 0
+    Call coll2.reverse()
+    Call coll2.add(1.5)
+
+    Do
+        Print coll2.getNthElementRaw(i)
+    Loop While ++i < coll2.ElementCount
+
+End Sub

@@ -1,0 +1,136 @@
+%REM
+    Copyright 2022-23 HCL America, Inc.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+%END REM
+Option Declare
+Use "../../src/VoltScriptCollections"  ' change this to point to the location of your VoltScriptCollections.vss file
+
+Class Person
+
+    Public key as String
+    Public firstName as String
+    Public lastName as String
+    Public age as Integer
+
+End Class
+
+Class AltPerson
+
+    Public fullName as String
+    Public ageRange as String
+
+End Class
+
+Class PersonFilter as MapFilter
+
+    Function filter(kvPair as Pair) as Boolean
+        Return CInt(kvPair.value.age) < 80
+    End Function
+
+End Class
+
+Class PersonTransformer as MapTransformer
+
+    Function transform(kvPair as Pair) as Pair
+        Dim tempPerson as Person
+        Dim newPerson as New AltPerson
+        Dim newKey as String
+
+        Set tempPerson = kvPair.value
+        If (tempPerson.age < 80) Then
+            newKey = Format(tempPerson.age, "00") & "," & tempPerson.firstName & " " & tempPerson.lastName & "," & tempPerson.key
+            newPerson.fullName = tempPerson.firstName & " " & tempPerson.lastName
+            newPerson.ageRange = getAgeRange(tempPerson.age)
+            Return new Pair(newKey, newPerson)
+        End If
+    End Function
+
+    Function getAgeRange(age as Integer) as String
+        Select Case age
+            Case Is < 18:
+                Return "Child"
+            Case 16 To 30
+                Return "Young Person"
+            Case Is > 60
+                Return "Pensioner"
+            Case Else
+                Return "Adult"
+        End Select
+    End Function
+
+End Class
+
+Sub Initialize
+
+    Dim personMap as New Map("PERSON", Nothing, False)
+    Call personMap.putPair(createPair("1", "Dennis", "Doe", 84))
+    Call personMap.putPair(createPair("2", "Denise", "Doe", 82))
+    Call personMap.putPair(createPair("3", "Andrew", "Doe", 65))
+    Call personMap.putPair(createPair("4", "Fred", "Doe", 65))
+    Call personMap.putPair(createPair("5", "Frances", "Doe", 67))
+    Call personMap.putPair(createPair("6", "John", "Doe", 42))
+    Call personMap.putPair(createPair("7", "Jane", "Doe", 30))
+    Call personMap.putPair(createPair("8", "Johnathan", "Doe", 12))
+    Call personMap.putPair(createPair("9", "Janet", "Doe", 6))
+    Call personMap.putPair(createPair("10", "Ken", "Doe", 41))
+    Call personMap.putPair(createPair("11", "Karen", "Doe", 39))
+    Call personMap.putPair(createPair("12", "Bill", "Doe", 19))
+    Call personMap.putPair(createPair("13", "Bob", "Doe", 17))
+    Call personMap.putPair(createPair("14", "Ben", "Doe", 10))
+
+    Dim filter as New PersonFilter()
+    Dim compar as New MatchingDataTypeComparator(false)
+    Dim tempMap as Map
+    Dim tempPerson as Person
+    Dim key as String
+    Dim i as Long
+    Dim sortedPersonMap as New Map("PERSON", compar, True)
+
+    Set tempMap = personMap.filter(filter)
+    Do
+        Set tempPerson = tempMap.getNthValueRaw(i)
+        key = Format(tempPerson.age, "00") & "," & tempPerson.firstName & " " & tempPerson.lastName & "," & tempPerson.key
+        Call sortedPersonMap.put(key, tempPerson)
+    Loop While ++i < tempMap.elementCount
+
+    Print "===Keys==="
+    i = 0
+    Do
+        Print sortedPersonMap.getNthKeyRaw(i)
+    Loop While ++i < sortedPersonMap.elementCount
+
+    Print "===Transformed==="
+    Dim transformedMap as New Map("ALTPERSON", Nothing, True)
+    Dim transformer as New PersonTransformer()
+    Dim altPerson as AltPerson
+    
+    Call personMap.transform(transformer, transformedMap)
+    i = 0
+    Do
+        Set altPerson = transformedMap.getNthValueRaw(i)
+        Print altPerson.fullName & " - " & altPerson.ageRange
+    Loop While ++i < sortedPersonMap.elementCount
+
+End Sub
+
+Function createPair(id as String, firstName as String, lastName as String, age as Integer) as Pair
+
+    Dim person as new Person()
+    person.key = id
+    person.firstName = firstName
+    person.lastName = lastName
+    person.age = age
+    Set createPair = new Pair(id, person)
+
+End Function

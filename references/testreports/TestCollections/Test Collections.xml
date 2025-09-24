@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="Test Collections" tests="145" time="250425T145329" failures="0" errors="0">
+  <testsuite name="Test Basic Collection" time="0" displayname="Test Basic Collection" id="[engine:testsuite-voltscript]/[Test Basic Collection]">
+    <testcase name="Test  contentType" classname="Test Basic Collection" time="0" displayname="Test  contentType" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Test  contentType]">
+    </testcase>
+    <testcase name="Test   contentType" classname="Test Basic Collection" time="0" displayname="Test   contentType" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Test   contentType]">
+    </testcase>
+    <testcase name="Test NULL contentType" classname="Test Basic Collection" time="0" displayname="Test NULL contentType" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Test NULL contentType]">
+    </testcase>
+    <testcase name="Test EMPTY contentType" classname="Test Basic Collection" time="0" displayname="Test EMPTY contentType" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Test EMPTY contentType]">
+    </testcase>
+    <testcase name="Test VARIANT contentType" classname="Test Basic Collection" time="0" displayname="Test VARIANT contentType" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Test VARIANT contentType]">
+    </testcase>
+    <testcase name="Test NOTHING contentType" classname="Test Basic Collection" time="0" displayname="Test NOTHING contentType" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Test NOTHING contentType]">
+    </testcase>
+    <testcase name="Test ARRAY contentType" classname="Test Basic Collection" time="0" displayname="Test ARRAY contentType" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Test ARRAY contentType]">
+    </testcase>
+    <testcase name="Test LIST contentType" classname="Test Basic Collection" time="0" displayname="Test LIST contentType" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Test LIST contentType]">
+    </testcase>
+    <testcase name="Test SCALAR,STRING contentType" classname="Test Basic Collection" time="0" displayname="Test SCALAR,STRING contentType" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Test SCALAR,STRING contentType]">
+    </testcase>
+    <testcase name="Test OBJECT,STRING contentType" classname="Test Basic Collection" time="0" displayname="Test OBJECT,STRING contentType" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Test OBJECT,STRING contentType]">
+    </testcase>
+    <testcase name="Test PERSON,STRING contentType" classname="Test Basic Collection" time="0" displayname="Test PERSON,STRING contentType" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Test PERSON,STRING contentType]">
+    </testcase>
+    <testcase name="Test has no content" classname="Test Basic Collection" time="0" displayname="Test has no content" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Test has no content]">
+    </testcase>
+    <testcase name="Adding to collection" classname="Test Basic Collection" time="0" displayname="Adding to collection" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Adding to collection]">
+    </testcase>
+    <testcase name="Test collection has content" classname="Test Basic Collection" time="0" displayname="Test collection has content" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Test collection has content]">
+    </testcase>
+    <testcase name="Check collection has 5 elements" classname="Test Basic Collection" time="0" displayname="Check collection has 5 elements" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Check collection has 5 elements]">
+    </testcase>
+    <testcase name="Check removing first element" classname="Test Basic Collection" time="0" displayname="Check removing first element" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Check removing first element]">
+    </testcase>
+    <testcase name="Check removing last element" classname="Test Basic Collection" time="0" displayname="Check removing last element" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Check removing last element]">
+    </testcase>
+    <testcase name="Check collection now has 3 elements" classname="Test Basic Collection" time="0" displayname="Check collection now has 3 elements" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Check collection now has 3 elements]">
+    </testcase>
+    <testcase name="Try adding EMPTY" classname="Test Basic Collection" time="0" displayname="Try adding EMPTY" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Try adding EMPTY]">
+    </testcase>
+    <testcase name="Check last Error in ErrorSession matches last Error." classname="Test Basic Collection" time="0" displayname="Check last Error in ErrorSession matches last Error." id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Check last Error in ErrorSession matches last Error.]">
+    </testcase>
+    <testcase name="Check collection still has 3 elements after adding EMPTY" classname="Test Basic Collection" time="0" displayname="Check collection still has 3 elements after adding EMPTY" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Check collection still has 3 elements after adding EMPTY]">
+    </testcase>
+    <testcase name="Check collection 4 elements after adding blank string" classname="Test Basic Collection" time="0" displayname="Check collection 4 elements after adding blank string" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Check collection 4 elements after adding blank string]">
+    </testcase>
+    <testcase name="Test element 0 is Two" classname="Test Basic Collection" time="0" displayname="Test element 0 is Two" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Test element 0 is Two]">
+    </testcase>
+    <testcase name="Test element 1 is one" classname="Test Basic Collection" time="0" displayname="Test element 1 is one" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Test element 1 is one]">
+    </testcase>
+    <testcase name="Test element 2 is 3" classname="Test Basic Collection" time="0" displayname="Test element 2 is 3" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Test element 2 is 3]">
+    </testcase>
+    <testcase name="Test get invalid index is EMPTY" classname="Test Basic Collection" time="0" displayname="Test get invalid index is EMPTY" id="[engine:testsuite-voltscript]/[Test Basic Collection]/[Test get invalid index is EMPTY]">
+    </testcase>
+  </testsuite>
+  <testsuite name="Test string insensitive comparator collection" time="0" displayname="Test string insensitive comparator collection" id="[engine:testsuite-voltscript]/[Test string insensitive comparator collection]">
+    <testcase name="Test adding a collection" classname="Test string insensitive comparator collection" time="0" displayname="Test adding a collection" id="[engine:testsuite-voltscript]/[Test string insensitive comparator collection]/[Test adding a collection]">
+    </testcase>
+    <testcase name="Check case insensitive unique coll has three elements" classname="Test string insensitive comparator collection" time="0" displayname="Check case insensitive unique coll has three elements" id="[engine:testsuite-voltscript]/[Test string insensitive comparator collection]/[Check case insensitive unique coll has three elements]">
+    </testcase>
+  </testsuite>
+  <testsuite name="Test adding collections" time="0" displayname="Test adding collections" id="[engine:testsuite-voltscript]/[Test adding collections]">
+    <testcase name="Test adding a collection" classname="Test adding collections" time="0" displayname="Test adding a collection" id="[engine:testsuite-voltscript]/[Test adding collections]/[Test adding a collection]">
+    </testcase>
+    <testcase name="Check unique newColl only has five elements" classname="Test adding collections" time="0" displayname="Check unique newColl only has five elements" id="[engine:testsuite-voltscript]/[Test adding collections]/[Check unique newColl only has five elements]">
+    </testcase>
+    <testcase name="Test adding non-Collection object" classname="Test adding collections" time="0" displayname="Test adding non-Collection object" id="[engine:testsuite-voltscript]/[Test adding collections]/[Test adding non-Collection object]">
+    </testcase>
+  </testsuite>
+  <testsuite name="Test String collection" time="0" displayname="Test String collection" id="[engine:testsuite-voltscript]/[Test String collection]">
+    <testcase name="Test string collection accepts strings" classname="Test String collection" time="0" displayname="Test string collection accepts strings" id="[engine:testsuite-voltscript]/[Test String collection]/[Test string collection accepts strings]">
+    </testcase>
+    <testcase name="Test collection at start has 2 elements" classname="Test String collection" time="0" displayname="Test collection at start has 2 elements" id="[engine:testsuite-voltscript]/[Test String collection]/[Test collection at start has 2 elements]">
+    </testcase>
+    <testcase name="Test string collection won't accept number" classname="Test String collection" time="0" displayname="Test string collection won't accept number" id="[engine:testsuite-voltscript]/[Test String collection]/[Test string collection won't accept number]">
+    </testcase>
+    <testcase name="Test collection after number has 2 elements" classname="Test String collection" time="0" displayname="Test collection after number has 2 elements" id="[engine:testsuite-voltscript]/[Test String collection]/[Test collection after number has 2 elements]">
+    </testcase>
+    <testcase name="Test string collection will not accept variant collection" classname="Test String collection" time="0" displayname="Test string collection will not accept variant collection" id="[engine:testsuite-voltscript]/[Test String collection]/[Test string collection will not accept variant collection]">
+    </testcase>
+    <testcase name="Test adding elements to collection error" classname="Test String collection" time="0" displayname="Test adding elements to collection error" id="[engine:testsuite-voltscript]/[Test String collection]/[Test adding elements to collection error]">
+    </testcase>
+    <testcase name="POST ERROR: Test LastEntry.message is 'Collection Index: 1'" classname="Test String collection" time="0" displayname="POST ERROR: Test LastEntry.message is 'Collection Index: 1'" id="[engine:testsuite-voltscript]/[Test String collection]/[POST ERROR: Test LastEntry.message is 'Collection Index: 1']">
+    </testcase>
+    <testcase name="Test collection after variant coll elements has 2 elements" classname="Test String collection" time="0" displayname="Test collection after variant coll elements has 2 elements" id="[engine:testsuite-voltscript]/[Test String collection]/[Test collection after variant coll elements has 2 elements]">
+    </testcase>
+    <testcase name="Test string collection will only accept strings from variant collection" classname="Test String collection" time="0" displayname="Test string collection will only accept strings from variant collection" id="[engine:testsuite-voltscript]/[Test String collection]/[Test string collection will only accept strings from variant collection]">
+    </testcase>
+    <testcase name="SUPPRESS ERRORS: Test LastEntry.message is 'Collection Index: 1'" classname="Test String collection" time="0" displayname="SUPPRESS ERRORS: Test LastEntry.message is 'Collection Index: 1'" id="[engine:testsuite-voltscript]/[Test String collection]/[SUPPRESS ERRORS: Test LastEntry.message is 'Collection Index: 1']">
+    </testcase>
+    <testcase name="Test collection after variant coll elements has 4 elements" classname="Test String collection" time="0" displayname="Test collection after variant coll elements has 4 elements" id="[engine:testsuite-voltscript]/[Test String collection]/[Test collection after variant coll elements has 4 elements]">
+    </testcase>
+    <testcase name="Test string collection won't accept variant array" classname="Test String collection" time="0" displayname="Test string collection won't accept variant array" id="[engine:testsuite-voltscript]/[Test String collection]/[Test string collection won't accept variant array]">
+    </testcase>
+    <testcase name="Test collection after variant array has 4 elements" classname="Test String collection" time="0" displayname="Test collection after variant array has 4 elements" id="[engine:testsuite-voltscript]/[Test String collection]/[Test collection after variant array has 4 elements]">
+    </testcase>
+    <testcase name="Test string collection will accept variant array with suppressErrors" classname="Test String collection" time="0" displayname="Test string collection will accept variant array with suppressErrors" id="[engine:testsuite-voltscript]/[Test String collection]/[Test string collection will accept variant array with suppressErrors]">
+    </testcase>
+    <testcase name="Test collection after variant array has 5 elements" classname="Test String collection" time="0" displayname="Test collection after variant array has 5 elements" id="[engine:testsuite-voltscript]/[Test String collection]/[Test collection after variant array has 5 elements]">
+    </testcase>
+    <testcase name="Test no ErrorEntity instances spawned with suppressErrors enabled" classname="Test String collection" time="0" displayname="Test no ErrorEntity instances spawned with suppressErrors enabled" id="[engine:testsuite-voltscript]/[Test String collection]/[Test no ErrorEntity instances spawned with suppressErrors enabled]">
+    </testcase>
+  </testsuite>
+  <testsuite name="Test Insertion" time="0" displayname="Test Insertion" id="[engine:testsuite-voltscript]/[Test Insertion]">
+    <testcase name="Test third element is Three" classname="Test Insertion" time="0" displayname="Test third element is Three" id="[engine:testsuite-voltscript]/[Test Insertion]/[Test third element is Three]">
+    </testcase>
+    <testcase name="Test third element is now Four" classname="Test Insertion" time="0" displayname="Test third element is now Four" id="[engine:testsuite-voltscript]/[Test Insertion]/[Test third element is now Four]">
+    </testcase>
+    <testcase name="Test remove first match" classname="Test Insertion" time="0" displayname="Test remove first match" id="[engine:testsuite-voltscript]/[Test Insertion]/[Test remove first match]">
+    </testcase>
+    <testcase name="Test remove all matches" classname="Test Insertion" time="0" displayname="Test remove all matches" id="[engine:testsuite-voltscript]/[Test Insertion]/[Test remove all matches]">
+    </testcase>
+    <testcase name="Test Four has been changed to 4" classname="Test Insertion" time="0" displayname="Test Four has been changed to 4" id="[engine:testsuite-voltscript]/[Test Insertion]/[Test Four has been changed to 4]">
+    </testcase>
+    <testcase name="Check one replacement made" classname="Test Insertion" time="0" displayname="Check one replacement made" id="[engine:testsuite-voltscript]/[Test Insertion]/[Check one replacement made]">
+    </testcase>
+    <testcase name="Test two has been changed to 2" classname="Test Insertion" time="0" displayname="Test two has been changed to 2" id="[engine:testsuite-voltscript]/[Test Insertion]/[Test two has been changed to 2]">
+    </testcase>
+    <testcase name="Check two replacements made" classname="Test Insertion" time="0" displayname="Check two replacements made" id="[engine:testsuite-voltscript]/[Test Insertion]/[Check two replacements made]">
+    </testcase>
+    <testcase name="Test collection is locked" classname="Test Insertion" time="0" displayname="Test collection is locked" id="[engine:testsuite-voltscript]/[Test Insertion]/[Test collection is locked]">
+    </testcase>
+    <testcase name="Test collection does not allow adding when locked" classname="Test Insertion" time="0" displayname="Test collection does not allow adding when locked" id="[engine:testsuite-voltscript]/[Test Insertion]/[Test collection does not allow adding when locked]">
+    </testcase>
+    <testcase name="Test collection does not allow adding all when locked" classname="Test Insertion" time="0" displayname="Test collection does not allow adding all when locked" id="[engine:testsuite-voltscript]/[Test Insertion]/[Test collection does not allow adding all when locked]">
+    </testcase>
+    <testcase name="Test collection does not allow removing first when locked" classname="Test Insertion" time="0" displayname="Test collection does not allow removing first when locked" id="[engine:testsuite-voltscript]/[Test Insertion]/[Test collection does not allow removing first when locked]">
+    </testcase>
+    <testcase name="Test collection does not allow removing last when locked" classname="Test Insertion" time="0" displayname="Test collection does not allow removing last when locked" id="[engine:testsuite-voltscript]/[Test Insertion]/[Test collection does not allow removing last when locked]">
+    </testcase>
+    <testcase name="Test collection does not allow insertAt when locked" classname="Test Insertion" time="0" displayname="Test collection does not allow insertAt when locked" id="[engine:testsuite-voltscript]/[Test Insertion]/[Test collection does not allow insertAt when locked]">
+    </testcase>
+    <testcase name="Test collection does not allow clear when locked" classname="Test Insertion" time="0" displayname="Test collection does not allow clear when locked" id="[engine:testsuite-voltscript]/[Test Insertion]/[Test collection does not allow clear when locked]">
+    </testcase>
+    <testcase name="Test collection does not allow remove element when locked" classname="Test Insertion" time="0" displayname="Test collection does not allow remove element when locked" id="[engine:testsuite-voltscript]/[Test Insertion]/[Test collection does not allow remove element when locked]">
+    </testcase>
+    <testcase name="Test collection does not allow replace element when locked" classname="Test Insertion" time="0" displayname="Test collection does not allow replace element when locked" id="[engine:testsuite-voltscript]/[Test Insertion]/[Test collection does not allow replace element when locked]">
+    </testcase>
+    <testcase name="Test collection does not allow reverse when locked" classname="Test Insertion" time="0" displayname="Test collection does not allow reverse when locked" id="[engine:testsuite-voltscript]/[Test Insertion]/[Test collection does not allow reverse when locked]">
+    </testcase>
+    <testcase name="Test adding again" classname="Test Insertion" time="0" displayname="Test adding again" id="[engine:testsuite-voltscript]/[Test Insertion]/[Test adding again]">
+    </testcase>
+    <testcase name="Test collection cleared" classname="Test Insertion" time="0" displayname="Test collection cleared" id="[engine:testsuite-voltscript]/[Test Insertion]/[Test collection cleared]">
+    </testcase>
+    <testcase name="Test collection has 0 elements" classname="Test Insertion" time="0" displayname="Test collection has 0 elements" id="[engine:testsuite-voltscript]/[Test Insertion]/[Test collection has 0 elements]">
+    </testcase>
+    <testcase name="Test collection still has four elements" classname="Test Insertion" time="0" displayname="Test collection still has four elements" id="[engine:testsuite-voltscript]/[Test Insertion]/[Test collection still has four elements]">
+    </testcase>
+    <testcase name="Test collection is ordered correctly" classname="Test Insertion" time="0" displayname="Test collection is ordered correctly" id="[engine:testsuite-voltscript]/[Test Insertion]/[Test collection is ordered correctly]">
+    </testcase>
+  </testsuite>
+  <testsuite name="Test transformation silently" time="0" displayname="Test transformation silently" id="[engine:testsuite-voltscript]/[Test transformation silently]">
+    <testcase name="Test coll1 has two elements" classname="Test transformation silently" time="0" displayname="Test coll1 has two elements" id="[engine:testsuite-voltscript]/[Test transformation silently]/[Test coll1 has two elements]">
+    </testcase>
+    <testcase name="Test transforming throws error" classname="Test transformation silently" time="0" displayname="Test transforming throws error" id="[engine:testsuite-voltscript]/[Test transformation silently]/[Test transforming throws error]">
+    </testcase>
+    <testcase name="Test transforming with suppressErrors doesn't error" classname="Test transformation silently" time="0" displayname="Test transforming with suppressErrors doesn't error" id="[engine:testsuite-voltscript]/[Test transformation silently]/[Test transforming with suppressErrors doesn't error]">
+    </testcase>
+    <testcase name="Test second collection has only one element" classname="Test transformation silently" time="0" displayname="Test second collection has only one element" id="[engine:testsuite-voltscript]/[Test transformation silently]/[Test second collection has only one element]">
+    </testcase>
+    <testcase name="Test adding number to StringCollection doesn't error" classname="Test transformation silently" time="0" displayname="Test adding number to StringCollection doesn't error" id="[engine:testsuite-voltscript]/[Test transformation silently]/[Test adding number to StringCollection doesn't error]">
+    </testcase>
+    <testcase name="Test only one element in StringCollection" classname="Test transformation silently" time="0" displayname="Test only one element in StringCollection" id="[engine:testsuite-voltscript]/[Test transformation silently]/[Test only one element in StringCollection]">
+    </testcase>
+    <testcase name="Test adding boolean to StringCollection doesn't error" classname="Test transformation silently" time="0" displayname="Test adding boolean to StringCollection doesn't error" id="[engine:testsuite-voltscript]/[Test transformation silently]/[Test adding boolean to StringCollection doesn't error]">
+    </testcase>
+    <testcase name="Test element is 'True' in StringCollection" classname="Test transformation silently" time="0" displayname="Test element is 'True' in StringCollection" id="[engine:testsuite-voltscript]/[Test transformation silently]/[Test element is 'True' in StringCollection]">
+    </testcase>
+    <testcase name="Test adding object to string throws error" classname="Test transformation silently" time="0" displayname="Test adding object to string throws error" id="[engine:testsuite-voltscript]/[Test transformation silently]/[Test adding object to string throws error]">
+    </testcase>
+    <testcase name="Test adding object with suppressErrors doesn't error" classname="Test transformation silently" time="0" displayname="Test adding object with suppressErrors doesn't error" id="[engine:testsuite-voltscript]/[Test transformation silently]/[Test adding object with suppressErrors doesn't error]">
+    </testcase>
+    <testcase name="Test two elements in StringCollection" classname="Test transformation silently" time="0" displayname="Test two elements in StringCollection" id="[engine:testsuite-voltscript]/[Test transformation silently]/[Test two elements in StringCollection]">
+    </testcase>
+  </testsuite>
+  <testsuite name="Test big collection" time="0" displayname="Test big collection" id="[engine:testsuite-voltscript]/[Test big collection]">
+    <testcase name="Test adding 671 elements" classname="Test big collection" time="0" displayname="Test adding 671 elements" id="[engine:testsuite-voltscript]/[Test big collection]/[Test adding 671 elements]">
+    </testcase>
+    <testcase name="Verify collection contains 671 elements" classname="Test big collection" time="0" displayname="Verify collection contains 671 elements" id="[engine:testsuite-voltscript]/[Test big collection]/[Verify collection contains 671 elements]">
+    </testcase>
+    <testcase name="Test adding 6701 elements" classname="Test big collection" time="0" displayname="Test adding 6701 elements" id="[engine:testsuite-voltscript]/[Test big collection]/[Test adding 6701 elements]">
+    </testcase>
+    <testcase name="Verify collection contains 6701 elements" classname="Test big collection" time="0" displayname="Verify collection contains 6701 elements" id="[engine:testsuite-voltscript]/[Test big collection]/[Verify collection contains 6701 elements]">
+    </testcase>
+    <testcase name="Test adding 3550 elements" classname="Test big collection" time="0" displayname="Test adding 3550 elements" id="[engine:testsuite-voltscript]/[Test big collection]/[Test adding 3550 elements]">
+    </testcase>
+    <testcase name="Verify collection contains 3550 elements" classname="Test big collection" time="0" displayname="Verify collection contains 3550 elements" id="[engine:testsuite-voltscript]/[Test big collection]/[Verify collection contains 3550 elements]">
+    </testcase>
+    <testcase name="Test adding 20001 elements" classname="Test big collection" time="0" displayname="Test adding 20001 elements" id="[engine:testsuite-voltscript]/[Test big collection]/[Test adding 20001 elements]">
+    </testcase>
+    <testcase name="Verify collection contains 20001 elements" classname="Test big collection" time="0" displayname="Verify collection contains 20001 elements" id="[engine:testsuite-voltscript]/[Test big collection]/[Verify collection contains 20001 elements]">
+    </testcase>
+    <testcase name="Verify first element is 20000" classname="Test big collection" time="0" displayname="Verify first element is 20000" id="[engine:testsuite-voltscript]/[Test big collection]/[Verify first element is 20000]">
+    </testcase>
+    <testcase name="Verify last element is 0" classname="Test big collection" time="0" displayname="Verify last element is 0" id="[engine:testsuite-voltscript]/[Test big collection]/[Verify last element is 0]">
+    </testcase>
+  </testsuite>
+  <testsuite name="Test Sorted numerics" time="0" displayname="Test Sorted numerics" id="[engine:testsuite-voltscript]/[Test Sorted numerics]">
+    <testcase name="Test 90 inserted at end" classname="Test Sorted numerics" time="0" displayname="Test 90 inserted at end" id="[engine:testsuite-voltscript]/[Test Sorted numerics]/[Test 90 inserted at end]">
+    </testcase>
+    <testcase name="Test -1 inserted at start" classname="Test Sorted numerics" time="0" displayname="Test -1 inserted at start" id="[engine:testsuite-voltscript]/[Test Sorted numerics]/[Test -1 inserted at start]">
+    </testcase>
+    <testcase name="Test 13 inserted as 7th element" classname="Test Sorted numerics" time="0" displayname="Test 13 inserted as 7th element" id="[engine:testsuite-voltscript]/[Test Sorted numerics]/[Test 13 inserted as 7th element]">
+    </testcase>
+    <testcase name="Check comparator is ascending" classname="Test Sorted numerics" time="0" displayname="Check comparator is ascending" id="[engine:testsuite-voltscript]/[Test Sorted numerics]/[Check comparator is ascending]">
+    </testcase>
+    <testcase name="Check reverse of collection" classname="Test Sorted numerics" time="0" displayname="Check reverse of collection" id="[engine:testsuite-voltscript]/[Test Sorted numerics]/[Check reverse of collection]">
+    </testcase>
+    <testcase name="Check 26 inserted at position 4" classname="Test Sorted numerics" time="0" displayname="Check 26 inserted at position 4" id="[engine:testsuite-voltscript]/[Test Sorted numerics]/[Check 26 inserted at position 4]">
+    </testcase>
+    <testcase name="Test 30 inserted at start" classname="Test Sorted numerics" time="0" displayname="Test 30 inserted at start" id="[engine:testsuite-voltscript]/[Test Sorted numerics]/[Test 30 inserted at start]">
+    </testcase>
+    <testcase name="Test 0 inserted at end" classname="Test Sorted numerics" time="0" displayname="Test 0 inserted at end" id="[engine:testsuite-voltscript]/[Test Sorted numerics]/[Test 0 inserted at end]">
+    </testcase>
+    <testcase name="Test 90 inserted at start" classname="Test Sorted numerics" time="0" displayname="Test 90 inserted at start" id="[engine:testsuite-voltscript]/[Test Sorted numerics]/[Test 90 inserted at start]">
+    </testcase>
+    <testcase name="Test -1 inserted at end" classname="Test Sorted numerics" time="0" displayname="Test -1 inserted at end" id="[engine:testsuite-voltscript]/[Test Sorted numerics]/[Test -1 inserted at end]">
+    </testcase>
+    <testcase name="Test 8th element is 13" classname="Test Sorted numerics" time="0" displayname="Test 8th element is 13" id="[engine:testsuite-voltscript]/[Test Sorted numerics]/[Test 8th element is 13]">
+    </testcase>
+    <testcase name="Check reverse of collection_1" classname="Test Sorted numerics" time="0" displayname="Check reverse of collection_1" id="[engine:testsuite-voltscript]/[Test Sorted numerics]/[Check reverse of collection_1]">
+    </testcase>
+    <testcase name="Check 12th element is 26" classname="Test Sorted numerics" time="0" displayname="Check 12th element is 26" id="[engine:testsuite-voltscript]/[Test Sorted numerics]/[Check 12th element is 26]">
+    </testcase>
+  </testsuite>
+  <testsuite name="Test Sorted strings" time="0" displayname="Test Sorted strings" id="[engine:testsuite-voltscript]/[Test Sorted strings]">
+    <testcase name="Check coll has 9 elements" classname="Test Sorted strings" time="0" displayname="Check coll has 9 elements" id="[engine:testsuite-voltscript]/[Test Sorted strings]/[Check coll has 9 elements]">
+    </testcase>
+    <testcase name="Check reverseColl has 8 elements" classname="Test Sorted strings" time="0" displayname="Check reverseColl has 8 elements" id="[engine:testsuite-voltscript]/[Test Sorted strings]/[Check reverseColl has 8 elements]">
+    </testcase>
+    <testcase name="Test brown is first word in coll" classname="Test Sorted strings" time="0" displayname="Test brown is first word in coll" id="[engine:testsuite-voltscript]/[Test Sorted strings]/[Test brown is first word in coll]">
+    </testcase>
+    <testcase name="Test 7th word is quick" classname="Test Sorted strings" time="0" displayname="Test 7th word is quick" id="[engine:testsuite-voltscript]/[Test Sorted strings]/[Test 7th word is quick]">
+    </testcase>
+    <testcase name="Test the is first word of reverseColl" classname="Test Sorted strings" time="0" displayname="Test the is first word of reverseColl" id="[engine:testsuite-voltscript]/[Test Sorted strings]/[Test the is first word of reverseColl]">
+    </testcase>
+    <testcase name="Test fox is the 6th word of reverseColl" classname="Test Sorted strings" time="0" displayname="Test fox is the 6th word of reverseColl" id="[engine:testsuite-voltscript]/[Test Sorted strings]/[Test fox is the 6th word of reverseColl]">
+    </testcase>
+    <testcase name="Test brown is the 8th word of reverseColl" classname="Test Sorted strings" time="0" displayname="Test brown is the 8th word of reverseColl" id="[engine:testsuite-voltscript]/[Test Sorted strings]/[Test brown is the 8th word of reverseColl]">
+    </testcase>
+    <testcase name="Test contains invalid value" classname="Test Sorted strings" time="0" displayname="Test contains invalid value" id="[engine:testsuite-voltscript]/[Test Sorted strings]/[Test contains invalid value]">
+    </testcase>
+    <testcase name="Test contains brown" classname="Test Sorted strings" time="0" displayname="Test contains brown" id="[engine:testsuite-voltscript]/[Test Sorted strings]/[Test contains brown]">
+    </testcase>
+  </testsuite>
+  <testsuite name="Test Mixed Sorted" time="0" displayname="Test Mixed Sorted" id="[engine:testsuite-voltscript]/[Test Mixed Sorted]">
+    <testcase name="Test collection contains 13 elements" classname="Test Mixed Sorted" time="0" displayname="Test collection contains 13 elements" id="[engine:testsuite-voltscript]/[Test Mixed Sorted]/[Test collection contains 13 elements]">
+    </testcase>
+    <testcase name="Test sorted correctly" classname="Test Mixed Sorted" time="0" displayname="Test sorted correctly" id="[engine:testsuite-voltscript]/[Test Mixed Sorted]/[Test sorted correctly]">
+    </testcase>
+  </testsuite>
+  <testsuite name="Test Filters" time="0" displayname="Test Filters" id="[engine:testsuite-voltscript]/[Test Filters]">
+    <testcase name="Test coll has 11 elements" classname="Test Filters" time="0" displayname="Test coll has 11 elements" id="[engine:testsuite-voltscript]/[Test Filters]/[Test coll has 11 elements]">
+    </testcase>
+    <testcase name="Test filter returns 6 elements" classname="Test Filters" time="0" displayname="Test filter returns 6 elements" id="[engine:testsuite-voltscript]/[Test Filters]/[Test filter returns 6 elements]">
+    </testcase>
+    <testcase name="Test filter contents" classname="Test Filters" time="0" displayname="Test filter contents" id="[engine:testsuite-voltscript]/[Test Filters]/[Test filter contents]">
+    </testcase>
+  </testsuite>
+  <testsuite name="Test People Sorted" time="0" displayname="Test People Sorted" id="[engine:testsuite-voltscript]/[Test People Sorted]">
+    <testcase name="Test unsorted second person is Jane Doe" classname="Test People Sorted" time="0" displayname="Test unsorted second person is Jane Doe" id="[engine:testsuite-voltscript]/[Test People Sorted]/[Test unsorted second person is Jane Doe]">
+    </testcase>
+    <testcase name="Test sorted second person is John Doe" classname="Test People Sorted" time="0" displayname="Test sorted second person is John Doe" id="[engine:testsuite-voltscript]/[Test People Sorted]/[Test sorted second person is John Doe]">
+    </testcase>
+    <testcase name="Test sorted first person is Jane Doe 32" classname="Test People Sorted" time="0" displayname="Test sorted first person is Jane Doe 32" id="[engine:testsuite-voltscript]/[Test People Sorted]/[Test sorted first person is Jane Doe 32]">
+    </testcase>
+    <testcase name="Test second person is Jane Doe, 30" classname="Test People Sorted" time="0" displayname="Test second person is Jane Doe, 30" id="[engine:testsuite-voltscript]/[Test People Sorted]/[Test second person is Jane Doe, 30]">
+    </testcase>
+    <testcase name="Test transformed has only 3 elements" classname="Test People Sorted" time="0" displayname="Test transformed has only 3 elements" id="[engine:testsuite-voltscript]/[Test People Sorted]/[Test transformed has only 3 elements]">
+    </testcase>
+    <testcase name="Test coll contains Steve Smith" classname="Test People Sorted" time="0" displayname="Test coll contains Steve Smith" id="[engine:testsuite-voltscript]/[Test People Sorted]/[Test coll contains Steve Smith]">
+    </testcase>
+    <testcase name="Test sortedColl contains Steve Smith" classname="Test People Sorted" time="0" displayname="Test sortedColl contains Steve Smith" id="[engine:testsuite-voltscript]/[Test People Sorted]/[Test sortedColl contains Steve Smith]">
+    </testcase>
+    <testcase name="Test get invalid index is NOTHING" classname="Test People Sorted" time="0" displayname="Test get invalid index is NOTHING" id="[engine:testsuite-voltscript]/[Test People Sorted]/[Test get invalid index is NOTHING]">
+    </testcase>
+    <testcase name="Test sortedColl has 5 entries" classname="Test People Sorted" time="0" displayname="Test sortedColl has 5 entries" id="[engine:testsuite-voltscript]/[Test People Sorted]/[Test sortedColl has 5 entries]">
+    </testcase>
+    <testcase name="Check insertion is as at pos 3" classname="Test People Sorted" time="0" displayname="Check insertion is as at pos 3" id="[engine:testsuite-voltscript]/[Test People Sorted]/[Check insertion is as at pos 3]">
+    </testcase>
+    <testcase name="Test sortedColl has 6 entries" classname="Test People Sorted" time="0" displayname="Test sortedColl has 6 entries" id="[engine:testsuite-voltscript]/[Test People Sorted]/[Test sortedColl has 6 entries]">
+    </testcase>
+    <testcase name="Check insertion is as at pos 4" classname="Test People Sorted" time="0" displayname="Check insertion is as at pos 4" id="[engine:testsuite-voltscript]/[Test People Sorted]/[Check insertion is as at pos 4]">
+    </testcase>
+    <testcase name="Check John Doe 42, 3, 3 is null index in sortedColl" classname="Test People Sorted" time="0" displayname="Check John Doe 42, 3, 3 is null index in sortedColl" id="[engine:testsuite-voltscript]/[Test People Sorted]/[Check John Doe 42, 3, 3 is null index in sortedColl]">
+    </testcase>
+    <testcase name="Check John Doe 42, 3, 3 is not in sortedColl" classname="Test People Sorted" time="0" displayname="Check John Doe 42, 3, 3 is not in sortedColl" id="[engine:testsuite-voltscript]/[Test People Sorted]/[Check John Doe 42, 3, 3 is not in sortedColl]">
+    </testcase>
+    <testcase name="Check John Doe 42, 0, 0 is at index 2" classname="Test People Sorted" time="0" displayname="Check John Doe 42, 0, 0 is at index 2" id="[engine:testsuite-voltscript]/[Test People Sorted]/[Check John Doe 42, 0, 0 is at index 2]">
+    </testcase>
+    <testcase name="Test sortedColl still has 6 entries" classname="Test People Sorted" time="0" displayname="Test sortedColl still has 6 entries" id="[engine:testsuite-voltscript]/[Test People Sorted]/[Test sortedColl still has 6 entries]">
+    </testcase>
+    <testcase name="Test sortedColl now has 5 entries" classname="Test People Sorted" time="0" displayname="Test sortedColl now has 5 entries" id="[engine:testsuite-voltscript]/[Test People Sorted]/[Test sortedColl now has 5 entries]">
+    </testcase>
+    <testcase name="Test person removed" classname="Test People Sorted" time="0" displayname="Test person removed" id="[engine:testsuite-voltscript]/[Test People Sorted]/[Test person removed]">
+    </testcase>
+    <testcase name="Test sortedColl still has 5 entries" classname="Test People Sorted" time="0" displayname="Test sortedColl still has 5 entries" id="[engine:testsuite-voltscript]/[Test People Sorted]/[Test sortedColl still has 5 entries]">
+    </testcase>
+    <testcase name="Check collection no longer contains person" classname="Test People Sorted" time="0" displayname="Check collection no longer contains person" id="[engine:testsuite-voltscript]/[Test People Sorted]/[Check collection no longer contains person]">
+    </testcase>
+    <testcase name="Check collection now contains newPerson" classname="Test People Sorted" time="0" displayname="Check collection now contains newPerson" id="[engine:testsuite-voltscript]/[Test People Sorted]/[Check collection now contains newPerson]">
+    </testcase>
+  </testsuite>
+  <testsuite name="Test JSON loading" time="0" displayname="Test JSON loading" id="[engine:testsuite-voltscript]/[Test JSON loading]">
+    <testcase name="Loading from JsonObject array" classname="Test JSON loading" time="0" displayname="Loading from JsonObject array" id="[engine:testsuite-voltscript]/[Test JSON loading]/[Loading from JsonObject array]">
+    </testcase>
+    <testcase name="Test collection has four elements" classname="Test JSON loading" time="0" displayname="Test collection has four elements" id="[engine:testsuite-voltscript]/[Test JSON loading]/[Test collection has four elements]">
+    </testcase>
+    <testcase name="Test converting basic collection to JSON" classname="Test JSON loading" time="0" displayname="Test converting basic collection to JSON" id="[engine:testsuite-voltscript]/[Test JSON loading]/[Test converting basic collection to JSON]">
+    </testcase>
+    <testcase name="Test JSON output" classname="Test JSON loading" time="0" displayname="Test JSON output" id="[engine:testsuite-voltscript]/[Test JSON loading]/[Test JSON output]">
+    </testcase>
+    <testcase name="Try serializing array of persons" classname="Test JSON loading" time="0" displayname="Try serializing array of persons" id="[engine:testsuite-voltscript]/[Test JSON loading]/[Try serializing array of persons]">
+    </testcase>
+    <testcase name="Test JSON persons output" classname="Test JSON loading" time="0" displayname="Test JSON persons output" id="[engine:testsuite-voltscript]/[Test JSON loading]/[Test JSON persons output]">
+    </testcase>
+  </testsuite>
+</testrun>
